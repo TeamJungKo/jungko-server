@@ -1,8 +1,6 @@
 package com.jungko.jungko_server.product.domain;
 
 import com.jungko.jungko_server.area.domain.EmdArea;
-import com.jungko.jungko_server.product.domain.ProductCategory;
-import com.jungko.jungko_server.product.domain.ProductKeyword;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,13 +12,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Entity
 @Getter
-@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
     @Id

@@ -1,10 +1,15 @@
 package com.jungko.jungko_server.keyword.controller;
 
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(value = "/api/keywords", produces = MediaType.APPLICATION_JSON_VALUE)
 public class KeywordController {
 
 	@GetMapping("/")
