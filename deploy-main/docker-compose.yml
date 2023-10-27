@@ -1,35 +1,22 @@
 version: "3.6"
 
 services:
-  diary-main:
+  jungko-main-application:
     image: jungko-main-application
     restart: always
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: "diary-application"
+    container_name: "jungko-main-application"
     ports:
       - "8080:8080"
     volumes:
       - $HOME/logs/:/logs/
     networks:
-      - diary
-
-  diary-redis:
-    image: redis:latest
-    restart: always
-    container_name: "diary-redis"
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      timeout: 20s
-      retries: 10
-    networks:
-      - diary
+      - jungko
 
 networks:
-  diary:
+  jungko:
     driver: bridge
 
 volumes:
