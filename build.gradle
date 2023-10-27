@@ -44,6 +44,24 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
+tasks.register('copyMainConfig', Copy) {
+    from 'server-config/main/resources'
+    into 'src/main/resources'
+}
+
+tasks.register('copyTestConfig', Copy) {
+    from 'server-config/test/resources'
+    into 'src/test/resources'
+}
+
+tasks.named('processResources') {
+    dependsOn 'copyMainConfig'
+}
+
+tasks.named('processTestResources') {
+    dependsOn 'copyTestConfig'
+}
+
 tasks.withType(Test) {
     useJUnitPlatform()
 }
