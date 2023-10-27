@@ -1,0 +1,8 @@
+services:
+  mariadb:
+    image: mariadb:11.1
+    environment:
+    - MARIADB_DATABASE=jungko-server
+    - MARIADB_ROOT_PASSWORD=P4ssword!
+    ports:
+    - 3307:3306
