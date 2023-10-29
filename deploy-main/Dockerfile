@@ -1,6 +1,6 @@
 FROM amazoncorretto:17
 
-COPY jungko-server-0.0.1-SNAPSHOT.jar diary.jar
+COPY jungko-server-0.0.1-SNAPSHOT.jar jungko.jar
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
