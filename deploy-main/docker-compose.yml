@@ -12,12 +12,10 @@ services:
       - "8080:8080"
     volumes:
       - $HOME/logs/:/logs/
+      - $HOME/server-config/main/resources/:/resources/
     networks:
       - jungko
 
 networks:
   jungko:
     driver: bridge
-
-volumes:
-  mariadb-data:
