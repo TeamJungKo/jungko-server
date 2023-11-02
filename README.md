@@ -30,7 +30,7 @@ java -Dspring.profiles.active=local -jar ./build/libs/jungko-server-0.0.1-SNAPSH
 You just run this bash script to build and start the application:
 
 ```bash
-chmod +x quickstart.sh && bash quickstart.sh
+chmod +x quickstart.sh && bash quickstart.sh local
 ```
 
 ## Further readings
