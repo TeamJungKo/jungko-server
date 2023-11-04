@@ -1,4 +1,4 @@
-package com.jungko.jungko_server.card.dto.response;
+package com.jungko.jungko_server.card.dto;
 
 import java.time.LocalDateTime;
 

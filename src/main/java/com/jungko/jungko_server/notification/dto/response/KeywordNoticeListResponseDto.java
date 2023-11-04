@@ -19,5 +19,5 @@ public class KeywordNoticeListResponseDto {
   private final List<KeywordNoticeDto> cardNotices;
 
   @Schema(description = "전체 키워드 알림수", example = "42")
-  private final Integer totalResources;
+  private final int totalResources;
 }

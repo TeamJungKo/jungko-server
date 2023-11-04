@@ -34,5 +34,5 @@ public class CardNoticeDto {
   private final LocalDateTime createdAt;
 
   @Schema(description = "알림 읽음 여부", example = "false")
-  private final Boolean isRead;
+  private final boolean isRead;
 }

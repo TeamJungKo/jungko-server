@@ -39,7 +39,7 @@ public class Member {
     private String nickname;
 
     @Column(nullable = false)
-    private Boolean notificationAgreement;
+    private boolean notificationAgreement;
 
     @Column(nullable = false)
     private String oauthType;

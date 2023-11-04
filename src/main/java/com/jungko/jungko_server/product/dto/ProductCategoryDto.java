@@ -1,6 +1,5 @@
 package com.jungko.jungko_server.product.dto;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +21,6 @@ public class ProductCategoryDto {
   @Schema(description = "상품ID", example = "1")
   private final Integer level;
 
-  @ArraySchema(schema = @Schema(implementation = ProductCategoryDto.class))
+  @Schema(implementation = ProductCategoryDto.class)
   private final ProductCategoryDto subCategory;
 }

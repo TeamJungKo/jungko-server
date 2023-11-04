@@ -21,5 +21,5 @@ public class ProductListResponseDto {
   private final List<ProductPreviewDto> products;
 
   @Schema(description = "전체", example = "142")
-  private final Integer totalResources;
+  private final int totalResources;
 }
