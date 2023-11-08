@@ -10,6 +10,7 @@ import com.jungko.jungko_server.util.AuthResponseMessages;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class Oauth2Handler {
 
 	private final MemberRepository memberRepository;
@@ -49,6 +51,7 @@ public class Oauth2Handler {
 									)
 							)
 					);
+			log.info("Member Login Success: {}", member);
 			String jwtToken = jwtTokenProvider.createCommonAccessToken(member.getId())
 					.getTokenValue();
 			cookieManager.createCookie(

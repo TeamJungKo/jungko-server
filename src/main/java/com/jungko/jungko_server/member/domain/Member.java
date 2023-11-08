@@ -39,7 +39,7 @@ public class Member {
 	@Column
 	private String profileImageUrl;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String nickname;
 
 	@Column(nullable = false)
@@ -83,7 +83,6 @@ public class Member {
 		member.nickname = nickname;
 		member.notificationAgreement = notificationAgreement;
 		member.oauthType = oauth2Type;
-		System.out.println("oauthType = " + oauth2Type);
 		member.oauthId = oauthId;
 		member.createdAt = now;
 		return member;
