@@ -1,6 +1,9 @@
 package com.jungko.jungko_server.product.domain;
 
 import com.jungko.jungko_server.card.domain.Card;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,40 +26,36 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductCategory {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(nullable = false, updatable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column(nullable = false)
-    private Integer level;
+	@Column(nullable = false)
+	private Integer level;
 
-    @Column
-    private String imageUrl;
+	@Column
+	private String imageUrl;
 
-    @OneToOne(
-            mappedBy = "productCategory",
-            fetch = FetchType.LAZY
-    )
-    private Card card;
+	@OneToOne(
+			mappedBy = "productCategory",
+			fetch = FetchType.LAZY
+	)
+	private Card card;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id", unique = true)
-    private ProductCategory productCategory;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_category_id")
+	private ProductCategory parentCategory;
 
-    @OneToOne(
-            mappedBy = "productCategory",
-            fetch = FetchType.LAZY
-    )
-    private ProductCategory productCategoryParent;
+	@OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductCategory> childCategories = new ArrayList<>();
 
-    @OneToOne(
-            mappedBy = "productCategory",
-            fetch = FetchType.LAZY
-    )
-    private Product product;
-
+	@OneToOne(
+			mappedBy = "productCategory",
+			fetch = FetchType.LAZY
+	)
+	private Product product;
 }
