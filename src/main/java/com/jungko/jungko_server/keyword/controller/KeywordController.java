@@ -1,5 +1,8 @@
 package com.jungko.jungko_server.keyword.controller;
 
+import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
+import com.jungko.jungko_server.auth.domain.MemberRole;
+import com.jungko.jungko_server.auth.dto.MemberSessionDto;
 import com.jungko.jungko_server.keyword.dto.request.KeywordRequestDto;
 import com.jungko.jungko_server.keyword.dto.response.KeywordListResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,9 +39,11 @@ public class KeywordController {
 	})
 	@PutMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
+	@Secured(MemberRole.S_USER)
 	public void createKeyword(
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @ModelAttribute KeywordRequestDto dto) {
-		log.info("Called createKeyword {}", dto);
+		log.info("Called createKeyword member: {}, dto: {}", memberSessionDto, dto);
 	}
 
 	@Operation(summary = "키워드 삭제", description = "특정 키워드를 삭제합니다. 키워드 ID를 배열에 담아 ID에 해당하는 키워드들을 삭제합니다.")
@@ -47,9 +53,11 @@ public class KeywordController {
 	})
 	@DeleteMapping(value = "/{keywordId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@Secured(MemberRole.S_USER)
 	public void deleteCard(
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("keywordId") Long keywordId) {
-		log.info("Called deleteKeyword {}", keywordId);
+		log.info("Called deleteKeyword member: {}, keywordId: {}", memberSessionDto, keywordId);
 	}
 
 	@Operation(summary = "내가 등록한 키워드 목록 조회", description = "내가 등록한 키워드 목록을 조회합니다. 키워드 개수는 최대 50개로 제한됩니다.")
@@ -57,10 +65,13 @@ public class KeywordController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
 	@GetMapping(value = "/members/me")
+	@Secured(MemberRole.S_USER)
 	public KeywordListResponseDto getMyKeywords(
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam Integer page,
 			@RequestParam Integer size) {
-		log.info("Called getMyKeywords page");
+		log.info("Called getMyKeywords member: {}, page: {}, size: {}", memberSessionDto, page,
+				size);
 
 		return KeywordListResponseDto.builder().build();
 	}
@@ -70,9 +81,11 @@ public class KeywordController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
 	@GetMapping(value = "/members/{memberId}")
-	public KeywordListResponseDto getMemberKeyowords(
+	@Secured(MemberRole.S_USER)
+	public KeywordListResponseDto getMemberKeywords(
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("memberId") Long memberId) {
-		log.info("Called getMemberKeywords memberId: {}", memberId);
+		log.info("Called getMemberKeywords member: {}, memberId: {}", memberSessionDto, memberId);
 
 		return KeywordListResponseDto.builder().build();
 	}
