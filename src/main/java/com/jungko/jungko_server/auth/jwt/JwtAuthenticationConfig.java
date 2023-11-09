@@ -17,24 +17,36 @@ import org.springframework.security.oauth2.server.resource.InvalidBearerTokenExc
 @Configuration
 @RequiredArgsConstructor
 public class JwtAuthenticationConfig {
+
 	private final JwtDecoder jwtDecoder;
 	private final JwtAuthenticationConverter jwtAuthenticationConverter;
 
 	@Bean
+	/*
+	  JwtAuthenticationManager를 Bean으로 등록한다.
+	  JwtAuthenticationProvider를 이용하여 인증을 수행한다.
+	 */
 	public AuthenticationManager jwtAuthenticationManager() {
 		return (Authentication authentication) -> {
 			AuthenticationProvider authenticationProvider = jwtAuthenticationProvider();
-			if (authenticationProvider.supports(authentication.getClass()))
+			if (authenticationProvider.supports(authentication.getClass())) {
 				return authenticationProvider.authenticate(authentication);
-			throw new AuthenticationServiceException("Unsupported authentication type: " + authentication.getClass().getName());
+			}
+			throw new AuthenticationServiceException(
+					"Unsupported authentication type: " + authentication.getClass().getName());
 		};
 	}
 
 	@Bean
+	/*
+	  JwtAuthenticationProvider를 Bean으로 등록한다.
+	  BearerTokenAuthenticationToken을 Jwt로 변환한다.
+	 */
 	public AuthenticationProvider jwtAuthenticationProvider() {
 		return new AuthenticationProvider() {
 			@Override
-			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+			public Authentication authenticate(Authentication authentication)
+					throws AuthenticationException {
 				BearerTokenAuthenticationToken token = (BearerTokenAuthenticationToken) authentication;
 				Jwt jwt = getJwt(token);
 				return jwtAuthenticationConverter.convert(jwt);

@@ -21,6 +21,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+/*
+  Oauth2 인증에 대한 핸들러를 정의하는 클래스
+ */
 public class Oauth2Handler {
 
 	private final MemberRepository memberRepository;
@@ -29,6 +32,12 @@ public class Oauth2Handler {
 	private final ClientConfig clientConfig;
 
 	@Bean
+	/*
+	  Oauth2 인증 성공 시 호출되는 핸들러
+	  인증 정보를 우리 시스템에 맞도록 변환한다.
+	  변환된 인증 정보를 Member 엔티티로 영속화하고, 회원의 ID를 이용해 JWT 토큰을 생성한다.
+	  생성된 JWT 토큰을 쿠키에 담아 클라이언트로 전송한다.
+	 */
 	public AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler() {
 		return (request, response, authentication) -> {
 			DefaultOAuth2User auth2User = (DefaultOAuth2User) authentication.getPrincipal();

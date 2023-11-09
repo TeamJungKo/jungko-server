@@ -22,6 +22,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Transient
 @Slf4j
 @RequiredArgsConstructor
+/*
+  JWT 토큰을 이용한 인증을 위한 커스텀 인증 필터
+ */
 public class MemberSessionAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
@@ -49,6 +52,12 @@ public class MemberSessionAuthenticationFilter extends OncePerRequestFilter {
 		doFilter(request, response, filterChain);
 	}
 
+	/**
+	 * JwtAuthenticationToken을 우리 시스템의 커스텀 MemberSessionAuthenticationToken으로 변환한다.
+	 *
+	 * @param token JwtAuthenticationToken 인증 토큰
+	 * @return 변환된 커스텀 인증 토큰
+	 */
 	private MemberSessionAuthenticationToken convert(JwtAuthenticationToken token) {
 		Object target = token.getPrincipal();
 		if (target instanceof Jwt) {
@@ -64,6 +73,12 @@ public class MemberSessionAuthenticationFilter extends OncePerRequestFilter {
 		throw new JwtAuthenticationTokenException("JwtAuthenticationToken의 Principal이 Jwt가 아닙니다.");
 	}
 
+	/**
+	 * Jwt Principal 정보를 토대로 회원 인증 정보 DTO 객체를 생성한다.
+	 *
+	 * @param jwt Jwt Principal 정보
+	 * @return 회원 인증 정보 DTO 객체
+	 */
 	private MemberSessionDto convertPrincipal(Jwt jwt) {
 		Long memberId = jwt.getClaim(JwtConfig.USERID);
 		List<MemberRole> roles = jwt.getClaim(JwtConfig.ROLES);

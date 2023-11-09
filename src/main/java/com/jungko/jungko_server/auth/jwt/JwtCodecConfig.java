@@ -13,10 +13,14 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 @Configuration
+/*
+  JWT 인코더/디코더를 위한 설정 클래스
+ */
 public class JwtCodecConfig {
 
 	private final static MacAlgorithm algorithm = MacAlgorithm.HS256;
 	private final SecretKey key;
+
 	public JwtCodecConfig(
 			@Value("${spring.jwt.key}") String secretKey
 	) {

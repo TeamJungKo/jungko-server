@@ -14,11 +14,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+/*
+  JWT 토큰 생성을 위한 클래스
+ */
 public class JwtTokenProvider {
 
 	private final JwtEncoder jwtEncoder;
 	private final JwtConfig jwtConfig;
 
+	/**
+	 * 주어진 ID를 가진 회원의 Common Access JWT Token을 생성한다.
+	 *
+	 * @param id 회원의 ID
+	 * @return 생성된 JWT Token
+	 */
 	public Jwt createCommonAccessToken(Long id) {
 		Instant now = Instant.now();
 		JwsHeader header = JwsHeader

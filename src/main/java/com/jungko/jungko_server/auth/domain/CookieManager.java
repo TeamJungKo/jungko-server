@@ -10,10 +10,19 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+/*
+  쿠키 관리를 담당하는 클래스
+ */
 public class CookieManager {
 
 	private final CookieConfig cookieConfig;
 
+	/**
+	 * 쿠키를 생성하여 HttpServletResponse 객체에 추가한다.
+	 *
+	 * @param res   클라이언트에게 보낼 응답을 나타내는 HttpServletResponse 객체
+	 * @param token 쿠키에 저장될 토큰 값
+	 */
 	public void createCookie(HttpServletResponse res, String token) {
 		log.info("Called setCookie path");
 		Cookie cookie = new Cookie(cookieConfig.getName(), token);

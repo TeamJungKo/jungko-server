@@ -11,6 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+/*
+  로그인한 회원의 정보를 담는 클래스
+ */
 public class MemberSessionDto {
 
 	private final Long memberId;

@@ -4,6 +4,12 @@ import com.jungko.jungko_server.auth.domain.Oauth2Type;
 import java.util.Map;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+/**
+ * // @formatter:off
+ * Oauth2User로부터 속성을 추출하는 메서드를 정의하는 인터페이스 Oauth 유저 정보를 추출하여 우리 시스템에 맞도록 변환하는 역할을 한다.
+ * 소셜 인증 기관이 추가되면이 인터페이스를 구현하여 Oauth2User로부터 속성을 추출하는 메서드를 정의해야 한다.
+ * // @formatter:on
+ */
 public interface Oauth2AttributeExtractor {
 
 	String getEmail();

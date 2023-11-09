@@ -19,6 +19,11 @@ public class JwtAuthenticationConverter implements Converter<Jwt, JwtAuthenticat
 	private static final String SCOPE_PREFIX = "SCOPE_";
 
 	@Override
+	/*
+	  Jwt를 JwtAuthenticationToken으로 변환한다.
+	  @param jwt 변환할 Jwt
+	 * @return JwtAuthenticationToken 변환된 JwtAuthenticationToken
+	 */
 	public JwtAuthenticationToken convert(Jwt jwt) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if (jwt.hasClaim(JwtConfig.ROLES)) {
