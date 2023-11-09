@@ -3,8 +3,11 @@ package com.jungko.jungko_server.member.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.mapper.MemberMapper;
+import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.dto.request.MemberProfileUpdateRequestDto;
 import com.jungko.jungko_server.member.dto.response.MemberProfileResponseDto;
+import com.jungko.jungko_server.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,6 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "회원", description = "회원 관련 API")
 public class MemberController {
 
+	private final MemberService memberService;
+	private final MemberMapper memberMapper;
+
 	@Operation(summary = "내 프로필 조회", description = "내 프로필을 조회합니다.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
@@ -38,7 +44,10 @@ public class MemberController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto
 	) {
 		log.info("Called getMyProfile member: {}", memberSessionDto);
-		return MemberProfileResponseDto.builder().build();
+
+		MemberProfileDto memberProfileDto = memberService.getMyProfile(
+				memberSessionDto.getMemberId());
+		return memberMapper.toMemberProfileResponseDto(memberProfileDto);
 	}
 
 	@Operation(summary = "내 프로필 수정", description = "내 프로필 정보를 수정합니다. null이 아닌 필드에 대해서만 수정이 이루어집니다.")
