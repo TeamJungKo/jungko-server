@@ -18,6 +18,7 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 
 	public MemberProfileDto getMyProfile(Long loginMemberId) {
+		log.info("Called getMyProfile member: {}", loginMemberId);
 
 		Member member = memberRepository.findById(loginMemberId).orElseThrow(
 				() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + loginMemberId));
