@@ -8,14 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class JwtConfig {
 
-	@Value("${jungko.jwt.roles-key}")
-	private String rolesKey;
-
-	@Value("${jungko.jwt.scopes-key}")
-	private String scopesKey;
-
-	@Value("${jungko.jwt.user-id-key}")
-	private String userIdKey;
+	public static final String ROLES = "roles";
+	public static final String SCOPES = "scopes";
+	public static final String USERID = "userId";
 
 	@Value("${jungko.jwt.common-token-expire-time}")
 	private long commonTokenExpireTime;

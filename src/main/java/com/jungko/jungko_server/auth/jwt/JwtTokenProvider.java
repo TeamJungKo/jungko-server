@@ -28,8 +28,8 @@ public class JwtTokenProvider {
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.issuedAt(now)
 				.expiresAt(now.plusSeconds(jwtConfig.getCommonTokenExpireTime()))
-				.claim(jwtConfig.getUserIdKey(), id)
-				.claim(jwtConfig.getRolesKey(), List.of(MemberRole.COMMON.name()))
+				.claim(JwtConfig.USERID, id)
+				.claim(JwtConfig.ROLES, List.of(MemberRole.S_USER))
 				.build();
 		return jwtEncoder.encode(JwtEncoderParameters.from(header, claims));
 	}

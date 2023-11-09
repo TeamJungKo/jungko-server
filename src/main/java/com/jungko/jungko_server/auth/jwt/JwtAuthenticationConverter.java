@@ -17,22 +17,21 @@ public class JwtAuthenticationConverter implements Converter<Jwt, JwtAuthenticat
 
 	private static final String ROLE_PREFIX = "ROLE_";
 	private static final String SCOPE_PREFIX = "SCOPE_";
-	private final JwtConfig jwtConfig;
 
 	@Override
 	public JwtAuthenticationToken convert(Jwt jwt) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		if (jwt.hasClaim(jwtConfig.getRolesKey())) {
+		if (jwt.hasClaim(JwtConfig.ROLES)) {
 			authorities.addAll(
-					jwt.getClaimAsStringList(jwtConfig.getRolesKey())
+					jwt.getClaimAsStringList(JwtConfig.ROLES)
 							.stream()
 							.map(role -> ROLE_PREFIX + role)
 							.map(SimpleGrantedAuthority::new)
 							.collect(Collectors.toList())
 			);
 		}
-		if (jwt.hasClaim(jwtConfig.getScopesKey())) {
-			authorities.addAll(jwt.getClaimAsStringList(jwtConfig.getScopesKey()).stream()
+		if (jwt.hasClaim(JwtConfig.SCOPES)) {
+			authorities.addAll(jwt.getClaimAsStringList(JwtConfig.SCOPES).stream()
 					.map(scope -> SCOPE_PREFIX + scope)
 					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toList())
