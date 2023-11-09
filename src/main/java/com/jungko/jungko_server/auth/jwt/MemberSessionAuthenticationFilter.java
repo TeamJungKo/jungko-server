@@ -33,6 +33,13 @@ public class MemberSessionAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
+		System.out.println(request.getRequestURI());
+		if (request.getRequestURI().contains("swagger")
+				|| request.getRequestURI().contains("api-docs")
+		) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 		if (authentication == null) {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인이 필요합니다.");
 			return;
