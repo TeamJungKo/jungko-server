@@ -33,7 +33,6 @@ public class MemberSessionAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
-		System.out.println(request.getRequestURI());
 		if (request.getRequestURI().contains("swagger")
 				|| request.getRequestURI().contains("api-docs")
 		) {
