@@ -4,10 +4,11 @@ import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
-import com.jungko.jungko_server.util.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 @Service
@@ -22,7 +23,9 @@ public class MemberService {
 		log.info("Called getMyProfile member: {}", loginMemberId);
 
 		Member member = memberRepository.findById(loginMemberId).orElseThrow(
-				() -> new NotFoundException("해당 회원이 존재하지 않습니다. id=" + loginMemberId));
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + loginMemberId));
 		return memberMapper.toMemberProfileDto(member, member.getProfileImageUrl());
 	}
 
@@ -30,7 +33,9 @@ public class MemberService {
 		log.info("Called getMemberProfile member: {}", memberId);
 
 		Member member = memberRepository.findById(memberId).orElseThrow(
-				() -> new NotFoundException("해당 회원이 존재하지 않습니다. id=" + memberId));
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
 		return memberMapper.toMemberProfileDto(member, member.getProfileImageUrl());
 	}
 }

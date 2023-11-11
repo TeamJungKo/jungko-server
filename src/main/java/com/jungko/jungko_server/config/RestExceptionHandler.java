@@ -11,11 +11,32 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 
 @RestControllerAdvice(annotations = RestController.class)
 public class RestExceptionHandler {
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ErrorResponse> handleIllegalArgument(
+			final IllegalArgumentException exception) {
+		final ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+		errorResponse.setException(exception.getClass().getSimpleName());
+		errorResponse.setMessage(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(HttpClientErrorException.class)
+	public ResponseEntity<ErrorResponse> handleHttpClientError(
+			final HttpClientErrorException exception) {
+		final ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setHttpStatus(exception.getStatusCode().value());
+		errorResponse.setException(exception.getClass().getSimpleName());
+		errorResponse.setMessage(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, exception.getStatusCode());
+	}
 
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleNotFound(final NotFoundException exception) {
