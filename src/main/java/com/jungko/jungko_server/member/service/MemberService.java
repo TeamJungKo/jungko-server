@@ -3,6 +3,7 @@ package com.jungko.jungko_server.member.service;
 import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
+import com.jungko.jungko_server.member.dto.request.MemberProfileUpdateRequestDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +38,20 @@ public class MemberService {
 						HttpStatus.NOT_FOUND,
 						"해당 회원이 존재하지 않습니다. id=" + memberId));
 		return memberMapper.toMemberProfileDto(member, member.getProfileImageUrl());
+	}
+
+	public void updateMemberProfile(Long memberId, MemberProfileUpdateRequestDto dto) {
+		log.info("Called updateMemberProfile member: {}, dto: {}", memberId, dto);
+
+		Member member = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+
+//		TODO: S3에 이미지 업로드하는 부분 추가
+//		TODO: S3에서 업로드한 이미지 url 얻어오는 부분 추가
+		String profileImageUrl = "";
+		member.updateProfile(dto.getNickname(), dto.getEmail(), profileImageUrl);
+		memberRepository.save(member);
 	}
 }

@@ -4,8 +4,10 @@ import com.jungko.jungko_server.util.NotFoundException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +19,21 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice(annotations = RestController.class)
 public class RestExceptionHandler {
+
+	@ExceptionHandler(BindException.class)
+	public ResponseEntity<ErrorResponse> handleBind(final BindException exception) {
+		BindingResult result = exception.getBindingResult();
+		
+		String joinedMessages = result.getAllErrors().stream()
+				.map(DefaultMessageSourceResolvable::getDefaultMessage)
+				.collect(Collectors.joining(" "));
+
+		final ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+		errorResponse.setException(exception.getClass().getSimpleName());
+		errorResponse.setMessage(joinedMessages);
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<ErrorResponse> handleIllegalArgument(

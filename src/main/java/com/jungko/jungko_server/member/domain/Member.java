@@ -87,4 +87,16 @@ public class Member {
 		member.createdAt = now;
 		return member;
 	}
+
+	public void updateProfile(String nickname, String email, String profileImageUrl) {
+		if (nickname != null) {
+			this.nickname = nickname;
+		}
+		if (email != null) {
+			this.email = email;
+		}
+		if (profileImageUrl != null) {
+			this.profileImageUrl = profileImageUrl;
+		}
+	}
 }
