@@ -56,12 +56,14 @@ public class MemberController {
 	})
 	@PatchMapping(value = "/me/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Secured(MemberRole.S_USER)
-	public void updateMyProfile(
+	public MemberProfileResponseDto updateMyProfile(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @ModelAttribute MemberProfileUpdateRequestDto dto
 	) {
 		log.info("Called updateCard member: {}, dto: {}", memberSessionDto, dto);
-		memberService.updateMemberProfile(memberSessionDto.getMemberId(), dto);
+		MemberProfileDto memberProfileDto = memberService.updateMemberProfile(
+				memberSessionDto.getMemberId(), dto);
+		return memberMapper.toMemberProfileResponseDto(memberProfileDto);
 	}
 
 	@Operation(summary = "회원 프로필 조회", description = "특정 회원의 프로필을 조회합니다.")

@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class ServerConfig {
 
+	@Value("${jungko.server.host}")
+	private String host;
+
 	@Value("${jungko.server.oauth2.login-endpoint}")
 	private String oauth2LoginEndpoint;
 
