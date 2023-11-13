@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @ToString
@@ -20,5 +22,5 @@ public class SiggDto {
   private final String name;
 
   @Schema(description = "읍면동 정보", implementation = EmdDto.class)
-  private final EmdDto emd;
+  private final List<EmdDto> emd;
 }

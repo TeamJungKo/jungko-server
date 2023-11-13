@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -20,5 +23,5 @@ public class SidoDto {
   private final String name;
 
   @Schema(description = "시군구 정보", implementation = SiggDto.class)
-  private final SiggDto sigg;
+  private final List<SiggDto> sigg;
 }
