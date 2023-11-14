@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -27,42 +28,44 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Card {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(nullable = false, updatable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    private String title;
+	@Column
+	private String title;
 
-    @Column
-    private String keyword;
+	@Column
+	private String keyword;
 
-    @Column
-    private Integer minPrice;
+	@Column
+	private Integer minPrice;
 
-    @Column
-    private Integer maxPrice;
+	@Column
+	private Integer maxPrice;
 
-    @Column(nullable = false)
-    private String scope;
+	@Column(nullable = false)
+	private String scope;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+	@Column(nullable = false)
+	private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "card")
-    private Set<InterestedCard> interestedCards;
+	@OneToMany(mappedBy = "card")
+	private Set<InterestedCard> interestedCards;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id", unique = true)
-    private ProductCategory productCategory;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_category_id", unique = true)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private ProductCategory productCategory;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "area_id", unique = true)
-    private EmdArea area;
-
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "area_id", unique = true)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private EmdArea area;
 }
