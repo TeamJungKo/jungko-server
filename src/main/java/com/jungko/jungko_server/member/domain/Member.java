@@ -20,6 +20,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -86,5 +87,17 @@ public class Member {
 		member.oauthId = oauthId;
 		member.createdAt = now;
 		return member;
+	}
+
+	public void updateProfile(String nickname, String email, String profileImageUrl) {
+		if (nickname != null) {
+			this.nickname = nickname;
+		}
+		if (email != null) {
+			this.email = email;
+		}
+		if (profileImageUrl != null) {
+			this.profileImageUrl = profileImageUrl;
+		}
 	}
 }
