@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -47,6 +48,7 @@ public class ProductCategory {
 	private Card card;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	@JoinColumn(name = "parent_category_id")
 	private ProductCategory parentCategory;
 
