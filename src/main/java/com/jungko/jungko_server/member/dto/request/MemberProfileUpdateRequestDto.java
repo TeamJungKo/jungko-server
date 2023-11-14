@@ -22,6 +22,6 @@ public class MemberProfileUpdateRequestDto {
 	@Schema(description = "프로필 이미지 데이터", example = "base64 encoded image data", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
 	private final MultipartFile imageData;
 
-	@Schema(description = "회원 이메일", example = "example.gmail.com")
+	@Schema(description = "회원 이메일", example = "example@gmail.com")
 	private final String email;
 }
