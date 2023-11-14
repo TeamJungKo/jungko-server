@@ -73,6 +73,7 @@ public class MemberController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("memberId") Long memberId) {
 		log.info("Called getMemberProfile member: {}, memberId: {}", memberSessionDto, memberId);
-		return MemberProfileResponseDto.builder().build();
+		MemberProfileDto memberProfileDto = memberService.getMemberProfile(memberId);
+		return memberMapper.toMemberProfileResponseDto(memberProfileDto);
 	}
 }
