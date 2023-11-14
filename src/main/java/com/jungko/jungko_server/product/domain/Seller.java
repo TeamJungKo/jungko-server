@@ -1,4 +1,4 @@
-package com.jungko.jungko_server.area.domain;
+package com.jungko.jungko_server.product.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,21 +18,24 @@ import org.hibernate.annotations.OnDelete;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EmdArea {
+public class Seller {
 
 	@Id
 	@Column(nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private String admCode;
-
-	@Column(nullable = false)
-	private String name;
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sigg_area_id", nullable = false)
+	@JoinColumn(name = "product_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
-	private SiggArea siggArea;
+	private Product product;
+
+	@Column(nullable = false)
+	private String sellerNickname;
+
+	@Column(nullable = false)
+	private Integer credibility;
+
+	@Column(nullable = false)
+	private Integer numberOfTransactions;
 }

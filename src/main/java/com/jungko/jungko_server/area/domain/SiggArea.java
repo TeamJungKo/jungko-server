@@ -14,7 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+import org.hibernate.annotations.OnDelete;
 
 @Entity
 @Getter
@@ -22,22 +22,22 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SiggArea {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(nullable = false, updatable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String admCode;
+	@Column(nullable = false)
+	private String admCode;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @OneToMany(mappedBy = "siggArea")
-    private Set<EmdArea> emdAreas;
+	@OneToMany(mappedBy = "siggArea")
+	private Set<EmdArea> emdAreas;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido_area_id", nullable = false)
-    private SidoArea sidoArea;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sido_area_id", nullable = false)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private SidoArea sidoArea;
 }

@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -24,47 +25,48 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(nullable = false, updatable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String title;
+	@Column(nullable = false)
+	private String title;
 
-    @Column(length = 4095)
-    private String content;
+	@Column(length = 4095)
+	private String content;
 
-    @Column
-    private Long price;
+	@Column
+	private Long price;
 
-    @Column(nullable = false)
-    private String availability;
+	@Column(nullable = false)
+	private String availability;
 
-    @Column(nullable = false)
-    private LocalDateTime uploadedAt;
+	@Column(nullable = false)
+	private LocalDateTime uploadedAt;
 
-    @Column
-    private String imageUrl;
+	@Column
+	private String imageUrl;
 
-    @Column(nullable = false)
-    private String marketName;
+	@Column(nullable = false)
+	private String marketName;
 
-    @Column(nullable = false)
-    private String marketProductId;
+	@Column(nullable = false)
+	private String marketProductId;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+	@Column(nullable = false)
+	private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id", nullable = false, unique = true)
-    private ProductCategory productCategory;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_category_id", nullable = false, unique = true)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private ProductCategory productCategory;
 
-    @OneToMany(mappedBy = "product")
-    private Set<ProductKeyword> productKeywords;
+	@OneToMany(mappedBy = "product")
+	private Set<ProductKeyword> productKeywords;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "area_id", unique = true)
-    private EmdArea area;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "area_id", unique = true)
+	private EmdArea area;
 
 }
