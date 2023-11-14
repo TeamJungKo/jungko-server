@@ -62,6 +62,7 @@ dependencies {
     testCompileOnly('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.security:spring-security-test')
     testRuntimeOnly('com.h2database:h2')
 }
 
@@ -70,19 +71,13 @@ tasks.register('copyMainConfig', Copy) {
     into 'src/main/resources'
 }
 
-tasks.register('copyTestConfig', Copy) {
-    from 'server-config/test/resources'
-    into 'src/test/resources'
-}
-
 tasks.named('processResources') {
     dependsOn 'copyMainConfig'
 }
 
-tasks.named('processTestResources') {
-    dependsOn 'copyTestConfig'
+test {
+    useJUnitPlatform()
+    failFast = true
+    systemProperty 'spring.profiles.active', 'test'
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-}
