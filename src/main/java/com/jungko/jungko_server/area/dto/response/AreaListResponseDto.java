@@ -1,5 +1,6 @@
 package com.jungko.jungko_server.area.dto.response;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +17,7 @@ import com.jungko.jungko_server.area.dto.AreaDto;
 @Schema(description = "지역 정보를 담는 DTO")
 public class AreaListResponseDto {
 
-  @Schema(description = "지역 정보", implementation = AreaDto.class)
-  private final List<AreaDto> areas;
+	//	@ArraySchema(schema = @Schema(implementation = AreaDto.class))
+	@Schema(description = "지역 정보", type = "array", implementation = AreaDto.class)
+	private final List<AreaDto> areas;
 }

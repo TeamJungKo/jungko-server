@@ -8,27 +8,35 @@ import com.jungko.jungko_server.area.dto.EmdDto;
 import com.jungko.jungko_server.area.dto.SidoDto;
 import com.jungko.jungko_server.area.dto.SiggDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.awt.geom.Area;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AreaMapper {
 
-    AreaMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(AreaMapper.class);
+	AreaMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(AreaMapper.class);
 
-    @Mapping(source = "emd.admCode", target = "code")
-    EmdDto toEmdDto(EmdArea emd);
+	@Mapping(source = "siggAreas", target = "sigg")
+	SidoDto sidoAreaToSidoDto(SidoArea sidoArea);
 
-    @Mapping(source = "sigg.admCode", target = "code")
-    SiggDto toSiggDto(SiggArea sigg);
+	@Mapping(source = "emdAreas", target = "emd")
+	SiggDto siggAreaToSiggDto(SiggArea siggArea);
 
-    @Mapping(source = "sido.admCode", target = "code")
-    SidoDto toSidoDto(SidoArea sido);
+	EmdDto emdAreaToEmdDto(EmdArea emdArea);
 
-    @Mapping(source = "sido", target = "sido")
-    AreaDto toAreaDto(SidoArea sido);
+	default AreaListResponseDto toAreaListResponseDto(List<SidoArea> sidoAreas) {
+		List<SidoDto> sidoDtos = sidoAreas.stream()
+				.map(this::sidoAreaToSidoDto)
+				.collect(Collectors.toList());
 
+		return AreaListResponseDto.builder()
+				.areas(Collections.singletonList(
+						AreaDto.builder()
+								.sido(sidoDtos)
+								.build()))
+				.build();
+	}
 }

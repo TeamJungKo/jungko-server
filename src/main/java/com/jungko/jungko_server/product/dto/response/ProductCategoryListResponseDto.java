@@ -18,6 +18,7 @@ import lombok.ToString;
 @Schema(description = "상품 카테고리 리스트를 응답하는 DTO")
 public class ProductCategoryListResponseDto {
 
-  @ArraySchema(schema = @Schema(implementation = ProductCategoryDto.class))
-  private final List<ProductCategoryDto> productCategories;
+	@ArraySchema(schema = @Schema(implementation = ProductCategoryDto.class))
+	@ToString.Exclude
+	private final List<ProductCategoryDto> productCategories;
 }
