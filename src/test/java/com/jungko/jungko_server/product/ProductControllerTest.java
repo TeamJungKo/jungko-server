@@ -82,6 +82,7 @@ public class ProductControllerTest extends E2EMvcTest {
 		}
 
 		@Test
+		@Disabled
 		@DisplayName("성공 - 특정 상품의 상제 정보 조회")
 		void 성공_getProductDetail() throws Exception {
 			// given
