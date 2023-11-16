@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @ToString
@@ -22,5 +24,5 @@ public class ProductCategoryDto {
   private final Integer level;
 
   @Schema(implementation = ProductCategoryDto.class)
-  private final ProductCategoryDto subCategory;
+  private final List<ProductCategoryDto> subCategory;
 }
