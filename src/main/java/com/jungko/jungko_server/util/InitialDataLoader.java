@@ -1,5 +1,8 @@
 package com.jungko.jungko_server.util;
 
+import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
+import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
+import com.jungko.jungko_server.area.infrastructure.SiggAreaRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -19,14 +22,45 @@ public class InitialDataLoader implements ApplicationRunner {
 
 	@Value("${jungko.sql.init.product-category}")
 	private String initProductCategory;
+
+	@Value("${jungko.sql.init.emd-area}")
+	private String initEmdArea;
+
+	@Value("${jungko.sql.init.sigg-area}")
+	private String initSiggArea;
+
+	@Value("${jungko.sql.init.sido-area}")
+	private String initSidoArea;
+
 	private final DataSource dataSource;
 	private final ProductCategoryRepository productCategoryRepository;
+	private final SidoAreaRepository sidoAreaRepository;
+	private final SiggAreaRepository siggAreaRepository;
+	private final EmdAreaRepository emdAreaRepository;
 
 	@Override
 	public void run(ApplicationArguments args) throws SQLException {
 		if (productCategoryRepository.count() == 0) {
 			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 			resourceDatabasePopulator.addScript(new ClassPathResource(initProductCategory));
+			resourceDatabasePopulator.execute(dataSource);
+		}
+
+		if (sidoAreaRepository.count() == 0) {
+			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+			resourceDatabasePopulator.addScript(new ClassPathResource(initSidoArea));
+			resourceDatabasePopulator.execute(dataSource);
+		}
+
+		if (siggAreaRepository.count() == 0) {
+			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+			resourceDatabasePopulator.addScript(new ClassPathResource(initSiggArea));
+			resourceDatabasePopulator.execute(dataSource);
+		}
+
+		if (emdAreaRepository.count() == 0) {
+			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+			resourceDatabasePopulator.addScript(new ClassPathResource(initEmdArea));
 			resourceDatabasePopulator.execute(dataSource);
 		}
 	}
