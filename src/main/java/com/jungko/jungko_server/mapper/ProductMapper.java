@@ -7,6 +7,8 @@ import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
+import java.util.HashSet;
+import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -37,6 +39,11 @@ public interface ProductMapper {
 	 */
 	default SpecificProductCategoryDto convertToSpecificProductCategoryDtoRecursive(
 			ProductCategory category) {
+		return convertToSpecificProductCategoryDtoRecursive(category, new HashSet<>());
+	}
+
+	default SpecificProductCategoryDto convertToSpecificProductCategoryDtoRecursive(
+			ProductCategory category, Set<Long> visitedIds) {
 		SpecificProductCategoryDto dto = SpecificProductCategoryDto.builder()
 				.categoryId(category.getId())
 				.name(category.getName())
@@ -44,9 +51,14 @@ public interface ProductMapper {
 				.subCategory(null)
 				.build();
 
+		if (visitedIds.contains(category.getId())) {
+			return dto;
+		}
+		visitedIds.add(category.getId());
+
 		if (category.getParentCategory() != null) {
 			SpecificProductCategoryDto parentDto = convertToSpecificProductCategoryDtoRecursive(
-					category.getParentCategory());
+					category.getParentCategory(), visitedIds);
 			parentDto.setSubCategory(dto);
 			return parentDto;
 		} else {
