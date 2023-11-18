@@ -69,4 +69,35 @@ public class Product {
 	@JoinColumn(name = "area_id", unique = true)
 	private EmdArea area;
 
+	public static Product createProduct(
+			Long productId,
+			String title,
+			String content,
+			Long price,
+			String availability,
+			LocalDateTime uploadedAt,
+			String imageUrl,
+			String marketName,
+			String marketProductId,
+			LocalDateTime createdAt,
+			ProductCategory productCategory,
+			Set<ProductKeyword> productKeywords,
+			EmdArea area) {
+		Product product = new Product();
+		product.id = productId;
+		product.title = title;
+		product.content = content;
+		product.price = price;
+		product.availability = availability;
+		product.uploadedAt = uploadedAt;
+		product.imageUrl = imageUrl;
+		product.marketName = marketName;
+		product.marketProductId = marketProductId;
+		product.createdAt = createdAt;
+		product.productCategory = productCategory;
+		product.productKeywords = productKeywords;
+		product.area = area;
+		return product;
+	}
+
 }

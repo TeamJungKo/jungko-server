@@ -41,12 +41,14 @@ public class ProductCategory {
 	@Column
 	private String imageUrl;
 
+	@ToString.Exclude
 	@OneToOne(
 			mappedBy = "productCategory",
 			fetch = FetchType.LAZY
 	)
 	private Card card;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	@JoinColumn(name = "parent_category_id")
@@ -55,6 +57,7 @@ public class ProductCategory {
 	@OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductCategory> childCategories = new ArrayList<>();
 
+	@ToString.Exclude
 	@OneToOne(
 			mappedBy = "productCategory",
 			fetch = FetchType.LAZY
