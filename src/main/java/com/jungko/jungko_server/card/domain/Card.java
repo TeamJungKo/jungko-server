@@ -60,12 +60,12 @@ public class Card {
 	private Member member;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_category_id", unique = true)
+	@JoinColumn(name = "product_category_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private ProductCategory productCategory;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "area_id", unique = true)
+	@JoinColumn(name = "area_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private EmdArea area;
 }

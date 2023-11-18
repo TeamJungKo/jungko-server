@@ -58,7 +58,7 @@ public class Product {
 	private LocalDateTime createdAt;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_category_id", nullable = false, unique = true)
+	@JoinColumn(name = "product_category_id", nullable = false)
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private ProductCategory productCategory;
 
@@ -66,7 +66,7 @@ public class Product {
 	private Set<ProductKeyword> productKeywords;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "area_id", unique = true)
+	@JoinColumn(name = "area_id")
 	private EmdArea area;
 
 	public static Product createProduct(
