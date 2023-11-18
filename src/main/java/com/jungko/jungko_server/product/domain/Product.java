@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -57,7 +57,7 @@ public class Product {
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_category_id", nullable = false)
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private ProductCategory productCategory;
@@ -65,7 +65,7 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private Set<ProductKeyword> productKeywords;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "area_id")
 	private EmdArea area;
 
