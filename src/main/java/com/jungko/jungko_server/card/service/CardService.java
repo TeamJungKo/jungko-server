@@ -82,4 +82,28 @@ public class CardService {
 						savedCard.getProductCategory()))
 				.build();
 	}
+
+	public void deleteCard(Long memberId, Long cardId) {
+		log.info("Called deleteCard memberId: {}, cardId: {}", memberId, cardId);
+
+		Member loginMember = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+
+		Card card = cardRepository.findById(cardId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 카드가 존재하지 않습니다. id=" + cardId));
+
+		System.out.println(card);
+
+		if (!card.isOwner(loginMember)) {
+			throw new HttpClientErrorException(
+					HttpStatus.FORBIDDEN,
+					"해당 카드의 소유자가 아닙니다. cardId=" + cardId + ", memberId=" + memberId);
+		}
+
+		cardRepository.delete(card);
+	}
 }

@@ -67,6 +67,8 @@ public class CardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("cardId") Long cardId) {
 		log.info("Called deleteCard member: {}, cardId: {}", memberSessionDto, cardId);
+
+		cardService.deleteCard(memberSessionDto.getMemberId(), cardId);
 	}
 
 	@Operation(summary = "카드 옵션 변경", description = "카드 옵션을 변경합니다. null이 아닌 값들만 변경합니다.")

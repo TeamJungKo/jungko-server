@@ -94,4 +94,8 @@ public class Card {
 	public void setArea(EmdArea area) {
 		this.area = area;
 	}
+
+	public boolean isOwner(Member loginMember) {
+		return this.member.equals(loginMember);
+	}
 }
