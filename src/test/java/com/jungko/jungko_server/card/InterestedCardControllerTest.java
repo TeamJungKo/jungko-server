@@ -48,7 +48,7 @@ public class InterestedCardControllerTest extends E2EMvcTest {
 	}
 
 	@Nested
-	@DisplayName("POST /")
+	@DisplayName("PUT /api/v1/cards/{cardId}/like")
 	class LikeCard {
 
 		private final String url = URL_PREFIX;
@@ -192,6 +192,84 @@ public class InterestedCardControllerTest extends E2EMvcTest {
 			// then
 			mockMvc.perform(request)
 					.andExpect(status().isForbidden());
+		}
+	}
+
+	@Nested
+	@DisplayName("DELETE /api/v1/cards/{cardId}/like")
+	class UnlikeCard {
+
+		private final String url = URL_PREFIX;
+		private Member loginMember;
+
+		@BeforeEach
+		void setUp() {
+			loginMember = Member.createMember(
+					"example@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(loginMember);
+
+			token = jwtTokenProvider.createCommonAccessToken(
+					loginMember.getId()).getTokenValue();
+		}
+
+		@Test
+		@DisplayName("성공 - 관심 카드 삭제 성공")
+		void 성공_관심_카드_삭제_성공() throws Exception {
+			// given
+			Member cardOwner = Member.createMember(
+					"example2@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(cardOwner);
+			Card card = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card.setArea(em.find(EmdArea.class, validAreaId));
+			card.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			card.setOwner(cardOwner);
+			em.persist(card);
+			InterestedCard interestedCard = InterestedCard.createInterestedCard(loginMember, card);
+			em.persist(interestedCard);
+
+			// when
+			MockHttpServletRequestBuilder request = delete(url + "/" + card.getId() + "/like")
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andExpect(status().isOk());
+		}
+
+		@Test
+		@DisplayName("실패 - 존재하지 않는 관심 카드 삭제")
+		void 실패_존재하지_않는_관심_카드_삭제() throws Exception {
+			// given
+			Long invalidCardId = 9999L;
+
+			// when
+			MockHttpServletRequestBuilder request = delete(url + "/" + invalidCardId + "/like")
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andExpect(status().isNotFound());
 		}
 	}
 }
