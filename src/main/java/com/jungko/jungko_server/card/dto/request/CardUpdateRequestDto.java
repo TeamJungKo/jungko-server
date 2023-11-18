@@ -2,6 +2,7 @@ package com.jungko.jungko_server.card.dto.request;
 
 import com.jungko.jungko_server.card.domain.CardScope;
 
+import com.jungko.jungko_server.card.validation.CardUpdateValidation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @Schema(description = "카드를 수정하는 DTO")
+@CardUpdateValidation
 public class CardUpdateRequestDto {
 
 	@Schema(description = "카테고리 아이디", example = "1")
