@@ -45,7 +45,7 @@ public class CardController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "created"),
 	})
-	@PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@Secured(MemberRole.S_USER)
 	public CardPreviewDto createCard(
