@@ -11,9 +11,11 @@ import lombok.ToString;
 @ToString
 @Builder
 @Schema(description = "특정 지역 정보를 담는 DTO")
-public class SpecificAreaDto {
+public class SpecificEmdDto {
 
-	@Schema(description = "시도", implementation = SpecificSidoDto.class)
-	private final SpecificSidoDto sido;
+	@Schema(description = "읍면동 이름", example = "장충동2가")
+	private final String name;
+
+	@Schema(description = "읍면동 코드", example = "11140144")
+	private final String code;
 }
-
