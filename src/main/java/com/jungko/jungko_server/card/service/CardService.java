@@ -140,7 +140,7 @@ public class CardService {
 		cardRepository.save(card);
 	}
 
-	public CardListResponseDto getMyCards(Long memberId, PageRequest pageRequest) {
+	public CardListResponseDto getCardsByMemberId(Long memberId, PageRequest pageRequest) {
 		log.info("Called getMyCards memberId: {}, pageRequest: {}", memberId, pageRequest);
 
 		Member loginMember = memberRepository.findById(memberId).orElseThrow(
