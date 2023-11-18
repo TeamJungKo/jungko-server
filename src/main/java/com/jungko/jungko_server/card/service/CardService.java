@@ -5,6 +5,7 @@ import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
 import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
+import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
 import com.jungko.jungko_server.card.infrastructure.CardRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.MemberMapper;
@@ -105,5 +106,34 @@ public class CardService {
 		}
 
 		cardRepository.delete(card);
+	}
+
+	public void updateCard(Long memberId, CardUpdateRequestDto dto, Long cardId) {
+		log.info("Called updateCard memberId: {}, dto: {}, cardId: {}", memberId, dto, cardId);
+
+		Member loginMember = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+
+		Card card = cardRepository.findById(cardId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 카드가 존재하지 않습니다. id=" + cardId));
+
+		if (!card.isOwner(loginMember)) {
+			throw new HttpClientErrorException(
+					HttpStatus.FORBIDDEN,
+					"해당 카드의 소유자가 아닙니다. cardId=" + cardId + ", memberId=" + memberId);
+		}
+		
+		card.update(
+				dto.getTitle(),
+				dto.getKeyword(),
+				dto.getMinPrice(),
+				dto.getMaxPrice(),
+				dto.getScope()
+		);
+		cardRepository.save(card);
 	}
 }
