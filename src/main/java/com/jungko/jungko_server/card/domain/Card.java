@@ -83,4 +83,16 @@ public class Card {
 		card.createdAt = now;
 		return card;
 	}
+
+	public void setOwner(Member member) {
+		this.member = member;
+	}
+
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
+	}
+
+	public void setArea(EmdArea area) {
+		this.area = area;
+	}
 }
