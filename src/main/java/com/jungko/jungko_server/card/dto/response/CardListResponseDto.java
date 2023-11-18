@@ -15,9 +15,10 @@ import java.util.List;
 @Builder
 @Schema(description = "전체 카드 목록을 조회하는 DTO")
 public class CardListResponseDto {
-  @ArraySchema(schema = @Schema(implementation = CardPreviewDto.class))
-  private final List<CardPreviewDto> cards;
 
-  @Schema(description = "전체 카드 수", example = "42")
-  private final int totalResources;
+	@ArraySchema(schema = @Schema(implementation = CardPreviewDto.class))
+	private final List<CardPreviewDto> cards;
+
+	@Schema(description = "전체 카드 수", example = "42")
+	private final long totalResources;
 }
