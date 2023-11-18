@@ -4,10 +4,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.jungko.jungko_server.area.domain.EmdArea;
 import com.jungko.jungko_server.auth.domain.Oauth2Type;
 import com.jungko.jungko_server.auth.jwt.JwtTokenProvider;
+import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.domain.CardScope;
 import com.jungko.jungko_server.member.domain.Member;
+import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.utils.test.E2EMvcTest;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +33,8 @@ public class CardControllerTest extends E2EMvcTest {
 	private String token;
 
 	/* start of given data */
-	Integer validCategoryId = 3; // 여성의류 -> 아우터
-	Integer validAreaId = 5196; // 서울특별시 중구 장충동2가
+	Long validCategoryId = 3L; // 여성의류 -> 아우터
+	Long validAreaId = 5196L; // 서울특별시 중구 장충동2가
 	String validTitle = "validTitle";
 	String validKeyword = "validKeyword";
 	Integer validMinPrice = 1000;
@@ -238,6 +241,111 @@ public class CardControllerTest extends E2EMvcTest {
 			mockMvc.perform(request)
 					.andDo(print())
 					.andExpect(status().isBadRequest());
+		}
+	}
+
+	@Nested
+	@DisplayName("DELETE /{cardId}")
+	class DeleteCard {
+
+		private final String url = URL_PREFIX;
+		private Member loginMember;
+
+		@BeforeEach
+		void setUp() {
+			loginMember = Member.createMember(
+					"example@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(loginMember);
+
+			token = jwtTokenProvider.createCommonAccessToken(
+					loginMember.getId()).getTokenValue();
+		}
+
+		@Test
+		@DisplayName("성공 - 정상적으로 카드 삭제에 성공한다.")
+		void 성공_deleteCard() throws Exception {
+			// given
+			Card card = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card.setOwner(loginMember);
+			card.setArea(em.find(EmdArea.class, validAreaId));
+			card.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			em.persist(card);
+
+			// when
+			MockHttpServletRequestBuilder request = delete(url + "/" + card.getId())
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().isNoContent());
+		}
+
+		@Test
+		@DisplayName("실패 - 존재하지 않는 카드")
+		void 실패_deleteCard_invalidCardId() throws Exception {
+			// given
+			Long invalidCardId = 99999999L;
+
+			// when
+			MockHttpServletRequestBuilder request = delete(url + "/" + invalidCardId)
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().isNotFound());
+		}
+
+		@Test
+		@DisplayName("실패 - 카드의 소유자가 아님")
+		void 실패_deleteCard_notOwner() throws Exception {
+			// given
+			Member CardOwner = Member.createMember(
+					"example2@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(CardOwner);
+			Card card = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card.setArea(em.find(EmdArea.class, validAreaId));
+			card.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			card.setOwner(CardOwner);
+			em.persist(card);
+
+			// when
+			MockHttpServletRequestBuilder request = delete(url + "/" + card.getId())
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().isForbidden());
 		}
 	}
 }
