@@ -3,7 +3,6 @@ package com.jungko.jungko_server.member.validation;
 import com.jungko.jungko_server.member.dto.request.MemberProfileUpdateRequestDto;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -24,14 +23,13 @@ public class MemberUpdateValidator implements
 	private boolean validateNickname(MemberProfileUpdateRequestDto value,
 			ConstraintValidatorContext context) {
 		if (value.getNickname() == null || value.getNickname().isEmpty()) {
-			context.buildConstraintViolationWithTemplate("닉네임을 입력해주세요.")
-					.addConstraintViolation();
-			return false;
+			return true;
 		}
 
 		if (value.getNickname().length() < NICKNAME_MIN_LENGTH
 				|| value.getNickname().length() > NICKNAME_MAX_LENGTH) {
-			context.buildConstraintViolationWithTemplate("닉네임은 2자 이상 10자 이하로 입력해주세요.")
+			context.buildConstraintViolationWithTemplate("닉네임은 " + NICKNAME_MIN_LENGTH
+							+ "자 이상 " + NICKNAME_MAX_LENGTH + "자 이하로 입력해주세요.")
 					.addConstraintViolation();
 			return false;
 		}
@@ -47,13 +45,12 @@ public class MemberUpdateValidator implements
 	private boolean validateEmail(MemberProfileUpdateRequestDto value,
 			ConstraintValidatorContext context) {
 		if (value.getEmail() == null || value.getEmail().isEmpty()) {
-			context.buildConstraintViolationWithTemplate("이메일을 입력해주세요.")
-					.addConstraintViolation();
-			return false;
+			return true;
 		}
 
 		if (value.getEmail().length() > EMAIL_MAX_LENGTH) {
-			context.buildConstraintViolationWithTemplate("이메일은 50자 이하로 입력해주세요.")
+			context.buildConstraintViolationWithTemplate("이메일은 " + EMAIL_MAX_LENGTH
+							+ "자 이하로 입력해주세요.")
 					.addConstraintViolation();
 			return false;
 		}
@@ -68,17 +65,13 @@ public class MemberUpdateValidator implements
 
 	private boolean validateImage(MemberProfileUpdateRequestDto value,
 			ConstraintValidatorContext context) {
-		if (value.getImageData() == null) {
+		if (value.getImageData() == null || value.getImageData().isEmpty() || value
+				.getImageData().getSize() == 0
+				|| value.getImageData().getOriginalFilename() == null) {
 			return true;
 		}
 
 		String originalFilename = value.getImageData().getOriginalFilename();
-		if (Objects.isNull(originalFilename) || originalFilename.isEmpty()) {
-			context.buildConstraintViolationWithTemplate(
-							"이미지 파일을 선택해주세요.")
-					.addConstraintViolation();
-			return false;
-		}
 		String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 		if (!ALLOWED_IMAGE_TYPES.contains(fileExtension.toLowerCase())) {
 			context.buildConstraintViolationWithTemplate(
