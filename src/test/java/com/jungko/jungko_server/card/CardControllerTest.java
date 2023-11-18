@@ -1,5 +1,6 @@
 package com.jungko.jungko_server.card;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -346,6 +348,73 @@ public class CardControllerTest extends E2EMvcTest {
 			mockMvc.perform(request)
 					.andDo(print())
 					.andExpect(status().isForbidden());
+		}
+	}
+
+	@Nested
+	@DisplayName("PATCH /{cardId}")
+	class UpdateCard {
+
+		private final String url = URL_PREFIX;
+		private Member loginMember;
+
+		@BeforeEach
+		void setUp() {
+			loginMember = Member.createMember(
+					"example@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(loginMember);
+
+			token = jwtTokenProvider.createCommonAccessToken(
+					loginMember.getId()).getTokenValue();
+		}
+
+		@Test
+		@DisplayName("성공 - 정상적으로 카드 수정에 성공한다.")
+		void 성공_updateCard() throws Exception {
+			// given
+			Card card = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card.setOwner(loginMember);
+			card.setArea(em.find(EmdArea.class, validAreaId));
+			card.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			em.persist(card);
+
+			String newTitle = "newTitle";
+			Integer newMinPrice = 5000;
+			CardScope newScope = CardScope.PRIVATE;
+
+			// when
+			MockHttpServletRequestBuilder request = multipart(HttpMethod.PATCH,
+					url + "/" + card.getId())
+					.param("title", newTitle)
+					.param("minPrice", newMinPrice.toString())
+					.param("scope", newScope.toString())
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().isOk());
+
+			Card updatedCard = em.find(Card.class, card.getId());
+			assertThat(updatedCard.getTitle()).isEqualTo(newTitle);
+			assertThat(updatedCard.getKeyword()).isEqualTo(validKeyword);
+			assertThat(updatedCard.getMinPrice()).isEqualTo(newMinPrice);
+			assertThat(updatedCard.getMaxPrice()).isEqualTo(validMaxPrice);
+			assertThat(updatedCard.getScope()).isEqualTo(newScope);
 		}
 	}
 }
