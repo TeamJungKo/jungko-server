@@ -55,8 +55,11 @@ public class MemberService {
 						HttpStatus.NOT_FOUND,
 						"해당 회원이 존재하지 않습니다. id=" + memberId));
 
-		String filePath = imageUtil.uploadFile(dto.getImageData(), profileImagePath);
-		String profileImageUrl = imageUtil.getImageUrl(filePath);
+		String profileImageUrl = null;
+		if (dto.getImageData() != null) {
+			String filePath = imageUtil.uploadFile(dto.getImageData(), profileImagePath);
+			profileImageUrl = imageUtil.getImageUrl(filePath);
+		}
 		member.updateProfile(dto.getNickname(), dto.getEmail(), profileImageUrl);
 		memberRepository.save(member);
 		return memberMapper.toMemberProfileDto(member, member.getProfileImageUrl());
