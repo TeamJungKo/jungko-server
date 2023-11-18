@@ -3,10 +3,12 @@ package com.jungko.jungko_server.card.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
 import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
 import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
 
+import com.jungko.jungko_server.card.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,17 +39,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "카드", description = "카드 관련 API")
 public class CardController {
 
+	private final CardService cardService;
+
 	@Operation(summary = "카드 생성", description = "새 카드를 생성합니다.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "created"),
 	})
-	@PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@Secured(MemberRole.S_USER)
-	public void createCard(
+	public CardPreviewDto createCard(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @ModelAttribute CardCreateRequestDto dto) {
 		log.info("Called createCard member: {}, dto: {}", memberSessionDto, dto);
+
+		return cardService.createCard(memberSessionDto.getMemberId(), dto);
 	}
 
 	@Operation(summary = "카드 삭제", description = "특정 카드를 삭제합니다.")

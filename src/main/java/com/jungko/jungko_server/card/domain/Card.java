@@ -5,6 +5,8 @@ import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.product.domain.ProductCategory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,7 +47,8 @@ public class Card {
 	private Integer maxPrice;
 
 	@Column(nullable = false)
-	private String scope;
+	@Enumerated(EnumType.STRING)
+	private CardScope scope;
 
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
@@ -67,4 +70,28 @@ public class Card {
 	@JoinColumn(name = "area_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private EmdArea area;
+
+	public static Card createCard(String title, String keyword, Integer minPrice, Integer maxPrice,
+			CardScope scope, LocalDateTime now) {
+		Card card = new Card();
+		card.title = title;
+		card.keyword = keyword;
+		card.minPrice = minPrice;
+		card.maxPrice = maxPrice;
+		card.scope = scope;
+		card.createdAt = now;
+		return card;
+	}
+
+	public void setOwner(Member member) {
+		this.member = member;
+	}
+
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
+	}
+
+	public void setArea(EmdArea area) {
+		this.area = area;
+	}
 }

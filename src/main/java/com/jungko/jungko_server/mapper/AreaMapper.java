@@ -7,6 +7,7 @@ import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.EmdDto;
 import com.jungko.jungko_server.area.dto.SidoDto;
 import com.jungko.jungko_server.area.dto.SiggDto;
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,12 @@ public interface AreaMapper {
 	SiggDto siggAreaToSiggDto(SiggArea siggArea);
 
 	EmdDto emdAreaToEmdDto(EmdArea emdArea);
+
+	@Mapping(target = "sido", source = "siggArea.sidoArea.name")
+	@Mapping(target = "sigg", source = "siggArea.name")
+	@Mapping(target = "emd", source = "name")
+	SpecificAreaDto emdAreaToSpecificAreaDto(EmdArea emdArea);
+
 
 	default AreaListResponseDto toAreaListResponseDto(List<SidoArea> sidoAreas) {
 		List<SidoDto> sidoDtos = sidoAreas.stream()
