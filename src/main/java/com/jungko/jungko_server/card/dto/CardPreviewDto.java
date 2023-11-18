@@ -1,7 +1,7 @@
 package com.jungko.jungko_server.card.dto;
 
 import com.jungko.jungko_server.area.dto.SpecificAreaDto;
-import com.jungko.jungko_server.product.dto.ProductCategoryDto;
+import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import java.time.LocalDateTime;
 
 import com.jungko.jungko_server.card.domain.CardScope;
@@ -47,6 +47,6 @@ public class CardPreviewDto {
 	@Schema(description = "지역 정보", implementation = SpecificAreaDto.class)
 	private final SpecificAreaDto area;
 
-	@Schema(description = "카테고리 정보", implementation = ProductCategoryDto.class)
-	private final ProductCategoryDto category;
+	@Schema(description = "카테고리 정보", implementation = SpecificProductCategoryDto.class)
+	private final SpecificProductCategoryDto category;
 }
