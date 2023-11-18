@@ -40,4 +40,12 @@ public class InterestedCard {
 	@JoinColumn(name = "card_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private Card card;
+
+	public static InterestedCard createInterestedCard(Member member, Card card) {
+		InterestedCard interestedCard = new InterestedCard();
+		interestedCard.createdAt = LocalDateTime.now();
+		interestedCard.member = member;
+		interestedCard.card = card;
+		return interestedCard;
+	}
 }

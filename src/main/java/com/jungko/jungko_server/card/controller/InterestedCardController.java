@@ -3,6 +3,8 @@ package com.jungko.jungko_server.card.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.card.service.CardService;
+import com.jungko.jungko_server.card.service.InterestedCardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "관심 카드", description = "관심 카드 관련 API")
 public class InterestedCardController {
 
+	private final CardService cardService;
+	private final InterestedCardService interestedCardService;
+
 	@Operation(summary = "관심 카드 등록", description = "특정 카드를 관심 카드로 등록합니다. 자신이 만든 카드는 등록할 수 없습니다. 이미 등록한 관심 카드를 재등록 시, 성공 응답을 주며 아무런 변화가 일어나지 않습니다.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
@@ -37,6 +42,8 @@ public class InterestedCardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("cardId") Long cardId) {
 		log.info("Called likeCard member: {}, cardId: {}", memberSessionDto, cardId);
+
+		interestedCardService.likeCard(memberSessionDto.getMemberId(), cardId);
 	}
 
 	@Operation(summary = "관심 카드 삭제", description = "특정 카드를 관심 카드에서 삭제합니다. 존재하지 않는 카드를 요청하면 404 실패 응답을 제공합니다.")
