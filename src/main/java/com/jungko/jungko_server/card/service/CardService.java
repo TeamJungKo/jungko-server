@@ -1,22 +1,31 @@
 package com.jungko.jungko_server.card.service;
 
 import com.jungko.jungko_server.area.domain.EmdArea;
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
 import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
 import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
+import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
 import com.jungko.jungko_server.card.infrastructure.CardRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
+import com.jungko.jungko_server.mapper.CardMapper;
 import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.member.domain.Member;
+import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
 import com.jungko.jungko_server.product.domain.ProductCategory;
+import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +45,7 @@ public class CardService {
 	private final MemberMapper memberMapper;
 	private final AreaMapper areaMapper;
 	private final ProductMapper productMapper;
+	private final CardMapper cardMapper;
 
 	public CardPreviewDto createCard(Long memberId, CardCreateRequestDto dto) {
 		log.info("Called createCard memberId: {}, dto: {}", memberId, dto);
@@ -68,20 +78,13 @@ public class CardService {
 		createdCard.setArea(emdArea);
 		Card savedCard = cardRepository.save(createdCard);
 
-		return CardPreviewDto.builder()
-				.cardId(savedCard.getId())
-				.title(savedCard.getTitle())
-				.keyword(savedCard.getKeyword())
-				.minPrice(savedCard.getMinPrice())
-				.maxPrice(savedCard.getMaxPrice())
-				.scope(savedCard.getScope())
-				.createdAt(savedCard.getCreatedAt())
-				.author(memberMapper.toMemberProfileDto(savedCard.getMember(),
-						savedCard.getMember().getProfileImageUrl()))
-				.area(areaMapper.emdAreaToSpecificAreaDto(savedCard.getArea()))
-				.category(productMapper.convertToSpecificProductCategoryDtoRecursive(
-						savedCard.getProductCategory()))
-				.build();
+		MemberProfileDto author = memberMapper.toMemberProfileDto(savedCard.getMember(),
+				savedCard.getMember().getProfileImageUrl());
+		SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(savedCard.getArea());
+		SpecificProductCategoryDto categoryDto = productMapper
+				.convertToSpecificProductCategoryDtoRecursive(
+						savedCard.getProductCategory());
+		return cardMapper.toCardPreviewDto(savedCard, author, areaDto, categoryDto);
 	}
 
 	public void deleteCard(Long memberId, Long cardId) {
@@ -126,7 +129,7 @@ public class CardService {
 					HttpStatus.FORBIDDEN,
 					"해당 카드의 소유자가 아닙니다. cardId=" + cardId + ", memberId=" + memberId);
 		}
-		
+
 		card.update(
 				dto.getTitle(),
 				dto.getKeyword(),
@@ -135,5 +138,27 @@ public class CardService {
 				dto.getScope()
 		);
 		cardRepository.save(card);
+	}
+
+	public CardListResponseDto getCardsByMemberId(Long memberId, PageRequest pageRequest) {
+		log.info("Called getMyCards memberId: {}, pageRequest: {}", memberId, pageRequest);
+
+		Member loginMember = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+		Page<Card> cards = cardRepository.findAllByMemberId(loginMember.getId(), pageRequest);
+
+		List<CardPreviewDto> cardPreviewDtos = cards.stream().map(card -> {
+					MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),
+							card.getMember().getProfileImageUrl());
+					SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(card.getArea());
+					SpecificProductCategoryDto categoryDto = productMapper
+							.convertToSpecificProductCategoryDtoRecursive(
+									card.getProductCategory());
+					return cardMapper.toCardPreviewDto(card, author, areaDto, categoryDto);
+				}
+		).collect(Collectors.toList());
+		return cardMapper.toCardListResponseDto(cardPreviewDtos, cards.getTotalElements());
 	}
 }

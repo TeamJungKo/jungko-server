@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -99,7 +100,8 @@ public class CardController {
 			@RequestParam Integer size) {
 		log.info("Called getMyCards member: {}, page: {}, size: {}", memberSessionDto, page, size);
 
-		return CardListResponseDto.builder().build();
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return cardService.getCardsByMemberId(memberSessionDto.getMemberId(), pageRequest);
 	}
 
 	@Operation(summary = "특정 유저 카드 목록 조회", description = "특정 유저가 만든 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
@@ -116,7 +118,8 @@ public class CardController {
 		log.info("Called getMemberCards member: {}, memberId: {}, page: {}, size: {}",
 				memberSessionDto, memberId, page, size);
 
-		return CardListResponseDto.builder().build();
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return cardService.getCardsByMemberId(memberId, pageRequest);
 	}
 
 	@Operation(summary = "인기 카드 목록 조회", description = "인기 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
