@@ -46,4 +46,22 @@ public class InterestedCardService {
 					return interestedCardRepository.save(createdInterestedCard);
 				});
 	}
+
+	public void unlikeCard(Long memberId, Long cardId) {
+		log.info("Called unlikeCard memberId: {}, cardId: {}", memberId, cardId);
+		memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+		interestedCardRepository
+				.findByMemberIdAndCardId(memberId, cardId)
+				.ifPresentOrElse(
+						interestedCardRepository::delete,
+						() -> {
+							throw new HttpClientErrorException(
+									HttpStatus.NOT_FOUND,
+									"관심 카드가 존재하지 않습니다. cardId=" + cardId + ", memberId="
+											+ memberId);
+						});
+	}
 }

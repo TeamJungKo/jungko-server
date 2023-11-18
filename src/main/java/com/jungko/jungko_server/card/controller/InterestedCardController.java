@@ -59,5 +59,7 @@ public class InterestedCardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("cardId") Long cardId) {
 		log.info("Called unlikeCard member: {}, cardId: {}", memberSessionDto, cardId);
+
+		interestedCardService.unlikeCard(memberSessionDto.getMemberId(), cardId);
 	}
 }
