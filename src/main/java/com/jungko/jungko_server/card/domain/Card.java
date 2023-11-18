@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -62,12 +61,12 @@ public class Card {
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private Member member;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "product_category_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private ProductCategory productCategory;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "area_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private EmdArea area;
