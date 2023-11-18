@@ -90,13 +90,13 @@ public class Member {
 	}
 
 	public void updateProfile(String nickname, String email, String profileImageUrl) {
-		if (nickname != null) {
+		if (nickname != null && !nickname.isEmpty()) {
 			this.nickname = nickname;
 		}
-		if (email != null) {
+		if (email != null && !email.isEmpty()) {
 			this.email = email;
 		}
-		if (profileImageUrl != null) {
+		if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
 			this.profileImageUrl = profileImageUrl;
 		}
 	}

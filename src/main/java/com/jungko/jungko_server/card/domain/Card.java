@@ -98,4 +98,23 @@ public class Card {
 	public boolean isOwner(Member loginMember) {
 		return this.member.equals(loginMember);
 	}
+
+	public void update(String title, String keyword, Integer minPrice, Integer maxPrice,
+			CardScope scope) {
+		if (title != null && !title.isEmpty()) {
+			this.title = title;
+		}
+		if (keyword != null && !keyword.isEmpty()) {
+			this.keyword = keyword;
+		}
+		if (minPrice != null) {
+			this.minPrice = minPrice;
+		}
+		if (maxPrice != null) {
+			this.maxPrice = maxPrice;
+		}
+		if (scope != null) {
+			this.scope = scope;
+		}
+	}
 }

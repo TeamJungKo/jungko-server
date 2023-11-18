@@ -83,6 +83,8 @@ public class CardController {
 			@PathVariable("cardId") Long cardId) {
 		log.info("Called updateCard member: {}, dto: {}, cardId: {}", memberSessionDto, dto,
 				cardId);
+
+		cardService.updateCard(memberSessionDto.getMemberId(), dto, cardId);
 	}
 
 	@Operation(summary = "내 카드 목록 조회", description = "내가 만든 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
