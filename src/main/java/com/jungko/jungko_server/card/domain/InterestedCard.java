@@ -31,11 +31,13 @@ public class InterestedCard {
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private Member member;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "card_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
