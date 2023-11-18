@@ -1,14 +1,19 @@
 package com.jungko.jungko_server.product.controller;
 
+import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.mapper.ProductMapper;
+import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.dto.response.RelatedQueryListResponseDto;
+import com.jungko.jungko_server.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +34,9 @@ import org.springframework.data.domain.Sort.Order;
 @RequestMapping(value = "/api/v1/products", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "상품", description = "상품 관련 API")
 public class ProductController {
+
+	private final ProductService productService;
+	private final ProductMapper productMapper;
 
 	@Operation(summary = "검색어를 통해 상품 목록을 조회", description = "상세 검색 페이지, 제목과 카테고리, 지역, 가격범위를 기반으로하여 상품을 조회합니다. 제목과 일치하는 결과를 제공합니다.")
 	@ApiResponses(value = {
@@ -92,12 +100,20 @@ public class ProductController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("productId") Long productId) {
 		log.info("Called getProductDetail member: {}, productId: {}", memberSessionDto, productId);
-		return ProductDetailResponseDto.builder().build();
+
+		ProductDetailDto productDetailDto = productService.getProductDetail(productId);
+		return productMapper.toProductDetailResponseDto(productDetailDto);
 	}
 
 	@Operation(summary = "전체 카테고리 목록 조회", description = "전체 카테고리 목록을 조회합니다. 리소스 수가 많지 않으므로 페이지네이션을 지원하지 않습니다.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "ok"),
+			@ApiResponse(responseCode = "200",
+					description = "ok",
+					content = @io.swagger.v3.oas.annotations.media.Content(
+							mediaType = "application/json",
+							schema = @Schema(implementation = ProductCategoryListResponseDto.class)
+					)
+			),
 	})
 	@GetMapping(value = "/categories")
 	@Secured(MemberRole.S_USER)
@@ -105,12 +121,19 @@ public class ProductController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto
 	) {
 		log.info("Called getAllCategories member: {}", memberSessionDto);
-		return ProductCategoryListResponseDto.builder().build();
+
+		return productService.getAllCategories();
 	}
 
 	@Operation(summary = "전체 지역 목록 조회", description = "전체 지역 목록을 조회합니다. 리소스 수가 많지 않으므로 페이지네이션을 지원하지 않습니다.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "ok"),
+			@ApiResponse(responseCode = "200",
+					description = "ok",
+					content = @io.swagger.v3.oas.annotations.media.Content(
+							mediaType = "application/json",
+							schema = @Schema(implementation = AreaListResponseDto.class)
+					)
+			),
 	})
 	@GetMapping(value = "/areas")
 	@Secured(MemberRole.S_USER)
@@ -118,6 +141,7 @@ public class ProductController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto
 	) {
 		log.info("Called getAllAreas member: {}", memberSessionDto);
-		return AreaListResponseDto.builder().build();
+
+		return productService.getAllAreas();
 	}
 }

@@ -25,14 +25,15 @@ public class EmdArea {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private String admCode;
+	@Column(nullable = false, name = "adm_code")
+	private String code;
 
 	@Column(nullable = false)
 	private String name;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sigg_area_id", nullable = false)
+	@JoinColumn(name = "sigg_area_id")
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	private SiggArea siggArea;
 }

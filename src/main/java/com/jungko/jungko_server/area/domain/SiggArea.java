@@ -1,5 +1,6 @@
 package com.jungko.jungko_server.area.domain;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,15 +27,16 @@ public class SiggArea {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private String admCode;
+	@Column(nullable = false, name = "adm_code")
+	private String code;
 
 	@Column(nullable = false)
 	private String name;
 
 	@OneToMany(mappedBy = "siggArea")
-	private Set<EmdArea> emdAreas;
+	private List<EmdArea> emdAreas;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "sido_area_id", nullable = false)
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
