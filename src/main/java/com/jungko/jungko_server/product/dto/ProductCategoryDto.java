@@ -7,13 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
 @ToString
 @Builder
+@AllArgsConstructor
 @Schema(description = "전체 상품 카테고리 목록을 조회하는 DTO")
 public class ProductCategoryDto {
 
@@ -29,4 +28,15 @@ public class ProductCategoryDto {
 	@Schema(implementation = ProductCategoryDto.class)
 	@ToString.Exclude
 	private final List<ProductCategoryDto> subCategory;
+
+	public static ProductCategoryDto of(ProductCategory productCategory) {
+		return new ProductCategoryDto(
+				productCategory.getId(),
+				productCategory.getName(),
+				productCategory.getLevel(),
+				productCategory.getChildCategories().stream()
+						.map(ProductCategoryDto::of)
+						.collect(Collectors.toList())
+		);
+	}
 }
