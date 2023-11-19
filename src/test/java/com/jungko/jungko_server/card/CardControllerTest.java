@@ -317,7 +317,7 @@ public class CardControllerTest extends E2EMvcTest {
 		@DisplayName("실패 - 카드의 소유자가 아님")
 		void 실패_deleteCard_notOwner() throws Exception {
 			// given
-			Member CardOwner = Member.createMember(
+			Member cardOwner = Member.createMember(
 					"example2@gmail.com",
 					"http://example.com",
 					"test",
@@ -326,7 +326,7 @@ public class CardControllerTest extends E2EMvcTest {
 					"test",
 					LocalDateTime.now()
 			);
-			em.persist(CardOwner);
+			em.persist(cardOwner);
 			Card card = Card.createCard(
 					validTitle,
 					validKeyword,
@@ -337,7 +337,7 @@ public class CardControllerTest extends E2EMvcTest {
 			);
 			card.setArea(em.find(EmdArea.class, validAreaId));
 			card.setProductCategory(em.find(ProductCategory.class, validCategoryId));
-			card.setOwner(CardOwner);
+			card.setOwner(cardOwner);
 			em.persist(card);
 
 			// when
