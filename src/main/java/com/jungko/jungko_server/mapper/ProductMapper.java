@@ -3,10 +3,11 @@ package com.jungko.jungko_server.mapper;
 
 import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.domain.ProductCategory;
-import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
+import java.util.HashSet;
+import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -25,9 +26,6 @@ public interface ProductMapper {
 	@Mapping(source = "productDetailDto", target = "productDetail")
 	ProductDetailResponseDto toProductDetailResponseDto(ProductDetailDto productDetailDto);
 
-	@Mapping(source = "productCategory.id", target = "categoryId")
-	@Mapping(source = "productCategory.childCategories", target = "subCategory")
-	ProductCategoryDto toProductCategoryDto(ProductCategory productCategory);
 
 	/**
 	 * 특정 ProductCategory의 부모 요소를 포함하여 SpecificProductCategoryDto로 변환한다.
@@ -37,6 +35,11 @@ public interface ProductMapper {
 	 */
 	default SpecificProductCategoryDto convertToSpecificProductCategoryDtoRecursive(
 			ProductCategory category) {
+		return convertToSpecificProductCategoryDtoRecursive(category, new HashSet<>());
+	}
+
+	default SpecificProductCategoryDto convertToSpecificProductCategoryDtoRecursive(
+			ProductCategory category, Set<Long> visitedIds) {
 		SpecificProductCategoryDto dto = SpecificProductCategoryDto.builder()
 				.categoryId(category.getId())
 				.name(category.getName())
@@ -44,9 +47,14 @@ public interface ProductMapper {
 				.subCategory(null)
 				.build();
 
+		if (visitedIds.contains(category.getId())) {
+			return dto;
+		}
+		visitedIds.add(category.getId());
+
 		if (category.getParentCategory() != null) {
 			SpecificProductCategoryDto parentDto = convertToSpecificProductCategoryDtoRecursive(
-					category.getParentCategory());
+					category.getParentCategory(), visitedIds);
 			parentDto.setSubCategory(dto);
 			return parentDto;
 		} else {

@@ -161,4 +161,26 @@ public class CardService {
 		).collect(Collectors.toList());
 		return cardMapper.toCardListResponseDto(cardPreviewDtos, cards.getTotalElements());
 	}
+
+	public CardListResponseDto getPopularCards(Long memberId, PageRequest pageRequest) {
+		log.info("Called getPopularCards memberId: {}, pageRequest: {}", memberId, pageRequest);
+
+		memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+		Page<Card> cards = cardRepository.findAllByInterestedCardsCount(pageRequest);
+
+		List<CardPreviewDto> cardPreviewDtos = cards.stream().map(card -> {
+					MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),
+							card.getMember().getProfileImageUrl());
+					SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(card.getArea());
+					SpecificProductCategoryDto categoryDto = productMapper
+							.convertToSpecificProductCategoryDtoRecursive(
+									card.getProductCategory());
+					return cardMapper.toCardPreviewDto(card, author, areaDto, categoryDto);
+				}
+		).collect(Collectors.toList());
+		return cardMapper.toCardListResponseDto(cardPreviewDtos, cards.getTotalElements());
+	}
 }

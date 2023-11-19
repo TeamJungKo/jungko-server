@@ -79,10 +79,7 @@ public class Product {
 			String imageUrl,
 			String marketName,
 			String marketProductId,
-			LocalDateTime createdAt,
-			ProductCategory productCategory,
-			Set<ProductKeyword> productKeywords,
-			EmdArea area) {
+			LocalDateTime createdAt) {
 		Product product = new Product();
 		product.id = productId;
 		product.title = title;
@@ -94,9 +91,6 @@ public class Product {
 		product.marketName = marketName;
 		product.marketProductId = marketProductId;
 		product.createdAt = createdAt;
-		product.productCategory = productCategory;
-		product.productKeywords = productKeywords;
-		product.area = area;
 		return product;
 	}
 

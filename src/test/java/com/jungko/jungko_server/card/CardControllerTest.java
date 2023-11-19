@@ -10,12 +10,12 @@ import com.jungko.jungko_server.auth.domain.Oauth2Type;
 import com.jungko.jungko_server.auth.jwt.JwtTokenProvider;
 import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.domain.CardScope;
+import com.jungko.jungko_server.card.domain.InterestedCard;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.utils.test.E2EMvcTest;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -76,7 +76,6 @@ public class CardControllerTest extends E2EMvcTest {
 
 		@Test
 		@DisplayName("성공 - 정상적으로 카드 생성에 성공한다.")
-		@Disabled
 		void 성공_createCard() throws Exception {
 			// given
 
@@ -93,18 +92,16 @@ public class CardControllerTest extends E2EMvcTest {
 
 			// then
 			mockMvc.perform(request)
-//					.andDo(print())
-					.andExpect(status().isCreated());
-//					.andExpect(jsonPath("$.cardId").exists())
-//					.andExpect(jsonPath("$.title").value(validTitle))
-//					.andExpect(jsonPath("$.keyword").value(validKeyword))
-//					.andExpect(jsonPath("$.minPrice").value(validMinPrice))
-//					.andExpect(jsonPath("$.maxPrice").value(validMaxPrice))
-//					.andExpect(jsonPath("$.scope").value(validScope.toString()))
-//					.andExpect(jsonPath("$.createdAt").exists())
-//					.andExpect(jsonPath("$.author").exists())
-//					.andExpect(jsonPath("$.area").exists())
-//					.andExpect(jsonPath("$.category").exists());
+					.andDo(print())
+					.andExpect(status().isCreated())
+					.andExpect(jsonPath("$.title").value(validTitle))
+					.andExpect(jsonPath("$.keyword").value(validKeyword))
+					.andExpect(jsonPath("$.minPrice").value(validMinPrice))
+					.andExpect(jsonPath("$.maxPrice").value(validMaxPrice))
+					.andExpect(jsonPath("$.scope").value(validScope.toString()))
+					.andExpect(jsonPath("$.author").exists())
+					.andExpect(jsonPath("$.area").exists())
+					.andExpect(jsonPath("$.category").exists());
 		}
 
 		@Test
@@ -415,6 +412,105 @@ public class CardControllerTest extends E2EMvcTest {
 			assertThat(updatedCard.getMinPrice()).isEqualTo(newMinPrice);
 			assertThat(updatedCard.getMaxPrice()).isEqualTo(validMaxPrice);
 			assertThat(updatedCard.getScope()).isEqualTo(newScope);
+		}
+	}
+
+	@Nested
+	@DisplayName("GET /popular")
+	class GetPopularCards {
+
+		private final String url = URL_PREFIX;
+		private Member loginMember;
+
+		@BeforeEach
+		void setUp() {
+			loginMember = Member.createMember(
+					"example@gmail.com",
+					"http://example.com",
+					"test",
+					false,
+					Oauth2Type.GOOGLE,
+					"test",
+					LocalDateTime.now()
+			);
+			em.persist(loginMember);
+
+			token = jwtTokenProvider.createCommonAccessToken(
+					loginMember.getId()).getTokenValue();
+		}
+
+		@Test
+		@DisplayName("인기 카드 조회 순위가 올바른지 확인")
+		void 인기_카드_조회() throws Exception {
+			// given
+			Card card1 = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card1.setOwner(loginMember);
+			card1.setArea(em.find(EmdArea.class, validAreaId));
+			card1.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			em.persist(card1);
+
+			Card card2 = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card2.setOwner(loginMember);
+			card2.setArea(em.find(EmdArea.class, validAreaId));
+			card2.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			em.persist(card2);
+
+			Card card3 = Card.createCard(
+					validTitle,
+					validKeyword,
+					validMinPrice,
+					validMaxPrice,
+					validScope,
+					LocalDateTime.now()
+			);
+			card3.setOwner(loginMember);
+			card3.setArea(em.find(EmdArea.class, validAreaId));
+			card3.setProductCategory(em.find(ProductCategory.class, validCategoryId));
+			em.persist(card3);
+
+			em.persist(InterestedCard.createInterestedCard(
+					loginMember,
+					card2
+			));
+			em.persist(InterestedCard.createInterestedCard(
+					loginMember,
+					card2
+			));
+			em.persist(InterestedCard.createInterestedCard(
+					loginMember,
+					card3
+			));
+
+			int page = 0;
+			int size = 3;
+
+			// when
+			MockHttpServletRequestBuilder request = get(
+					url + "/popular" + "?page=" + page + "&size=" + size)
+					.header(AUTHORIZE_VALUE, BEARER + token);
+
+			// then
+			mockMvc.perform(request)
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$.cards.length()").value(3))
+					.andExpect(jsonPath("$.cards[0].cardId").value(card2.getId()))
+					.andExpect(jsonPath("$.cards[1].cardId").value(card3.getId()))
+					.andExpect(jsonPath("$.cards[2].cardId").value(card1.getId()));
 		}
 	}
 }

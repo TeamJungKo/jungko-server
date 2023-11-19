@@ -64,21 +64,19 @@ public class ProductControllerTest extends E2EMvcTest {
 			token = jwtTokenProvider.createCommonAccessToken(
 					loginMember.getId()).getTokenValue();
 
-//			sample = Product.createProduct(
-//					1L,
-//					"아이유 검정바지요",
-//					"아이유 검정바지 싸게 팔고 있어요.",
-//					5000L,
-//					"ON_SALE",
-//					LocalDateTime.now(),    // CreadtedAt
-//					"http://example.com",
-//					"중고나라",
-//					"1234",
-//					LocalDateTime.now(),    // UpdatedAt
-//					null,   // productCategory
-//					productKeywords,
-//					null    // area
-//			);
+			sample = Product.createProduct(
+					1L,
+					"아이유 검정바지요",
+					"아이유 검정바지 싸게 팔고 있어요.",
+					5000L,
+					"ON_SALE",
+					LocalDateTime.now(),    // CreadtedAt
+					"http://example.com",
+					"중고나라",
+					"1234",
+					LocalDateTime.now()
+			);
+			em.persist(sample);
 		}
 
 		@Test
@@ -126,14 +124,13 @@ public class ProductControllerTest extends E2EMvcTest {
 		}
 
 		@Test
-		@Disabled
 		@DisplayName("성공 - 모든 카테고리 조회")
 		void getAllProductCategories() throws Exception {
 			MockHttpServletRequestBuilder requestBuilder = get(url + "/categories")
 					.header(AUTHORIZE_VALUE, BEARER + token);
 
 			mockMvc.perform(requestBuilder)
-//					.andDo(print())
+					.andDo(print())
 					.andExpect(status().isOk());
 		}
 	}

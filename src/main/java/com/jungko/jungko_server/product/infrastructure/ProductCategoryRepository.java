@@ -14,8 +14,8 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 	@Query("SELECT c FROM ProductCategory c LEFT JOIN c.parentCategory p ORDER BY p.id ASC NULLS FIRST, c.id ASC")
 	List<ProductCategory> findAllOrderByParentIdAscNullsFirstCategoryIdAsc();
 
-	@Query("SELECT c FROM ProductCategory c ORDER BY c.parentCategory.id ")
-	List<ProductCategory> findAllOrderByParentId();
+	@Query("SELECT p FROM ProductCategory p where p.parentCategory is null")
+	List<ProductCategory> findAllByParentId();
 
 	@Query("SELECT p FROM ProductCategory p JOIN FETCH p.parentCategory WHERE p.id = :id")
 	Optional<ProductCategory> findByIdAndFetchParentEagerly(@Param("id") Long id);

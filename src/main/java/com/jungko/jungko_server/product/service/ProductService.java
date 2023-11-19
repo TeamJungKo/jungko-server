@@ -18,6 +18,7 @@ import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -54,12 +55,11 @@ public class ProductService {
 
 	public ProductCategoryListResponseDto getAllCategories() {
 		log.info("Called getAllCategories");
-		List<ProductCategory> categories = productCategoryRepository.findAllOrderByParentId();
-		List<ProductCategoryDto> categoryDtos = new ArrayList<>();
-		for (ProductCategory category : categories) {
-			categoryDtos.add(productMapper.toProductCategoryDto(category));
-		}
-		return new ProductCategoryListResponseDto(categoryDtos);
+		List<ProductCategoryDto> categories = productCategoryRepository.findAllByParentId()
+				.stream()
+				.map(ProductCategoryDto::of)
+				.collect(Collectors.toList());
+		return new ProductCategoryListResponseDto(categories);
 	}
 
 	public AreaListResponseDto getAllAreas() {
