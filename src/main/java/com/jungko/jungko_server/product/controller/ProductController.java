@@ -1,5 +1,6 @@
 package com.jungko.jungko_server.product.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
@@ -7,6 +8,7 @@ import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.request.ProductCompareRequestDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
@@ -18,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +29,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -84,16 +89,12 @@ public class ProductController {
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto compareProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam List<Long> productIds,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
-			@RequestParam String sort,
-			@RequestParam Direction order) {
+			@Valid @RequestBody ProductCompareRequestDto productIds) {
 		log.info(
-				"Called compareProducts member: {}, productIds: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, productIds, page, size, sort, order);
+				"Called compareProducts member: {}, productIds: {}",
+				memberSessionDto, productIds);
 
-		return productService.compareProduct(productIds, PageRequest.of(page, size, order, sort));
+		return productService.compareProduct(productIds);
 	}
 
 	@Operation(summary = "특정 상품 상세 정보 조회", description = "특정 상품의 상세 정보를 조회합니다.")

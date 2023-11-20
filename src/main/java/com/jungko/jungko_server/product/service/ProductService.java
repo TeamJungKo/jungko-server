@@ -9,6 +9,7 @@ import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
+import com.jungko.jungko_server.product.dto.request.ProductCompareRequestDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
@@ -38,10 +39,10 @@ public class ProductService {
 	private final SidoAreaRepository sidoAreaRepository;
 	private final AreaMapper areaMapper;
 
-	public ProductListResponseDto compareProduct(List<Long> productIds, PageRequest pageRequest) {
+	public ProductListResponseDto compareProduct(ProductCompareRequestDto productIds) {
 		log.info("Called compareProduct productIds: {}", productIds);
 
-		Page<Product> products = productRepository.findAllById(productIds, pageRequest);
+		List<Product> products = productRepository.findAllById(productIds.getProductIds());
 		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
 		for (Product product : products) {
 			list.add(productMapper.toProductPreviewDto(product));
