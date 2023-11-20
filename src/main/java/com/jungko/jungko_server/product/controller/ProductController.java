@@ -85,11 +85,13 @@ public class ProductController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
-	@GetMapping(value = "/compare")
+	@PostMapping(value = "/compare")
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto compareProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@Valid @RequestBody ProductCompareRequestDto productIds) {
+			@Valid @RequestBody ProductCompareRequestDto compareRequest) {
+		List<Long> productIds = compareRequest.getProductIds();
+
 		log.info(
 				"Called compareProducts member: {}, productIds: {}",
 				memberSessionDto, productIds);

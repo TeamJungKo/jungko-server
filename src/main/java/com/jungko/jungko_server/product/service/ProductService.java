@@ -39,10 +39,10 @@ public class ProductService {
 	private final SidoAreaRepository sidoAreaRepository;
 	private final AreaMapper areaMapper;
 
-	public ProductListResponseDto compareProduct(ProductCompareRequestDto productIds) {
+	public ProductListResponseDto compareProduct(List<Long> productIds) {
 		log.info("Called compareProduct productIds: {}", productIds);
 
-		List<Product> products = productRepository.findAllById(productIds.getProductIds());
+		List<Product> products = productRepository.findAllById(productIds);
 		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
 		for (Product product : products) {
 			list.add(productMapper.toProductPreviewDto(product));

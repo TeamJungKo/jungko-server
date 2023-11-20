@@ -1,12 +1,15 @@
 package com.jungko.jungko_server.product.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @ToString
@@ -15,5 +18,6 @@ import lombok.ToString;
 public class ProductCompareRequestDto {
 
 	@Schema(description = "상품Id", example = "1")
-	private final List<Long> productIds;
+	private List<Long> productIds;
 }
+
