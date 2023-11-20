@@ -8,10 +8,12 @@ import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +40,12 @@ public class ProductService {
 		log.info("Called compareProduct productIds: {}", productIds);
 
 		List<Product> products = productRepository.findAllById(productIds);
+		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
+		for (Product product : products) {
+			list.add(productMapper.toProductPreviewDto(product));
+		}
 
-		return ProductListResponseDto.builder().build();
+		return new ProductListResponseDto(list, list.size());
 	}
 
 	public ProductDetailDto getProductDetail(Long productId) {

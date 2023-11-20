@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -81,13 +82,16 @@ public class ProductController {
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto compareProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
+			@RequestParam List<Long> productIds,
 			@RequestParam Integer page,
 			@RequestParam Integer size,
 			@RequestParam String sort,
 			@RequestParam Order order) {
-		log.info("Called compareProducts member: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, page, size, sort, order);
-		return ProductListResponseDto.builder().build();
+		log.info(
+				"Called compareProducts member: {}, productIds: {}, page: {}, size: {}, sort: {}, order: {}",
+				memberSessionDto, productIds, page, size, sort, order);
+		
+		return productService.compareProduct(productIds);
 	}
 
 	@Operation(summary = "특정 상품 상세 정보 조회", description = "특정 상품의 상세 정보를 조회합니다.")
