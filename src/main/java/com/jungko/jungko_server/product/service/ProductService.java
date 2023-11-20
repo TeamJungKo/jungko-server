@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,10 +38,10 @@ public class ProductService {
 	private final SidoAreaRepository sidoAreaRepository;
 	private final AreaMapper areaMapper;
 
-	public ProductListResponseDto compareProduct(List<Long> productIds) {
+	public ProductListResponseDto compareProduct(List<Long> productIds, PageRequest pageRequest) {
 		log.info("Called compareProduct productIds: {}", productIds);
 
-		List<Product> products = productRepository.findAllById(productIds);
+		Page<Product> products = productRepository.findAllById(productIds, pageRequest);
 		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
 		for (Product product : products) {
 			list.add(productMapper.toProductPreviewDto(product));

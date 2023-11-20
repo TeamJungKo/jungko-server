@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,12 +88,12 @@ public class ProductController {
 			@RequestParam Integer page,
 			@RequestParam Integer size,
 			@RequestParam String sort,
-			@RequestParam Order order) {
+			@RequestParam Direction order) {
 		log.info(
 				"Called compareProducts member: {}, productIds: {}, page: {}, size: {}, sort: {}, order: {}",
 				memberSessionDto, productIds, page, size, sort, order);
-		
-		return productService.compareProduct(productIds);
+
+		return productService.compareProduct(productIds, PageRequest.of(page, size, order, sort));
 	}
 
 	@Operation(summary = "특정 상품 상세 정보 조회", description = "특정 상품의 상세 정보를 조회합니다.")
