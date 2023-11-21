@@ -37,7 +37,6 @@ public interface ProductMapper {
 	@Mapping(source = "totalElements", target = "totalResources")
 	ProductListResponseDto toProductListResponseDto(List<ProductPreviewDto> productPreviewDtos,
 			long totalElements);
-
 	/**
 	 * 특정 ProductCategory의 부모 요소를 포함하여 SpecificProductCategoryDto로 변환한다.
 	 *

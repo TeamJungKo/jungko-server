@@ -1,19 +1,12 @@
 package com.jungko.jungko_server.product.service;
 
-import com.jungko.jungko_server.area.domain.EmdArea;
 import com.jungko.jungko_server.area.domain.SidoArea;
-import com.jungko.jungko_server.area.domain.SiggArea;
-import com.jungko.jungko_server.area.dto.AreaDto;
-import com.jungko.jungko_server.area.dto.SidoDto;
 import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
-import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
 import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
-import com.jungko.jungko_server.area.infrastructure.SiggAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
-import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
@@ -63,6 +56,18 @@ public class ProductService {
 				products.getTotalElements());
 	}
 
+	public ProductListResponseDto compareProduct(List<Long> productIds) {
+		log.info("Called compareProduct productIds: {}", productIds);
+
+		List<Product> products = productRepository.findAllById(productIds);
+		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
+		for (Product product : products) {
+			list.add(productMapper.toProductPreviewDto(product));
+		}
+
+		return new ProductListResponseDto(list, list.size());
+	}
+
 	public ProductDetailDto getProductDetail(Long productId) {
 		log.info("Called getProductDetail productId: {}", productId);
 
@@ -73,6 +78,7 @@ public class ProductService {
 
 		return productMapper.toProductDetailDto(product, product.getImageUrl());
 	}
+
 
 	public ProductCategoryListResponseDto getAllCategories() {
 		log.info("Called getAllCategories");
