@@ -1,7 +1,6 @@
 package com.jungko.jungko_server.product.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

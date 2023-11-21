@@ -1,7 +1,5 @@
 package com.jungko.jungko_server.product.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
@@ -23,8 +21,6 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
