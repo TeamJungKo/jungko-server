@@ -1,23 +1,19 @@
 package com.jungko.jungko_server.product.service;
 
-import com.jungko.jungko_server.area.domain.EmdArea;
 import com.jungko.jungko_server.area.domain.SidoArea;
-import com.jungko.jungko_server.area.domain.SiggArea;
-import com.jungko.jungko_server.area.dto.AreaDto;
-import com.jungko.jungko_server.area.dto.SidoDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
-import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
 import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
-import com.jungko.jungko_server.area.infrastructure.SiggAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
-import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
+import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +35,18 @@ public class ProductService {
 	private final ProductCategoryRepository productCategoryRepository;
 	private final SidoAreaRepository sidoAreaRepository;
 	private final AreaMapper areaMapper;
+
+	public ProductListResponseDto compareProduct(List<Long> productIds) {
+		log.info("Called compareProduct productIds: {}", productIds);
+
+		List<Product> products = productRepository.findAllById(productIds);
+		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
+		for (Product product : products) {
+			list.add(productMapper.toProductPreviewDto(product));
+		}
+
+		return new ProductListResponseDto(list, list.size());
+	}
 
 	public ProductDetailDto getProductDetail(Long productId) {
 		log.info("Called getProductDetail productId: {}", productId);
