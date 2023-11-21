@@ -126,15 +126,12 @@ public class CardController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
 	@GetMapping(value = "/popular")
-	@Secured(MemberRole.S_USER)
 	public CardListResponseDto getPopularCards(
-			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam Integer page,
 			@RequestParam Integer size) {
-		log.info("Called getPopularCards member: {}, page: {}, size: {}", memberSessionDto, page,
+		log.info("Called getPopularCards page: {}, size: {}", page,
 				size);
 
-		return cardService.getPopularCards(memberSessionDto.getMemberId(),
-				PageRequest.of(page, size));
+		return cardService.getPopularCards(PageRequest.of(page, size));
 	}
 }

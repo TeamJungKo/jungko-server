@@ -87,6 +87,8 @@ public class SecurityConfig {
 	public WebSecurityCustomizer ignoreCustomizer() {
 		return web -> web.ignoring()
 				.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
-						"/actuator/**");
+						"/actuator/**",
+						"/api/v1/cards/popular"
+				);
 	}
 }
