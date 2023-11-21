@@ -5,6 +5,7 @@ import com.jungko.jungko_server.area.domain.SidoArea;
 import com.jungko.jungko_server.area.domain.SiggArea;
 import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.SidoDto;
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.area.infrastructure.EmdAreaRepository;
 import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
@@ -15,6 +16,7 @@ import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
@@ -22,6 +24,7 @@ import com.jungko.jungko_server.product.infrastructure.ProductRepository;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,10 +47,20 @@ public class ProductService {
 	private final AreaMapper areaMapper;
 
 	public ProductListResponseDto searchProduct(String keyword, Integer minPrice, Integer maxPrice,
-			ProductCategoryDto productCategoryDto, AreaDto areaDto, PageRequest pageRequest) {
+			ProductCategoryDto productCategoryDto, SpecificAreaDto specificAreaDto,
+			PageRequest pageRequest) {
 		log.info("Called searchProduct");
 
-		return ProductListResponseDto.builder().build();
+		Page<Product> products = productRepository.searchProduct(keyword, minPrice,
+				maxPrice, productCategoryDto.getCategoryId(),
+				specificAreaDto.getSido().getSigg().getEmd().getCode(), pageRequest);
+
+		List<ProductPreviewDto> productPreviewDtos = products.stream()
+				.map(productMapper::toProductPreviewDto)
+				.collect(Collectors.toList());
+
+		return productMapper.toProductListResponseDto(productPreviewDtos,
+				products.getTotalElements());
 	}
 
 	public ProductDetailDto getProductDetail(Long productId) {

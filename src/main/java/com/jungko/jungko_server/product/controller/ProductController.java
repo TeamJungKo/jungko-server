@@ -1,6 +1,7 @@
 package com.jungko.jungko_server.product.controller;
 
 import com.jungko.jungko_server.area.dto.AreaDto;
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
@@ -56,20 +57,18 @@ public class ProductController {
 			@RequestBody Integer minPrice,
 			@RequestBody Integer maxPrice,
 			@RequestBody ProductCategoryDto productCategoryDto,
-			@RequestBody AreaDto areaDto,
+			@RequestBody SpecificAreaDto specificAreaDto,
 			@RequestParam Integer page,
 			@RequestParam Integer size,
 			@RequestParam String sort,
 			@RequestParam Direction order) {
 		log.info(
 				"Called searchProducts member: {}, keyword: {}, minPrice: {}, maxPrice: {}, productCategoryDto: {}, areaDto: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, keyword, minPrice, maxPrice, productCategoryDto, areaDto, page,
-				size, sort, order);
+				memberSessionDto, keyword, minPrice, maxPrice, productCategoryDto, specificAreaDto,
+				page, size, sort, order);
 
-		productService.searchProduct(keyword, minPrice, maxPrice, productCategoryDto, areaDto,
-				PageRequest.of(page, size, order, sort));
-
-		return ProductListResponseDto.builder().build();
+		return productService.searchProduct(keyword, minPrice, maxPrice, productCategoryDto,
+				specificAreaDto, PageRequest.of(page, size, order, sort));
 	}
 
 	@Operation(summary = "검색 결과에 대한 연관 검색어 조회", description = "현재 검색 결과의 연관 검색어를 제공합니다.")
