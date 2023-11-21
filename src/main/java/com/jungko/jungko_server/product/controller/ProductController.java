@@ -8,6 +8,7 @@ import com.jungko.jungko_server.auth.dto.MemberSessionDto;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.request.ProductCompareRequestDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
@@ -18,6 +19,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -86,17 +89,18 @@ public class ProductController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
-	@GetMapping(value = "/compare")
+	@PostMapping(value = "/compare")
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto compareProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
-			@RequestParam String sort,
-			@RequestParam Order order) {
-		log.info("Called compareProducts member: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, page, size, sort, order);
-		return ProductListResponseDto.builder().build();
+			@Valid @RequestBody ProductCompareRequestDto compareRequest) {
+		List<Long> productIds = compareRequest.getProductIds();
+
+		log.info(
+				"Called compareProducts member: {}, productIds: {}",
+				memberSessionDto, productIds);
+
+		return productService.compareProduct(productIds);
 	}
 
 	@Operation(summary = "특정 상품 상세 정보 조회", description = "특정 상품의 상세 정보를 조회합니다.")

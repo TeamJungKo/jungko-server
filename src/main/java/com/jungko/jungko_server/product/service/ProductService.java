@@ -45,7 +45,8 @@ public class ProductService {
 
 		Page<Product> products = productRepository.searchProduct(keyword, minPrice,
 				maxPrice, productCategoryDto.getCategoryId(),
-				specificAreaDto.getSido().getSigg().getEmd().getCode(), pageRequest);
+				specificAreaDto.getSido().getSigg().getEmd().getCode(),
+				pageRequest);
 
 		List<ProductPreviewDto> productPreviewDtos = products.stream()
 				.map(productMapper::toProductPreviewDto)
