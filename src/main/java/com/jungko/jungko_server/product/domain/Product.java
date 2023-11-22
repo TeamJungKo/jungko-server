@@ -57,6 +57,9 @@ public class Product {
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
+	@Column(nullable = false)
+	private boolean isNew;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_category_id", nullable = false)
 	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
