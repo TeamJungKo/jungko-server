@@ -14,4 +14,8 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 	@Query("SELECT c FROM Card c LEFT JOIN c.interestedCards ic "
 			+ "GROUP BY c.id ORDER BY COUNT(ic) DESC")
 	Page<Card> findAllByInterestedCardsCount(Pageable pageable);
+
+	@Query("SELECT c FROM Card c JOIN c.interestedCards ic "
+			+ "WHERE ic.member.id = :memberId")
+	Page<Card> findAllByInterestedCardsMemberId(Long memberId, Pageable pageable);
 }
