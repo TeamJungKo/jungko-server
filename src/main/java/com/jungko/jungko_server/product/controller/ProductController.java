@@ -1,12 +1,12 @@
 package com.jungko.jungko_server.product.controller;
 
-import com.jungko.jungko_server.area.dto.AreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.request.ProductCompareRequestDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
@@ -17,16 +17,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Sort.Order;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,18 +50,22 @@ public class ProductController {
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto searchProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam String query,
+			@RequestParam String keyword,
+			@RequestParam(defaultValue = "0") Integer minPrice,
+			@RequestParam(defaultValue = "200000000") Integer maxPrice,
+			@RequestParam Long categoryId,
+			@RequestParam Long areaId,
 			@RequestParam Integer page,
 			@RequestParam Integer size,
 			@RequestParam String sort,
-			@RequestParam Order order) {
+			@RequestParam Direction order) {
 		log.info(
-				"Called searchProducts member: {}, query: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, query,
-				page, size,
-				sort,
-				order);
-		return ProductListResponseDto.builder().build();
+				"Called searchProducts member: {}, keyword: {}, minPrice: {}, maxPrice: {}, productCategoryDto: {}, areaDto: {}, page: {}, size: {}, sort: {}, order: {}",
+				memberSessionDto, keyword, minPrice, maxPrice, categoryId, areaId,
+				page, size, sort, order);
+
+		return productService.searchProduct(keyword, minPrice, maxPrice, categoryId,
+				areaId, page, size, sort, order);
 	}
 
 	@Operation(summary = "검색 결과에 대한 연관 검색어 조회", description = "현재 검색 결과의 연관 검색어를 제공합니다.")
@@ -77,17 +85,18 @@ public class ProductController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
-	@GetMapping(value = "/compare")
+	@PostMapping(value = "/compare")
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto compareProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
-			@RequestParam String sort,
-			@RequestParam Order order) {
-		log.info("Called compareProducts member: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, page, size, sort, order);
-		return ProductListResponseDto.builder().build();
+			@Valid @RequestBody ProductCompareRequestDto compareRequest) {
+		List<Long> productIds = compareRequest.getProductIds();
+
+		log.info(
+				"Called compareProducts member: {}, productIds: {}",
+				memberSessionDto, productIds);
+
+		return productService.compareProduct(productIds);
 	}
 
 	@Operation(summary = "특정 상품 상세 정보 조회", description = "특정 상품의 상세 정보를 조회합니다.")
