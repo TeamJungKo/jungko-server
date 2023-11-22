@@ -97,11 +97,14 @@ public class CardController {
 	public CardListResponseDto getMyCards(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam Integer page,
-			@RequestParam Integer size) {
-		log.info("Called getMyCards member: {}, page: {}, size: {}", memberSessionDto, page, size);
+			@RequestParam Integer size,
+			@RequestParam(required = false) Long categoryId
+	) {
+		log.info("Called getMyCards member: {}, page: {}, size: {}, categoryId: {}",
+				memberSessionDto, page, size, categoryId);
 
 		return cardService.getCardsByMemberId(memberSessionDto.getMemberId(),
-				PageRequest.of(page, size));
+				PageRequest.of(page, size), categoryId);
 	}
 
 	@Operation(summary = "특정 유저 카드 목록 조회", description = "특정 유저가 만든 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
@@ -114,11 +117,14 @@ public class CardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("memberId") Long memberId,
 			@RequestParam Integer page,
-			@RequestParam Integer size) {
-		log.info("Called getMemberCards member: {}, memberId: {}, page: {}, size: {}",
-				memberSessionDto, memberId, page, size);
+			@RequestParam Integer size,
+			@RequestParam(required = false) Long categoryId
+	) {
+		log.info(
+				"Called getMemberCards member: {}, memberId: {}, page: {}, size: {}, categoryId: {}",
+				memberSessionDto, memberId, page, size, categoryId);
 
-		return cardService.getCardsByMemberId(memberId, PageRequest.of(page, size));
+		return cardService.getCardsByMemberId(memberId, PageRequest.of(page, size), categoryId);
 	}
 
 	@Operation(summary = "인기 카드 목록 조회", description = "인기 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
@@ -128,10 +134,12 @@ public class CardController {
 	@GetMapping(value = "/popular")
 	public CardListResponseDto getPopularCards(
 			@RequestParam Integer page,
-			@RequestParam Integer size) {
-		log.info("Called getPopularCards page: {}, size: {}", page,
-				size);
+			@RequestParam Integer size,
+			@RequestParam(required = false) Long categoryId
+	) {
+		log.info("Called getPopularCards page: {}, size: {}, categoryId: {}",
+				page, size, categoryId);
 
-		return cardService.getPopularCards(PageRequest.of(page, size));
+		return cardService.getPopularCards(PageRequest.of(page, size), categoryId);
 	}
 }

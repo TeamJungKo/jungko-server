@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -83,8 +84,10 @@ public class InterestedCardService {
 	}
 
 	public CardListResponseDto getLikedCards(Long memberId, Long targetMemberId,
-			Pageable pageable) {
-		log.info("Called getLikedCards memberId: {}, targetMemberId: {}", memberId, targetMemberId);
+			Pageable pageable, Long categoryId) {
+		log.info(
+				"Called getLikedCards memberId: {}, targetMemberId: {}, pageable: {}, categoryId: {}",
+				memberId, targetMemberId, pageable, categoryId);
 		memberRepository.findById(memberId).orElseThrow(
 				() -> new HttpClientErrorException(
 						HttpStatus.NOT_FOUND,
@@ -96,17 +99,23 @@ public class InterestedCardService {
 						"해당 회원이 존재하지 않습니다. id=" + targetMemberId));
 		Page<Card> cards = cardRepository.findAllByInterestedCardsMemberId(targetMemberId,
 				pageable);
+		Page<Card> filteredCards = cards.stream()
+				.filter(card -> categoryId == null || card.getProductCategory().getId()
+						.equals(categoryId))
+				.collect(Collectors.collectingAndThen(Collectors.toList(),
+						list -> new PageImpl<>(list, pageable, cards.getTotalElements())));
 
-		List<CardPreviewDto> cardPreviewDtos = cards.stream().map(card -> {
-					MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),
-							card.getMember().getProfileImageUrl());
-					SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(card.getArea());
-					SpecificProductCategoryDto categoryDto = productMapper
-							.convertToSpecificProductCategoryDtoRecursive(
-									card.getProductCategory());
-					return cardMapper.toCardPreviewDto(card, author, areaDto, categoryDto);
-				}
-		).collect(Collectors.toList());
-		return cardMapper.toCardListResponseDto(cardPreviewDtos, cards.getTotalElements());
+		List<CardPreviewDto> cardPreviewDtos = filteredCards.stream()
+				.map(card -> {
+							MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),
+									card.getMember().getProfileImageUrl());
+							SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(card.getArea());
+							SpecificProductCategoryDto categoryDto = productMapper
+									.convertToSpecificProductCategoryDtoRecursive(
+											card.getProductCategory());
+							return cardMapper.toCardPreviewDto(card, author, areaDto, categoryDto);
+						}
+				).collect(Collectors.toList());
+		return cardMapper.toCardListResponseDto(cardPreviewDtos, filteredCards.getTotalElements());
 	}
 }

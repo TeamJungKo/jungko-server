@@ -77,11 +77,14 @@ public class InterestedCardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("memberId") Long memberId,
 			@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "size", defaultValue = "10") int size
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(required = false) Long categoryId
 	) {
-		log.info("Called getLikedCards member: {}, memberId: {}", memberSessionDto, memberId);
+		log.info(
+				"Called getLikedCards member: {}, memberId: {}, page: {}, size: {}, categoryId: {}",
+				memberSessionDto, memberId, page, size, categoryId);
 
 		return interestedCardService.getLikedCards(memberSessionDto.getMemberId(), memberId,
-				PageRequest.of(page, size));
+				PageRequest.of(page, size), categoryId);
 	}
 }
