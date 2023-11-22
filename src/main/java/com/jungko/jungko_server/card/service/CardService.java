@@ -56,10 +56,11 @@ public class CardService {
 						"해당 회원이 존재하지 않습니다. id=" + memberId));
 		ProductCategory productCategory = productCategoryRepository.findByIdAndFetchParentEagerly(
 						dto.getCategoryId())
-				.orElseThrow(
-						() -> new HttpClientErrorException(
-								HttpStatus.NOT_FOUND,
-								"해당 상품 카테고리가 존재하지 않습니다. id=" + dto.getCategoryId()));
+				.orElseGet(() -> productCategoryRepository.findById(dto.getCategoryId())
+						.orElseThrow(
+								() -> new HttpClientErrorException(
+										HttpStatus.NOT_FOUND,
+										"해당 상품 카테고리가 존재하지 않습니다. id=" + dto.getCategoryId())));
 		EmdArea emdArea = emdAreaRepository.findEmdAreaByIdWithSiggAreaWithSidoArea(dto.getAreaId())
 				.orElseThrow(
 						() -> new HttpClientErrorException(
