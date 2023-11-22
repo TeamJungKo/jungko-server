@@ -45,19 +45,10 @@ public class ProductService {
 	public ProductListResponseDto searchProduct(String keyword, Integer minPrice, Integer maxPrice,
 			Long categoryId, Long areaId, Integer page, Integer size, String sort,
 			Direction order) {
-//		log.info(
-//				"Called searchProduct keyword: {}, minPrice: {}, maxPrice: {}, categoryId: {}, areaId: {}",
-//				keyword, minPrice, maxPrice, categoryId, areaId);
-//
-//		Page<Product> products = productRepository.searchProduct(keyword, minPrice,
-//				maxPrice, categoryId, areaId, pageRequest);
-//
-//		List<ProductPreviewDto> productPreviewDtos = products.stream()
-//				.map(productMapper::toProductPreviewDto)
-//				.collect(Collectors.toList());
-//
-//		return productMapper.toProductListResponseDto(productPreviewDtos,
-//				products.getTotalElements());
+
+		log.info(
+				"Called searchProduct keyword: {}, minPrice: {}, maxPrice: {}, categoryId: {}, areaId: {}, page: {}, size: {}, sort: {}, order: {}",
+				keyword, minPrice, maxPrice, categoryId, areaId, page, size, sort, order);
 
 		Pageable pageable = PageRequest.of(page, size,
 				Sort.by(Sort.Direction.fromString(order.name()), sort));
@@ -79,7 +70,7 @@ public class ProductService {
 						criteriaBuilder.equal(root.get("productCategory").get("id"), categoryId));
 			}
 			if (areaId != null) {
-				predicates.add(criteriaBuilder.equal(root.get("area").get("code"), areaId));
+				predicates.add(criteriaBuilder.equal(root.get("area").get("id"), areaId));
 			}
 
 			return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

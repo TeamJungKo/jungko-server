@@ -52,7 +52,7 @@ public class ProductController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam String keyword,
 			@RequestParam(defaultValue = "0") Integer minPrice,
-			@RequestParam(defaultValue = "Integer.MAX_VALUE") Integer maxPrice,
+			@RequestParam(defaultValue = "200000000") Integer maxPrice,
 			@RequestParam Long categoryId,
 			@RequestParam Long areaId,
 			@RequestParam Integer page,
