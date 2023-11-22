@@ -21,6 +21,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Sort.Order;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,18 +50,22 @@ public class ProductController {
 	@Secured(MemberRole.S_USER)
 	public ProductListResponseDto searchProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam String query,
+			@RequestParam String keyword,
+			@RequestParam(defaultValue = "0") Integer minPrice,
+			@RequestParam(defaultValue = "200000000") Integer maxPrice,
+			@RequestParam Long categoryId,
+			@RequestParam Long areaId,
 			@RequestParam Integer page,
 			@RequestParam Integer size,
 			@RequestParam String sort,
-			@RequestParam Order order) {
+			@RequestParam Direction order) {
 		log.info(
-				"Called searchProducts member: {}, query: {}, page: {}, size: {}, sort: {}, order: {}",
-				memberSessionDto, query,
-				page, size,
-				sort,
-				order);
-		return ProductListResponseDto.builder().build();
+				"Called searchProducts member: {}, keyword: {}, minPrice: {}, maxPrice: {}, productCategoryDto: {}, areaDto: {}, page: {}, size: {}, sort: {}, order: {}",
+				memberSessionDto, keyword, minPrice, maxPrice, categoryId, areaId,
+				page, size, sort, order);
+
+		return productService.searchProduct(keyword, minPrice, maxPrice, categoryId,
+				areaId, page, size, sort, order);
 	}
 
 	@Operation(summary = "검색 결과에 대한 연관 검색어 조회", description = "현재 검색 결과의 연관 검색어를 제공합니다.")
