@@ -9,6 +9,7 @@ import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
 import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
 
 import com.jungko.jungko_server.card.service.CardService;
+import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -141,5 +143,32 @@ public class CardController {
 				page, size, categoryId);
 
 		return cardService.getPopularCards(PageRequest.of(page, size), categoryId);
+	}
+
+	@Operation(summary = "카드 내 매물 검색", description = "카드 내 매물을 검색합니다. 페이지네이션을 지원합니다.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "ok"),
+	})
+	@GetMapping(value = "/{cardId}/products")
+	public ProductListResponseDto searchProductsByCard(
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
+			@PathVariable("cardId") Long cardId,
+			@RequestParam Integer page,
+			@RequestParam Integer size,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) Direction order
+	) {
+		log.info(
+				"Called searchProductsByCard member: {}, cardId: {}, page: {}, size: {}, sort: {}, order: {}",
+				memberSessionDto, cardId, page, size, sort, order);
+
+		PageRequest pageRequest;
+		if (sort == null || sort.isEmpty() || order == null) {
+			pageRequest = PageRequest.of(page, size);
+		} else {
+			pageRequest = PageRequest.of(page, size, order, sort);
+		}
+		return cardService.searchProductsByCard(memberSessionDto.getMemberId(), cardId,
+				pageRequest);
 	}
 }
