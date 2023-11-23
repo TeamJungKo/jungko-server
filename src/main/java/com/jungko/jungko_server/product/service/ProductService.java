@@ -1,6 +1,7 @@
 package com.jungko.jungko_server.product.service;
 
 import com.jungko.jungko_server.area.domain.SidoArea;
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
@@ -9,6 +10,7 @@ import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
+import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
@@ -43,15 +45,11 @@ public class ProductService {
 	private final AreaMapper areaMapper;
 
 	public ProductListResponseDto searchProduct(String keyword, Integer minPrice, Integer maxPrice,
-			Long categoryId, Long areaId, Integer page, Integer size, String sort,
-			Direction order) {
+			Long categoryId, Long areaId, Pageable pageable) {
 
 		log.info(
-				"Called searchProduct keyword: {}, minPrice: {}, maxPrice: {}, categoryId: {}, areaId: {}, page: {}, size: {}, sort: {}, order: {}",
-				keyword, minPrice, maxPrice, categoryId, areaId, page, size, sort, order);
-
-		Pageable pageable = PageRequest.of(page, size,
-				Sort.by(Sort.Direction.fromString(order.name()), sort));
+				"Called searchProduct keyword: {}, minPrice: {}, maxPrice: {}, pageable: {}",
+				keyword, minPrice, maxPrice, pageable);
 
 		Specification<Product> specification = (root, query, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
@@ -79,8 +77,15 @@ public class ProductService {
 		Page<Product> products = productRepository.findAll(specification, pageable);
 
 		List<ProductPreviewDto> productPreviewDtos = products.stream()
-				.map(productMapper::toProductPreviewDto)
-				.collect(Collectors.toList());
+				.map(product -> {
+							SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(
+									product.getArea());
+							SpecificProductCategoryDto categoryDto = productMapper
+									.convertToSpecificProductCategoryDtoRecursive(
+											product.getProductCategory());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+						}
+				).collect(Collectors.toList());
 
 		return productMapper.toProductListResponseDto(productPreviewDtos,
 				products.getTotalElements());
@@ -91,12 +96,18 @@ public class ProductService {
 		log.info("Called compareProduct productIds: {}", productIds);
 
 		List<Product> products = productRepository.findAllById(productIds);
-		List<ProductPreviewDto> list = new ArrayList<ProductPreviewDto>();
-		for (Product product : products) {
-			list.add(productMapper.toProductPreviewDto(product));
-		}
+		List<ProductPreviewDto> productPreviewDtos = products.stream()
+				.map(product -> {
+							SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(
+									product.getArea());
+							SpecificProductCategoryDto categoryDto = productMapper
+									.convertToSpecificProductCategoryDtoRecursive(
+											product.getProductCategory());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+						}
+				).collect(Collectors.toList());
 
-		return new ProductListResponseDto(list, list.size());
+		return productMapper.toProductListResponseDto(productPreviewDtos, products.size());
 	}
 
 	public ProductDetailDto getProductDetail(Long productId) {

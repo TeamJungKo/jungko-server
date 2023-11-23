@@ -1,6 +1,7 @@
 package com.jungko.jungko_server.mapper;
 
 
+import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.domain.ProductCategory;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
@@ -31,12 +32,16 @@ public interface ProductMapper {
 
 	@Mapping(source = "product.id", target = "productId")
 	@Mapping(source = "product.imageUrl", target = "productImageUrl")
-	ProductPreviewDto toProductPreviewDto(Product product);
+	@Mapping(target = "area", source = "areaDto")
+	@Mapping(target = "category", source = "categoryDto")
+	ProductPreviewDto toProductPreviewDto(Product product, SpecificAreaDto areaDto,
+			SpecificProductCategoryDto categoryDto);
 
 	@Mapping(source = "productPreviewDtos", target = "products")
 	@Mapping(source = "totalElements", target = "totalResources")
 	ProductListResponseDto toProductListResponseDto(List<ProductPreviewDto> productPreviewDtos,
 			long totalElements);
+
 	/**
 	 * 특정 ProductCategory의 부모 요소를 포함하여 SpecificProductCategoryDto로 변환한다.
 	 *
