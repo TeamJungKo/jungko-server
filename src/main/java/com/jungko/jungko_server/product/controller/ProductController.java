@@ -21,6 +21,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -57,15 +58,22 @@ public class ProductController {
 			@RequestParam Long areaId,
 			@RequestParam Integer page,
 			@RequestParam Integer size,
-			@RequestParam String sort,
-			@RequestParam Direction order) {
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) Direction order) {
 		log.info(
 				"Called searchProducts member: {}, keyword: {}, minPrice: {}, maxPrice: {}, productCategoryDto: {}, areaDto: {}, page: {}, size: {}, sort: {}, order: {}",
 				memberSessionDto, keyword, minPrice, maxPrice, categoryId, areaId,
 				page, size, sort, order);
 
+		PageRequest pageRequest;
+		if (sort == null || sort.isEmpty() || order == null) {
+			pageRequest = PageRequest.of(page, size);
+		} else {
+			pageRequest = PageRequest.of(page, size, order, sort);
+		}
+
 		return productService.searchProduct(keyword, minPrice, maxPrice, categoryId,
-				areaId, page, size, sort, order);
+				areaId, pageRequest);
 	}
 
 	@Operation(summary = "검색 결과에 대한 연관 검색어 조회", description = "현재 검색 결과의 연관 검색어를 제공합니다.")
