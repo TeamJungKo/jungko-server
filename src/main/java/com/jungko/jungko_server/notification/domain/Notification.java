@@ -34,8 +34,8 @@ public class Notification {
 	@Column
 	private String content;
 
-	@Column(nullable = false)
-	private String noticeType;
+	@Column
+	private Long productId;
 
 	@Column(nullable = false)
 	private boolean isRead;
