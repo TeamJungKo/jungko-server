@@ -38,7 +38,7 @@ public class Notification {
 	private Long productId;
 
 	@Column(nullable = false)
-	private boolean isRead;
+	private Boolean isRead;
 
 	@Column(nullable = false)
 	private LocalDateTime createdAt;

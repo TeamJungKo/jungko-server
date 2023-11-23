@@ -7,6 +7,7 @@ import com.jungko.jungko_server.notification.domain.Notification;
 import com.jungko.jungko_server.notification.dto.KeywordNoticeDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
 import com.jungko.jungko_server.notification.infrastructure.NotificationRepository;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,10 +37,11 @@ public class NotificationService {
 		Page<Notification> notices = notificationRepository
 				.findAllByMemberId(loginMember.getId(), pageRequest);
 
-		List<KeywordNoticeDto> keywordNoticeDtos = notificationMapper
-				.toKeywordNoticeDtos(notices.getContent());
+		List<KeywordNoticeDto> keywordNoticeDtos = notices.stream()
+				.map(notificationMapper::toKeywordNoticeDto)
+				.collect(Collectors.toList());
 
 		return notificationMapper.toKeywordNoticeListResponseDto(keywordNoticeDtos,
-				notices.getTotalElements());
+				(long) keywordNoticeDtos.size());
 	}
 }
