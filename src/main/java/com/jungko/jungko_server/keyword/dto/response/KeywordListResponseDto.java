@@ -19,4 +19,7 @@ public class KeywordListResponseDto {
 
   @ArraySchema(schema = @Schema(implementation = KeywordDto.class))
   private final List<KeywordDto> keywordList;
+
+  @Schema(description = "전체 키워드 수", example = "50")
+  private final long totalResources;
 }

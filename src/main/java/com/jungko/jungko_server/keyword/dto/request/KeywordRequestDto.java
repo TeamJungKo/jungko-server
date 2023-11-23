@@ -1,5 +1,6 @@
 package com.jungko.jungko_server.keyword.dto.request;
 
+import com.jungko.jungko_server.keyword.validation.KeywordCreateValidation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
