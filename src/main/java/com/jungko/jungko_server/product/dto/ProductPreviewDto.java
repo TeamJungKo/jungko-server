@@ -43,9 +43,6 @@ public class ProductPreviewDto {
 	@Schema(description = "마켓상품ID", example = "1234")
 	private final String marketProductId;
 
-	@Schema(description = "전체", example = "142")
-	private final ProductCategoryDto productCategory;
-
 	@Schema(description = "지역 정보", implementation = SpecificAreaDto.class)
 	private final SpecificAreaDto area;
 
