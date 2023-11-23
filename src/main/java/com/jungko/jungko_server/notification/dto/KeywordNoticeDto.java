@@ -14,16 +14,16 @@ import com.jungko.jungko_server.notification.domain.NoticeType;
 @Getter
 @ToString
 @Builder
-@Schema(description = "카드 알림에 대한 DTO")
+@Schema(description = "키워드 알림에 대한 DTO")
 public class KeywordNoticeDto {
 
-	@Schema(description = "notice 고유 번호", example = "12345")
+	@Schema(description = "notice 고유 번호", example = "1")
 	private final Long noticeId;
 
-	@Schema(description = "notice 제목", example = "1")
+	@Schema(description = "notice 제목", example = "[아이유] 서울시 중구 장충동 2가")
 	private final String title;
 
-	@Schema(description = "notice 내용", example = "아이유")
+	@Schema(description = "notice 내용", example = "아이유 검은 바지 두둥!!")
 	private final String content;
 
 	@Schema(description = "상품 고유 번호", example = "123")
@@ -33,5 +33,5 @@ public class KeywordNoticeDto {
 	private final LocalDateTime createdAt;
 
 	@Schema(description = "알림 읽음 여부", example = "false")
-	private final boolean isRead;
+	private final Boolean isRead;
 }
