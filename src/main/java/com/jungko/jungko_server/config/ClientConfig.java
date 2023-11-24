@@ -11,6 +11,9 @@ public class ClientConfig {
 	@Value("${jungko.client.url}")
 	private String clientUrl;
 
+	@Value("${jungko.client.http-url}")
+	private String clientHttpUrl;
+
 	@Value("${jungko.client.callback}")
 	private String clientCallbackUrl;
 }
