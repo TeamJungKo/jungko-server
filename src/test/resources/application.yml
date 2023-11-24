@@ -121,6 +121,7 @@ jungko:
       callback-endpoint: /api/v1/auth/login/callback/oauth-types/*
   client:
     url: http://localhost:5173
+    http-url: http://localhost:5173
     callback: /home
   cookie:
     domain: localhost
