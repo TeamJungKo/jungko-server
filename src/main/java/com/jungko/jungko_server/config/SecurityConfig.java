@@ -16,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +26,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
 
 	private final ServerConfig serverConfig;
+	private final ClientConfig clientConfig;
 	private final AuthenticationManager jwtAuthenticationManager;
 	private final AccessDeniedHandler jwtAccessDeniedHandler;
 	private final AuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -35,6 +39,9 @@ public class SecurityConfig {
 		httpSecurity
 				.formLogin().disable()
 				.addFilterAfter(new MemberSessionAuthenticationFilter(), BearerTokenAuthenticationFilter.class)
+				.cors()
+					.configurationSource(corsConfigurationSource())
+				.and()
 				.csrf().disable()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -60,6 +67,21 @@ public class SecurityConfig {
 				;
 		return httpSecurity.build();
 //		@formatter:on
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+
+		configuration.addAllowedOrigin(clientConfig.getClientUrl());
+		configuration.addAllowedOrigin(clientConfig.getClientHttpUrl());
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		configuration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 	@Bean
