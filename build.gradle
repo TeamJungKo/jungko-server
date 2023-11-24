@@ -1,16 +1,25 @@
 plugins {
-    id 'org.springframework.boot' version '3.1.5'
-    id 'io.spring.dependency-management' version '1.1.3'
+    id 'org.springframework.boot' version '2.7.10'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
 }
 
 group = 'com.jungko'
 version = '0.0.1-SNAPSHOT'
 
-java.sourceCompatibility = '17'
+java.sourceCompatibility = '11'
 
 bootRun {
     environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: 'local'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    configureEach {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 repositories {
@@ -19,12 +28,21 @@ repositories {
 
 dependencies {
 //  Spring Boot
+    implementation('org.springframework.boot:spring-boot-starter')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0')
-    implementation('org.springframework.boot:spring-boot-actuator')
-    implementation('org.springframework.boot:spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+
+//  AWS
+    implementation('org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE')
+
+//  Monitoring
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('io.micrometer:micrometer-core')
 
 //  Database
     runtimeOnly('org.mariadb.jdbc:mariadb-java-client')
@@ -34,14 +52,21 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok')
 
 //  Development
-    developmentOnly('org.springframework.boot:spring-boot-devtools')
+//    developmentOnly('org.springframework.boot:spring-boot-devtools')
     annotationProcessor('org.springframework.boot:spring-boot-configuration-processor')
-    developmentOnly('org.springframework.boot:spring-boot-docker-compose')
+
+//  Etc
+    implementation('org.springdoc:springdoc-openapi-ui:1.7.0')
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
+    implementation('org.mapstruct:mapstruct:1.5.5.Final')
+    annotationProcessor('org.mapstruct:mapstruct-processor:1.5.5.Final')
 
 //  Test
     testCompileOnly('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.security:spring-security-test')
+    testRuntimeOnly('com.h2database:h2')
 }
 
 tasks.register('copyMainConfig', Copy) {
@@ -49,19 +74,13 @@ tasks.register('copyMainConfig', Copy) {
     into 'src/main/resources'
 }
 
-tasks.register('copyTestConfig', Copy) {
-    from 'server-config/test/resources'
-    into 'src/test/resources'
-}
-
 tasks.named('processResources') {
     dependsOn 'copyMainConfig'
 }
 
-tasks.named('processTestResources') {
-    dependsOn 'copyTestConfig'
+test {
+    useJUnitPlatform()
+    failFast = true
+    systemProperty 'spring.profiles.active', 'test'
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-}

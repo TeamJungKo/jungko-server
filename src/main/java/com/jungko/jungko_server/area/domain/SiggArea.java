@@ -1,20 +1,20 @@
 package com.jungko.jungko_server.area.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import java.util.Set;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+import org.hibernate.annotations.OnDelete;
 
 @Entity
 @Getter
@@ -22,22 +22,23 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SiggArea {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(nullable = false, updatable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String admCode;
+	@Column(nullable = false, name = "adm_code")
+	private String code;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @OneToMany(mappedBy = "siggArea")
-    private Set<EmdArea> emdAreas;
+	@OneToMany(mappedBy = "siggArea")
+	private List<EmdArea> emdAreas;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido_area_id", nullable = false)
-    private SidoArea sidoArea;
-
+	@ToString.Exclude
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sido_area_id", nullable = false)
+	@OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	private SidoArea sidoArea;
 }
