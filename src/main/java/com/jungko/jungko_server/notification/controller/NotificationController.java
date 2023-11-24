@@ -3,6 +3,7 @@ package com.jungko.jungko_server.notification.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.notification.dto.request.NoticeDeleteRequestDto;
 import com.jungko.jungko_server.notification.dto.response.CardNoticeListResponseDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
 import com.jungko.jungko_server.notification.service.NotificationService;
@@ -109,8 +110,12 @@ public class NotificationController {
 	@Secured(MemberRole.S_USER)
 	public void deleteNotice(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@Valid @ModelAttribute List<Long> noticeIds) {
+			@Valid @ModelAttribute NoticeDeleteRequestDto noticeDeleteRequestDto) {
+		List<Long> noticeIds = noticeDeleteRequestDto.getNoticeIds();
+
 		log.info("Called deleteNotice member: {}, noticeIds: {}", memberSessionDto, noticeIds);
+
+		notificationService.deleteNotices(memberSessionDto.getMemberId(), noticeIds);
 	}
 
 	@Operation(summary = "특정 카드 알림 ON/OFF", description = "특정 카드에 대해 알림을 ON/OFF 합니다. 토글 API입니다.")
