@@ -53,6 +53,9 @@ public class Member {
 	@Column(nullable = false)
 	private String oauthId;
 
+	@Column(nullable = true)
+	private String deviceToken;
+
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 

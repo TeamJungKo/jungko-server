@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `member`
     `id`                     bigint(20)   NOT NULL AUTO_INCREMENT,
     `created_at`             datetime(6)  NOT NULL,
     `deleted_at`             datetime(6)  DEFAULT NULL,
+    `device_token`           varchar(255) null,
     `email`                  varchar(255) NOT NULL,
     `nickname`               varchar(255) NOT NULL,
     `notification_agreement` bit(1)       NOT NULL,
@@ -146,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `product`
     `content`             varchar(4095) DEFAULT NULL,
     `created_at`          datetime(6)  NOT NULL,
     `image_url`           varchar(255)  DEFAULT NULL,
+    `is_new`              bit          not null,
     `market_name`         varchar(255) NOT NULL,
     `market_product_id`   varchar(255) NOT NULL,
     `price`               bigint(20)    DEFAULT NULL,
@@ -252,13 +254,13 @@ CREATE TABLE IF NOT EXISTS `interested_keyword`
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `notification`
 (
-    `id`          bigint(20)   NOT NULL AUTO_INCREMENT,
-    `content`     varchar(255) DEFAULT NULL,
-    `created_at`  datetime(6)  NOT NULL,
-    `is_read`     bit(1)       NOT NULL,
-    `notice_type` varchar(255) NOT NULL,
-    `title`       varchar(255) NOT NULL,
-    `member_id`   bigint(20)   DEFAULT NULL,
+    `id`         bigint(20)   NOT NULL AUTO_INCREMENT,
+    `content`    varchar(255) DEFAULT NULL,
+    `created_at` datetime(6)  NOT NULL,
+    `is_read`    bit(1)       NOT NULL,
+    `product_id` bigint       null,
+    `title`      varchar(255) NOT NULL,
+    `member_id`  bigint(20)   DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `FK1xep8o2ge7if6diclyyx53v4q` (`member_id`),
     CONSTRAINT `FK1xep8o2ge7if6diclyyx53v4q` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE
