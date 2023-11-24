@@ -111,6 +111,7 @@ public class NotificationController {
 	public void deleteNotice(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @ModelAttribute NoticeDeleteRequestDto noticeDeleteRequestDto) {
+
 		List<Long> noticeIds = noticeDeleteRequestDto.getNoticeIds();
 
 		log.info("Called deleteNotice member: {}, noticeIds: {}", memberSessionDto, noticeIds);
@@ -155,5 +156,7 @@ public class NotificationController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto
 	) {
 		log.info("Called totalNoticeToggle member: {}", memberSessionDto);
+
+		notificationService.toggleAgreement(memberSessionDto.getMemberId());
 	}
 }
