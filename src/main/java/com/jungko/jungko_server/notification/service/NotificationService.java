@@ -44,4 +44,30 @@ public class NotificationService {
 		return notificationMapper.toKeywordNoticeListResponseDto(keywordNoticeDtos,
 				(long) keywordNoticeDtos.size());
 	}
+
+	public void deleteNotices(Long memberId, List<Long> noticeIds) {
+
+		Member loginMember = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+
+		List<Notification> notices = notificationRepository.findAllByIdAndMemberId(noticeIds,
+				loginMember.getId());
+
+		notificationRepository.deleteAll(notices);
+	}
+
+	public void toggleAgreement(Long memberId) {
+
+		Member loginMember = memberRepository.findById(memberId).orElseThrow(
+				() -> new HttpClientErrorException(
+						HttpStatus.NOT_FOUND,
+						"해당 회원이 존재하지 않습니다. id=" + memberId));
+
+		Boolean temp = loginMember.getNotificationAgreement();
+		loginMember.setNotificationAgreement(!temp);
+
+		memberRepository.save(loginMember);
+	}
 }
