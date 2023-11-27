@@ -20,20 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-import com.jungko.jungko_server.member.domain.Member;
-import com.jungko.jungko_server.member.dto.MemberProfileDto;
-import com.jungko.jungko_server.member.infrastructure.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -55,30 +41,33 @@ public class KeywordService {
         return keywordMapper.toKeywordDto(savedKeyword, author);
     }
 
-    //memberId에 해당하는membere의keywordId를 지우는거
+    //memberId에 해당하는 membere의 keywordId를 지우는거
     public void deleteKeyword(Long memberId, Long keywordId) {
         log.info("Called deleteKeword memberId: {}, keywordId: {}", memberId, keywordId);
         Member loginMember = memberRepository.findById(memberId).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND,"해당 회원이 존재하지 않습니다. id=" + memberId));
         Keyword keyword = KeywordRepository.findById(keywordId).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND,"해당 키워드가 존재하지 않습니다. id=" + keywordId));
-        System.out.println(keyword);if (!keyword.isOwner(loginMember)) {
+        System.out.println(keyword);
+        if (!keyword.isOwner(loginMember)) {
             throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"해당 키워드의 소유자가 아닙니다. keywordId=" + keywordId + ", memberId=" + memberId);
         }
         KeywordRepository.delete(keyword);
     }
+
+
+    /*
     public KeywordListResponseDto getMemberKeywords(Long memberId) {
         log.info("Called getMemberKeywords memberId: {}", memberId);
         Member loginMember = memberRepository.findById(memberId).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND,"해당 회원이 존재하지 않습니다. id=" + memberId));
 
-        Page<Card> cards = cardRepository.findAllByMemberId(loginMember.getId(), pageRequest);
-        Page<Card> filteredCards = cards.stream().filter(card -> categoryId == null || card.getProductCategory().getId().equals(categoryId)).collect(Collectors.collectingAndThen(Collectors.toList(),list -> new PageImpl<>(list, pageRequest, cards.getTotalElements())));
-        List<CardPreviewDto> cardPreviewDtos = filteredCards.stream().filter(card -> categoryId == null || card.getProductCategory().getId().equals(categoryId)).map(card -> {MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),card.getMember().getProfileImageUrl());SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(card.getArea());
-            SpecificProductCategoryDto categoryDto = productMapper.convertToSpecificProductCategoryDtoRecursive(card.getProductCategory());
+        List<KeywordDto> keywordDtos = filteredCards.stream().filter(card -> categoryId == null || card.getProductCategory().getId().equals(categoryId)).map(card -> {
+            MemberProfileDto author = memberMapper.toMemberProfileDto(card.getMember(),card.getMember().getProfileImageUrl());
 
-            return cardMapper.toCardPreviewDto(card, author, areaDto, categoryDto);}).collect(Collectors.toList());
-        return cardMapper.toCardListResponseDto(cardPreviewDtos, filteredCards.getTotalElements());
+            return keywordMapper.toKeywordDto(keyword, author);}).collect(Collectors.toList());
+        return keywordMapper.toKeywordListResponseDto(cardPreviewDtos, filteredCards.getTotalElements());
     }
+     */
 }
-}
+

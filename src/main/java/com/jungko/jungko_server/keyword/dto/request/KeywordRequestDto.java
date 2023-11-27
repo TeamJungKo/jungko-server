@@ -15,7 +15,6 @@ import java.util.List;
 
 @Schema(description = "새 키워드들을 생성하는 DTO")
 public class KeywordRequestDto {
-
   @Schema(description = "키워드Id", example = "[\"검정바지\", \"흰색바지\"]")
   private final List<String> keywords;
 }

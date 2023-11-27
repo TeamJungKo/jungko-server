@@ -10,9 +10,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface KeywordMapper {
 	KeywordMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(KeywordMapper.class);
-	@Mapping(target = "kewordId", source = "keword.id")
+	@Mapping(target = "keywordId", source = "keyword.id")
 	@Mapping(target = "author", source = "author")
 	KeywordDto toKeywordDto(Keyword keyword, MemberProfileDto author);
-	@Mapping(target = "kewords", source = "cardPreviewDtos")
+
+	@Mapping(target = "keywords", source = "KeywordDtos")
 	KeywordListResponseDto toKeywordListResponseDto(List<KeywordDto> KeywordDtos, long totalResources);
 }
