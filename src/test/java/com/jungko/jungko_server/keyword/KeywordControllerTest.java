@@ -135,7 +135,7 @@ public class KeywordControllerTest extends E2EMvcTest {
 		void 성공_deleteKeyword() throws Exception {
 			// given
 			Keyword keyword = Keyword.createKeyword(
-					validKeywordId
+					validKeywordId,
 					validKeyword,
 					LocalDateTime.now()
 			);

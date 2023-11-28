@@ -10,8 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 
+@Entity
+
+@Getter
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Keyword {
 
     @Id
@@ -28,10 +40,21 @@ public class Keyword {
     @JoinColumn(name = "member_id", nullable = false)
     @OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
     private Member member;
-    public static Keyword createKeyword(String keyword) {
-        Keyword keywordd = new Keyword();
-        keywordd.keyword = keyword;
-        return keywordd;
+    public static List<Keyword> createKeyword(Member member, List<String> keywords) {
+
+        List<Keyword> keywordList = new ArrayList<>();
+
+        for (String keyword : keywords) {
+            Keyword newKeyword = new Keyword();
+            newKeyword.setKeyword(keyword);
+            newKeyword.setOwner(member);
+            keywordList.add(newKeyword);
+        }
+        return keywordList;
+
+    }
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
     public void setOwner(Member member) {
         this.member = member;

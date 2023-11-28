@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
     @Query("select ic from Keyword ic "
-            + "where ic.member.id = :memberId "
-            + "and ic.keyword.id = :keywordId")
-    Optional<Keyword> findByMemberIdAndKeywordId(Long memberId, Long keywordId);
+            + "where ic.member.id = :memberId")
+    Optional<Keyword> findByMemberId(Long memberId);
 }
