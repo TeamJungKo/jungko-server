@@ -3,6 +3,7 @@ package com.jungko.jungko_server.mapper;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.dto.response.MemberProfileResponseDto;
+import com.jungko.jungko_server.member.dto.response.MyProfileResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,4 +17,8 @@ public interface MemberMapper {
 
 	@Mapping(source = "memberProfileDto.memberId", target = "memberId")
 	MemberProfileResponseDto toMemberProfileResponseDto(MemberProfileDto memberProfileDto);
+
+	@Mapping(source = "memberProfileDto.memberId", target = "memberId")
+	MyProfileResponseDto toMyProfileResponseDto(MemberProfileDto memberProfileDto,
+			boolean notificationAgreement);
 }

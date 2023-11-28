@@ -7,6 +7,7 @@ import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.dto.request.MemberProfileUpdateRequestDto;
 import com.jungko.jungko_server.member.dto.response.MemberProfileResponseDto;
+import com.jungko.jungko_server.member.dto.response.MyProfileResponseDto;
 import com.jungko.jungko_server.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,14 +41,13 @@ public class MemberController {
 	})
 	@GetMapping(value = "/me/profile")
 	@Secured(MemberRole.S_USER)
-	public MemberProfileResponseDto getMyProfile(
+	public MyProfileResponseDto getMyProfile(
 			@LoginMemberInfo MemberSessionDto memberSessionDto
 	) {
 		log.info("Called getMyProfile member: {}", memberSessionDto);
 
-		MemberProfileDto memberProfileDto = memberService.getMyProfile(
+		return memberService.getMyProfile(
 				memberSessionDto.getMemberId());
-		return memberMapper.toMemberProfileResponseDto(memberProfileDto);
 	}
 
 	@Operation(summary = "내 프로필 수정", description = "내 프로필 정보를 수정합니다. null이 아닌 필드에 대해서만 수정이 이루어집니다.")

@@ -44,7 +44,7 @@ public class Member {
 	private String nickname;
 
 	@Column(nullable = false)
-	private boolean notificationAgreement;
+	private Boolean notificationAgreement;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -52,6 +52,9 @@ public class Member {
 
 	@Column(nullable = false)
 	private String oauthId;
+
+	@Column(nullable = true)
+	private String deviceToken;
 
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
@@ -99,5 +102,13 @@ public class Member {
 		if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
 			this.profileImageUrl = profileImageUrl;
 		}
+	}
+
+	public void setNotificationAgreement(boolean notificationAgreement) {
+		this.notificationAgreement = notificationAgreement;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
 	}
 }

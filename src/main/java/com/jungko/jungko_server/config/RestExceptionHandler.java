@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -23,7 +24,7 @@ public class RestExceptionHandler {
 	@ExceptionHandler(BindException.class)
 	public ResponseEntity<ErrorResponse> handleBind(final BindException exception) {
 		BindingResult result = exception.getBindingResult();
-		
+
 		String joinedMessages = result.getAllErrors().stream()
 				.map(DefaultMessageSourceResolvable::getDefaultMessage)
 				.collect(Collectors.joining(" "));
@@ -104,4 +105,13 @@ public class RestExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatch(
+			final MethodArgumentTypeMismatchException exception) {
+		final ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+		errorResponse.setException(exception.getClass().getSimpleName());
+		errorResponse.setMessage(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
 }

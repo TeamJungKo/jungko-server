@@ -4,6 +4,7 @@ import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.dto.request.MemberProfileUpdateRequestDto;
+import com.jungko.jungko_server.member.dto.response.MyProfileResponseDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
 import com.jungko.jungko_server.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,17 @@ public class MemberService {
 	@Value("${jungko.images.path.profile}")
 	private String profileImagePath;
 
-	public MemberProfileDto getMyProfile(Long loginMemberId) {
+	public MyProfileResponseDto getMyProfile(Long loginMemberId) {
 		log.info("Called getMyProfile member: {}", loginMemberId);
 
 		Member member = memberRepository.findById(loginMemberId).orElseThrow(
 				() -> new HttpClientErrorException(
 						HttpStatus.NOT_FOUND,
 						"해당 회원이 존재하지 않습니다. id=" + loginMemberId));
-		return memberMapper.toMemberProfileDto(member, member.getProfileImageUrl());
+		MemberProfileDto memberProfileDto = memberMapper.toMemberProfileDto(member,
+				member.getProfileImageUrl());
+		return memberMapper.toMyProfileResponseDto(memberProfileDto,
+				member.getNotificationAgreement());
 	}
 
 	public MemberProfileDto getMemberProfile(Long memberId) {

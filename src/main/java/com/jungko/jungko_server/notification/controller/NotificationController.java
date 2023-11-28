@@ -3,10 +3,15 @@ package com.jungko.jungko_server.notification.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.notification.dto.request.DeviceTokenRequestDto;
+import com.jungko.jungko_server.notification.dto.request.NoticeDeleteRequestDto;
 import com.jungko.jungko_server.notification.dto.response.CardNoticeListResponseDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
+import com.jungko.jungko_server.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +24,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +35,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 @Tag(name = "알림", description = "알림 관련 API")
 public class NotificationController {
+
+	private final NotificationService notificationService;
 
 	@Operation(summary = "전체 카드 알림 조회", description = "전체 카드 알림을 조회합니다. 페이지네이션을 지원합니다. 알림은 최근 2주일까지만 제공됩니다.")
 	@ApiResponses(value = {
@@ -63,7 +69,8 @@ public class NotificationController {
 		log.info("Called getKeywordNotice member: {}, page: {}, size: {}", memberSessionDto, page,
 				size);
 
-		return KeywordNoticeListResponseDto.builder().build();
+		return notificationService.getNoticesByKeyword(memberSessionDto.getMemberId(),
+				PageRequest.of(page, size));
 	}
 
 	@Operation(summary = "전체 카드 알림 삭제", description = "전체 카드 알림을 삭제합니다.")
@@ -104,8 +111,13 @@ public class NotificationController {
 	@Secured(MemberRole.S_USER)
 	public void deleteNotice(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@Valid @ModelAttribute List<Long> noticeIds) {
+			@Valid @RequestBody NoticeDeleteRequestDto noticeDeleteRequestDto) {
+
+		List<Long> noticeIds = noticeDeleteRequestDto.getNoticeIds();
+
 		log.info("Called deleteNotice member: {}, noticeIds: {}", memberSessionDto, noticeIds);
+
+		notificationService.deleteNotices(memberSessionDto.getMemberId(), noticeIds);
 	}
 
 	@Operation(summary = "특정 카드 알림 ON/OFF", description = "특정 카드에 대해 알림을 ON/OFF 합니다. 토글 API입니다.")
@@ -142,8 +154,11 @@ public class NotificationController {
 	@PutMapping(value = "/setting")
 	@Secured(MemberRole.S_USER)
 	public void totalNoticeToggle(
-			@LoginMemberInfo MemberSessionDto memberSessionDto
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
+			@RequestBody(required = false) DeviceTokenRequestDto deviceTokenRequestDto
 	) {
 		log.info("Called totalNoticeToggle member: {}", memberSessionDto);
+
+		notificationService.toggleAgreement(memberSessionDto.getMemberId(), deviceTokenRequestDto);
 	}
 }
