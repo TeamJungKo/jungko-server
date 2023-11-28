@@ -3,6 +3,7 @@ package com.jungko.jungko_server.notification.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.notification.dto.request.DeviceTokenRequestDto;
 import com.jungko.jungko_server.notification.dto.request.NoticeDeleteRequestDto;
 import com.jungko.jungko_server.notification.dto.response.CardNoticeListResponseDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
@@ -153,10 +154,11 @@ public class NotificationController {
 	@PutMapping(value = "/setting")
 	@Secured(MemberRole.S_USER)
 	public void totalNoticeToggle(
-			@LoginMemberInfo MemberSessionDto memberSessionDto
+			@LoginMemberInfo MemberSessionDto memberSessionDto,
+			@RequestBody(required = false) DeviceTokenRequestDto deviceTokenRequestDto
 	) {
 		log.info("Called totalNoticeToggle member: {}", memberSessionDto);
 
-		notificationService.toggleAgreement(memberSessionDto.getMemberId());
+		notificationService.toggleAgreement(memberSessionDto.getMemberId(), deviceTokenRequestDto);
 	}
 }

@@ -106,4 +106,8 @@ public class Member {
 	public void setNotificationAgreement(boolean notificationAgreement) {
 		this.notificationAgreement = notificationAgreement;
 	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
 }
