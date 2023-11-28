@@ -20,7 +20,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.OnDelete;
 
 
 @Entity
@@ -44,7 +43,7 @@ public class Member {
 	private String nickname;
 
 	@Column(nullable = false)
-	private boolean notificationAgreement;
+	private Boolean notificationAgreement;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -102,5 +101,13 @@ public class Member {
 		if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
 			this.profileImageUrl = profileImageUrl;
 		}
+	}
+
+	public void setNotificationAgreement(boolean notificationAgreement) {
+		this.notificationAgreement = notificationAgreement;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
 	}
 }

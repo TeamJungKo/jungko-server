@@ -6,16 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @ToString
 @Builder
-@Schema(description = "특정 알림 삭제하는 DTO")
-public class NoticeDeleteRequestDto {
+@Schema(description = "디바이스 토큰을 등록하는 DTO")
+public class DeviceTokenRequestDto {
 
-	@Schema(description = "notice 고유 번호의 배열", type = "array", example = "[1, 2, 3]")
-	private List<Long> noticeIds;
+	@Schema(description = "디바이스 토큰", example = "1234")
+	private String deviceToken;
 }
