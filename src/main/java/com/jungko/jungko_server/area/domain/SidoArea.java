@@ -1,6 +1,6 @@
 package com.jungko.jungko_server.area.domain;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +31,6 @@ public class SidoArea {
 	private String name;
 
 	@OneToMany(mappedBy = "sidoArea")
-	private List<SiggArea> siggAreas;
+	private Set<SiggArea> siggAreas;
 
 }

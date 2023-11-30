@@ -7,7 +7,6 @@ import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
-import com.jungko.jungko_server.product.domain.ProductKeyword;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.ProductKeywordDto;
@@ -16,8 +15,8 @@ import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
-import com.jungko.jungko_server.product.infrastructure.ProductKeywordRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -146,7 +145,7 @@ public class ProductService {
 
 	public AreaListResponseDto getAllAreas() {
 		log.info("Called getAllArea");
-		List<SidoArea> areas = sidoAreaRepository.findAllWithSiggAndEmd();
+		Set<SidoArea> areas = sidoAreaRepository.findAllWithSiggAndEmd();
 		return areaMapper.toAreaListResponseDto(areas);
 	}
 }

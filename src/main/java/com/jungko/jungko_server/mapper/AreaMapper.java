@@ -13,7 +13,7 @@ import com.jungko.jungko_server.area.dto.SpecificSidoDto;
 import com.jungko.jungko_server.area.dto.SpecificSiggDto;
 import com.jungko.jungko_server.area.dto.response.AreaListResponseDto;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -54,10 +54,10 @@ public interface AreaMapper {
 	}
 
 
-	default AreaListResponseDto toAreaListResponseDto(List<SidoArea> sidoAreas) {
-		List<SidoDto> sidoDtos = sidoAreas.stream()
+	default AreaListResponseDto toAreaListResponseDto(Set<SidoArea> sidoAreas) {
+		Set<SidoDto> sidoDtos = sidoAreas.stream()
 				.map(this::sidoAreaToSidoDto)
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 
 		return AreaListResponseDto.builder()
 				.areas(Collections.singletonList(
