@@ -52,12 +52,12 @@ public class ProductController {
 	public ProductListResponseDto searchProducts(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam String keyword,
-			@RequestParam(defaultValue = "0") Integer minPrice,
-			@RequestParam(defaultValue = "200000000") Integer maxPrice,
-			@RequestParam Long categoryId,
-			@RequestParam Long areaId,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
+			@RequestParam(defaultValue = "0", required = false) Integer minPrice,
+			@RequestParam(defaultValue = "200000000", required = false) Integer maxPrice,
+			@RequestParam(required = false) Long categoryId,
+			@RequestParam(required = false) Long areaId,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false) Direction order) {
 		log.info(

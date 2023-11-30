@@ -7,23 +7,23 @@ import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
+import com.jungko.jungko_server.product.domain.ProductKeyword;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductKeywordDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
+import com.jungko.jungko_server.product.infrastructure.ProductKeywordRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -83,7 +83,10 @@ public class ProductService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											product.getProductCategory());
-							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+							List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+									product.getProductKeywords());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto,
+									productKeywordDtos);
 						}
 				).collect(Collectors.toList());
 
@@ -103,7 +106,10 @@ public class ProductService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											product.getProductCategory());
-							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+							List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+									product.getProductKeywords());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto,
+									productKeywordDtos);
 						}
 				).collect(Collectors.toList());
 
@@ -118,7 +124,14 @@ public class ProductService {
 						HttpStatus.NOT_FOUND,
 						"해당 상품이 존재하지 않습니다. id=" + productId));
 
-		return productMapper.toProductDetailDto(product, product.getImageUrl());
+		SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(product.getArea());
+		SpecificProductCategoryDto categoryDto = productMapper
+				.convertToSpecificProductCategoryDtoRecursive(
+						product.getProductCategory());
+		List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+				product.getProductKeywords());
+		return productMapper.toProductDetailDto(product, product.getImageUrl(), areaDto,
+				categoryDto, productKeywordDtos);
 	}
 
 

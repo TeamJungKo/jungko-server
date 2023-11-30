@@ -98,8 +98,8 @@ public class CardController {
 	@Secured(MemberRole.S_USER)
 	public CardListResponseDto getMyCards(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(required = false) Long categoryId
 	) {
 		log.info("Called getMyCards member: {}, page: {}, size: {}, categoryId: {}",
@@ -118,8 +118,8 @@ public class CardController {
 	public CardListResponseDto getMemberCards(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("memberId") Long memberId,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(required = false) Long categoryId
 	) {
 		log.info(
@@ -135,8 +135,8 @@ public class CardController {
 	})
 	@GetMapping(value = "/popular")
 	public CardListResponseDto getPopularCards(
-			@RequestParam Integer page,
-			@RequestParam Integer size,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(required = false) Long categoryId
 	) {
 		log.info("Called getPopularCards page: {}, size: {}, categoryId: {}",
@@ -153,8 +153,8 @@ public class CardController {
 	public ProductListResponseDto searchProductsByCard(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("cardId") Long cardId,
-			@RequestParam Integer page,
-			@RequestParam Integer size,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false) Direction order
 	) {

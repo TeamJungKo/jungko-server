@@ -2,6 +2,7 @@ package com.jungko.jungko_server.product.dto;
 
 import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,9 +44,12 @@ public class ProductPreviewDto {
 	@Schema(description = "마켓상품ID", example = "1234")
 	private final String marketProductId;
 
+	@Schema(description = "카테고리 정보", implementation = SpecificProductCategoryDto.class)
+	private final SpecificProductCategoryDto category;
+
 	@Schema(description = "지역 정보", implementation = SpecificAreaDto.class)
 	private final SpecificAreaDto area;
 
-	@Schema(description = "카테고리 정보", implementation = SpecificProductCategoryDto.class)
-	private final SpecificProductCategoryDto category;
+	@Schema(description = "상품의 키워드 정보를 조회하는 DTO", implementation = ProductKeywordDto.class)
+	private final List<ProductKeywordDto> keywords;
 }

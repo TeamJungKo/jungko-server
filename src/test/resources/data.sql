@@ -1,431 +1,272 @@
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '여성의류', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '아우터', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '상의', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '바지', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '치마', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '원피스/정장', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '언더웨어/홈웨어', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '이벤트/기타', 2);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '남성의류', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '아우터', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '상의', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '하의', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '셋업/정장', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '언더웨어/홈웨어', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '이벤트/기타', 10);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '신발', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여성신발', 17);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남성신발', 17);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스포츠화', 17);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타신발', 17);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '가방/지갑', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여성가방', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남성가방', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타가방', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여성지갑', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남성지갑', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타지갑', 22);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '시계', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여성시계', 29);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남성시계', 29);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '시계용품', 29);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타시계', 29);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '쥬얼리', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '귀걸이/피어싱', 34);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '목걸이/팬던트', 34);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '팔찌/발찌', 34);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '반지', 34);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타쥬얼리', 34);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '패션잡화', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '모자', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '안경/선글라스', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '장갑/목도리', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스카프/넥타이', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '벨트', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '양말/스타킹', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '우산/양산', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타모자', 40);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '모바일/태블릿', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스마트폰', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '태블릿PC', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스마트워치/밴드', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '일반/피쳐폰', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '케이스/거치대/보호필름', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '배터리/충전기/케이블', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '메모리/젠더/리더기', 49);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '노트북/PC', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '노트북', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '데스크탑/본체', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '모니터', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'CPU/메인보드', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'HDD/SSD/ODD', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'RAM/VGA/SOUND', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'USB/케이블', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '케이스/파워/쿨러', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '키보드/마우스/스피커', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '프린터/복합기/잉크/토너', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '공유기/랜카드', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '소프트웨어', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타기기', 57);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '카메라/캠코더', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'DSLR', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '미러리스', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '디지털카메라', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '필름/즉석카메라', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '캠코더/액션캠', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타카메라', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '카메라렌즈', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '삼각대/조명/플래시', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타악세서리', 71);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '가전제품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '냉장고', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'TV', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '세탁기/건조기', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '주방가전', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스마트홈', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '영상/음향가전', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '계절가전', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '생활가전', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '미용가전', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '사무기기', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타가전제품', 81);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '취미', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '피규어/인형', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '레고/블럭', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '프라모델', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, 'RC/드론', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '보드게임', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '게임', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '핸드메이드/DIY', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '미술재료/도구', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타', 93);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '예술/수집품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '희귀/수집품', 103);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '골동품', 103);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '예술작품', 103);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '악기', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '건반악기', 107);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '현악기', 107);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '관악기/타악기', 107);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '도서/음반/문구', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '도서', 111);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '음반/DVD', 111);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '문구/사무용품', 111);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '티켓/쿠폰', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '티켓', 115);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '상품권/쿠폰', 115);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여행숙박/이용권', 115);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타티켓/쿠폰/이용권', 115);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '뷰티/미용', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '스킨케어', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '색조메이크업', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '베이스메이크업', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '바디/헤어케어', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '향수', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '네일아트/케어', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '미용소품/기기', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '다이어트/이너뷰티', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남성화장품', 120);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '가구/인테리어', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '거실가구', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '침실가구', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '주방가구', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '서재/사무용가구', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타가구', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '조명', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '카페트/러그/매트', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '커튼/블라인드', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '셀프인테리어용품', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '인테리어소품', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '시계/액자/팝아트', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '원예/화분', 130);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '생활/주방용품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '주방용품', 143);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '욕실용품', 143);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '생활용품', 143);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '공구/산업용품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '드릴/전동공구', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '수공구/가정용공구', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '공구함', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '산업용품/자재', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '측정/계측', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '공장기계/용접/가스', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '에어/유압공구', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '농기계/농업용공구', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타산업용품', 147);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '식품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '농수축산물', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '간식', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '커피/차', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '생수/음료', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '면/통조림', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '장/소스/오일', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '간편조리식품', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '건강식품', 157);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '유아동/출산', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '출산/육아용품', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '유아동안전/실내용품', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '유아동의류', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '유아동잡화', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '유아동가구', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '유아동교구/완구', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타유아동용품', 166);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '반려동물용품', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '강아지용품', 174);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '고양이용품', 174);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '관상어용품', 174);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타반려동물용품', 174);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '스타굿즈', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '보이그룹', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '걸그룹', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남자솔로', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여자솔로', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '남자배우', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '여자배우', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '방송/예능/캐릭터', 179);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '스포츠/레저', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '골프', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '축구', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '야구', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '농구', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '자전거', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '등산/클라이밍', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '헬스/요가/필라테스', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '인라인/스케이트보드', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '전동킥보드/전동힐', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '테니스/배드민턴', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '볼링/탁구/당구', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '겨울스포츠', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '수상스포츠', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '격투/무술', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타스포츠', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '캠핑', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '낚시', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '등산', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '기타레저용품', 187);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '차량/오토바이', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '국산차', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '수입차', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '차량용품/부품', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '오토바이/스쿠터', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '오토바이용품/부품', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '산업용차량/장비', 207);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 0, '무료나눔', null);
-INSERT INTO product_category (image_url, level, name, parent_category_id)
-VALUES (null, 1, '무료나눔', 214);
+insert into product_category (id, image_url, level, name, parent_category_id)
+values (2,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/2,%EC%97%AC%EC%84%B1%EC%9D%98%EB%A5%98.jpg?raw=true',
+        0, '여성의류', null),
+       (3, null, 1, '아우터', 2),
+       (4, null, 1, '상의', 2),
+       (5, null, 1, '바지', 2),
+       (6, null, 1, '치마', 2),
+       (7, null, 1, '원피스/정장', 2),
+       (8, null, 1, '언더웨어/홈웨어', 2),
+       (9, null, 1, '이벤트/기타', 2),
+       (10,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/10,%EB%82%A8%EC%84%B1%EC%9D%98%EB%A5%98.jpg?raw=true',
+        0, '남성의류', null),
+       (11, null, 1, '아우터', 10),
+       (12, null, 1, '상의', 10),
+       (13, null, 1, '하의', 10),
+       (14, null, 1, '셋업/정장', 10),
+       (15, null, 1, '언더웨어/홈웨어', 10),
+       (16, null, 1, '이벤트/기타', 10),
+       (17,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/17,%EC%8B%A0%EB%B0%9C.jpg?raw=true',
+        0, '신발', null),
+       (18, null, 1, '여성신발', 17),
+       (19, null, 1, '남성신발', 17),
+       (20, null, 1, '스포츠화', 17),
+       (21, null, 1, '기타신발', 17),
+       (22,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/22,%EA%B0%80%EB%B0%A9%EC%A7%80%EA%B0%91.jpg?raw=true',
+        0, '가방/지갑', null),
+       (23, null, 1, '여성가방', 22),
+       (24, null, 1, '남성가방', 22),
+       (25, null, 1, '기타가방', 22),
+       (26, null, 1, '여성지갑', 22),
+       (27, null, 1, '남성지갑', 22),
+       (28, null, 1, '기타지갑', 22),
+       (29,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/29,%EC%8B%9C%EA%B3%84.jpg?raw=true',
+        0, '시계', null),
+       (30, null, 1, '여성시계', 29),
+       (31, null, 1, '남성시계', 29),
+       (32, null, 1, '시계용품', 29),
+       (33, null, 1, '기타시계', 29),
+       (34,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/34,%EC%A5%AC%EC%96%BC%EB%A6%AC.jpg?raw=true',
+        0, '쥬얼리', null),
+       (35, null, 1, '귀걸이/피어싱', 34),
+       (36, null, 1, '목걸이/팬던트', 34),
+       (37, null, 1, '팔찌/발찌', 34),
+       (38, null, 1, '반지', 34),
+       (39, null, 1, '기타쥬얼리', 34),
+       (40,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/40,%ED%8C%A8%EC%85%98%EC%9E%A1%ED%99%94.jpg?raw=true',
+        0, '패션잡화', null),
+       (41, null, 1, '모자', 40),
+       (42, null, 1, '안경/선글라스', 40),
+       (43, null, 1, '장갑/목도리', 40),
+       (44, null, 1, '스카프/넥타이', 40),
+       (45, null, 1, '벨트', 40),
+       (46, null, 1, '양말/스타킹', 40),
+       (47, null, 1, '우산/양산', 40),
+       (48, null, 1, '기타모자', 40),
+       (49,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/49,%EB%AA%A8%EB%B0%94%EC%9D%BC%ED%83%9C%EB%B8%94%EB%A6%BF.jpg?raw=true',
+        0, '모바일/태블릿', null),
+       (50, null, 1, '스마트폰', 49),
+       (51, null, 1, '태블릿PC', 49),
+       (52, null, 1, '스마트워치/밴드', 49),
+       (53, null, 1, '일반/피쳐폰', 49),
+       (54, null, 1, '케이스/거치대/보호필름', 49),
+       (55, null, 1, '배터리/충전기/케이블', 49),
+       (56, null, 1, '메모리/젠더/리더기', 49),
+       (57,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/57,%EB%85%B8%ED%8A%B8%EB%B6%81PC.jpg?raw=true',
+        0, '노트북/PC', null),
+       (58, null, 1, '노트북', 57),
+       (59, null, 1, '데스크탑/본체', 57),
+       (60, null, 1, '모니터', 57),
+       (61, null, 1, 'CPU/메인보드', 57),
+       (62, null, 1, 'HDD/SSD/ODD', 57),
+       (63, null, 1, 'RAM/VGA/SOUND', 57),
+       (64, null, 1, 'USB/케이블', 57),
+       (65, null, 1, '케이스/파워/쿨러', 57),
+       (66, null, 1, '키보드/마우스/스피커', 57),
+       (67, null, 1, '프린터/복합기/잉크/토너', 57),
+       (68, null, 1, '공유기/랜카드', 57),
+       (69, null, 1, '소프트웨어', 57),
+       (70, null, 1, '기타기기', 57),
+       (71,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/71,%EC%B9%B4%EB%A9%94%EB%9D%BC%EC%BA%A0%EC%BD%94%EB%8D%94.jpg?raw=true',
+        0, '카메라/캠코더', null),
+       (72, null, 1, 'DSLR', 71),
+       (73, null, 1, '미러리스', 71),
+       (74, null, 1, '디지털카메라', 71),
+       (75, null, 1, '필름/즉석카메라', 71),
+       (76, null, 1, '캠코더/액션캠', 71),
+       (77, null, 1, '기타카메라', 71),
+       (78, null, 1, '카메라렌즈', 71),
+       (79, null, 1, '삼각대/조명/플래시', 71),
+       (80, null, 1, '기타악세서리', 71),
+       (81,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/81,%EA%B0%80%EC%A0%84%EC%A0%9C%ED%92%88.jpg?raw=true',
+        0, '가전제품', null),
+       (82, null, 1, '냉장고', 81),
+       (83, null, 1, 'TV', 81),
+       (84, null, 1, '세탁기/건조기', 81),
+       (85, null, 1, '주방가전', 81),
+       (86, null, 1, '스마트홈', 81),
+       (87, null, 1, '영상/음향가전', 81),
+       (88, null, 1, '계절가전', 81),
+       (89, null, 1, '생활가전', 81),
+       (90, null, 1, '미용가전', 81),
+       (91, null, 1, '사무기기', 81),
+       (92, null, 1, '기타가전제품', 81),
+       (93,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/93,%EC%B7%A8%EB%AF%B8.jpg?raw=true',
+        0, '취미', null),
+       (94, null, 1, '피규어/인형', 93),
+       (95, null, 1, '레고/블럭', 93),
+       (96, null, 1, '프라모델', 93),
+       (97, null, 1, 'RC/드론', 93),
+       (98, null, 1, '보드게임', 93),
+       (99, null, 1, '게임', 93),
+       (100, null, 1, '핸드메이드/DIY', 93),
+       (101, null, 1, '미술재료/도구', 93),
+       (102, null, 1, '기타', 93),
+       (103,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/103,%EC%98%88%EC%88%A0%EC%88%98%EC%A7%91%ED%92%88.jpg?raw=true',
+        0, '예술/수집품', null),
+       (104, null, 1, '희귀/수집품', 103),
+       (105, null, 1, '골동품', 103),
+       (106, null, 1, '예술작품', 103),
+       (107,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/107,%EC%95%85%EA%B8%B0.jpg?raw=true',
+        0, '악기', null),
+       (108, null, 1, '건반악기', 107),
+       (109, null, 1, '현악기', 107),
+       (110, null, 1, '관악기/타악기', 107),
+       (111,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/111,%EB%8F%84%EC%84%9C%EC%9D%8C%EB%B0%98%EB%AC%B8%EA%B5%AC.jpg?raw=true',
+        0, '도서/음반/문구', null),
+       (112, null, 1, '도서', 111),
+       (113, null, 1, '음반/DVD', 111),
+       (114, null, 1, '문구/사무용품', 111),
+       (115,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/115,%ED%8B%B0%EC%BC%93%EC%BF%A0%ED%8F%B0.jpg?raw=true',
+        0, '티켓/쿠폰', null),
+       (116, null, 1, '티켓', 115),
+       (117, null, 1, '상품권/쿠폰', 115),
+       (118, null, 1, '여행숙박/이용권', 115),
+       (119, null, 1, '기타티켓/쿠폰/이용권', 115),
+       (120,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/120,%EB%B7%B0%ED%8B%B0%EB%AF%B8%EC%9A%A9.jpg?raw=true',
+        0, '뷰티/미용', null),
+       (121, null, 1, '스킨케어', 120),
+       (122, null, 1, '색조메이크업', 120),
+       (123, null, 1, '베이스메이크업', 120),
+       (124, null, 1, '바디/헤어케어', 120),
+       (125, null, 1, '향수', 120),
+       (126, null, 1, '네일아트/케어', 120),
+       (127, null, 1, '미용소품/기기', 120),
+       (128, null, 1, '다이어트/이너뷰티', 120),
+       (129, null, 1, '남성화장품', 120),
+       (130,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/130,%EA%B0%80%EA%B5%AC%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4.jpg?raw=true',
+        0, '가구/인테리어', null),
+       (131, null, 1, '거실가구', 130),
+       (132, null, 1, '침실가구', 130),
+       (133, null, 1, '주방가구', 130),
+       (134, null, 1, '서재/사무용가구', 130),
+       (135, null, 1, '기타가구', 130),
+       (136, null, 1, '조명', 130),
+       (137, null, 1, '카페트/러그/매트', 130),
+       (138, null, 1, '커튼/블라인드', 130),
+       (139, null, 1, '셀프인테리어용품', 130),
+       (140, null, 1, '인테리어소품', 130),
+       (141, null, 1, '시계/액자/팝아트', 130),
+       (142, null, 1, '원예/화분', 130),
+       (143,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/143,%EC%83%9D%ED%99%9C%EC%A3%BC%EB%B0%A9%EC%9A%A9%ED%92%88.jpg?raw=true',
+        0, '생활/주방용품', null),
+       (144, null, 1, '주방용품', 143),
+       (145, null, 1, '욕실용품', 143),
+       (146, null, 1, '생활용품', 143),
+       (147,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/147,%EA%B3%B5%EA%B5%AC%EC%82%B0%EC%97%85%EC%9A%A9%ED%92%88.jpg?raw=true',
+        0, '공구/산업용품', null),
+       (148, null, 1, '드릴/전동공구', 147),
+       (149, null, 1, '수공구/가정용공구', 147),
+       (150, null, 1, '공구함', 147),
+       (151, null, 1, '산업용품/자재', 147),
+       (152, null, 1, '측정/계측', 147),
+       (153, null, 1, '공장기계/용접/가스', 147),
+       (154, null, 1, '에어/유압공구', 147),
+       (155, null, 1, '농기계/농업용공구', 147),
+       (156, null, 1, '기타산업용품', 147),
+       (157,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/157,%EC%8B%9D%ED%92%88.jpg?raw=true',
+        0, '식품', null),
+       (158, null, 1, '농수축산물', 157),
+       (159, null, 1, '간식', 157),
+       (160, null, 1, '커피/차', 157),
+       (161, null, 1, '생수/음료', 157),
+       (162, null, 1, '면/통조림', 157),
+       (163, null, 1, '장/소스/오일', 157),
+       (164, null, 1, '간편조리식품', 157),
+       (165, null, 1, '건강식품', 157),
+       (166,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/166,%EC%9C%A0%EC%95%84%EB%8F%99%EC%B6%9C%EC%82%B0.jpg?raw=true',
+        0, '유아동/출산', null),
+       (167, null, 1, '출산/육아용품', 166),
+       (168, null, 1, '유아동안전/실내용품', 166),
+       (169, null, 1, '유아동의류', 166),
+       (170, null, 1, '유아동잡화', 166),
+       (171, null, 1, '유아동가구', 166),
+       (172, null, 1, '유아동교구/완구', 166),
+       (173, null, 1, '기타유아동용품', 166),
+       (174,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/174,%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC%EC%9A%A9%ED%92%88.jpg?raw=true',
+        0, '반려동물용품', null),
+       (175, null, 1, '강아지용품', 174),
+       (176, null, 1, '고양이용품', 174),
+       (177, null, 1, '관상어용품', 174),
+       (178, null, 1, '기타반려동물용품', 174),
+       (179,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/179,%EC%8A%A4%ED%83%80%EA%B5%BF%EC%A6%88.jpg?raw=true',
+        0, '스타굿즈', null),
+       (180, null, 1, '보이그룹', 179),
+       (181, null, 1, '걸그룹', 179),
+       (182, null, 1, '남자솔로', 179),
+       (183, null, 1, '여자솔로', 179),
+       (184, null, 1, '남자배우', 179),
+       (185, null, 1, '여자배우', 179),
+       (186, null, 1, '방송/예능/캐릭터', 179),
+       (187,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/187,%EC%8A%A4%ED%8F%AC%EC%B8%A0%EB%A0%88%EC%A0%80.jpg?raw=true',
+        0, '스포츠/레저', null),
+       (188, null, 1, '골프', 187),
+       (189, null, 1, '축구', 187),
+       (190, null, 1, '야구', 187),
+       (191, null, 1, '농구', 187),
+       (192, null, 1, '자전거', 187),
+       (193, null, 1, '등산/클라이밍', 187),
+       (194, null, 1, '헬스/요가/필라테스', 187),
+       (195, null, 1, '인라인/스케이트보드', 187),
+       (196, null, 1, '전동킥보드/전동힐', 187),
+       (197, null, 1, '테니스/배드민턴', 187),
+       (198, null, 1, '볼링/탁구/당구', 187),
+       (199, null, 1, '겨울스포츠', 187),
+       (200, null, 1, '수상스포츠', 187),
+       (201, null, 1, '격투/무술', 187),
+       (202, null, 1, '기타스포츠', 187),
+       (203, null, 1, '캠핑', 187),
+       (204, null, 1, '낚시', 187),
+       (205, null, 1, '등산', 187),
+       (206, null, 1, '기타레저용품', 187),
+       (207,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/207,%EC%B0%A8%EB%9F%89%EC%98%A4%ED%86%A0%EB%B0%94%EC%9D%B4.jpg?raw=true',
+        0, '차량/오토바이', null),
+       (208, null, 1, '국산차', 207),
+       (209, null, 1, '수입차', 207),
+       (210, null, 1, '차량용품/부품', 207),
+       (211, null, 1, '오토바이/스쿠터', 207),
+       (212, null, 1, '오토바이용품/부품', 207),
+       (213, null, 1, '산업용차량/장비', 207),
+       (214,
+        'https://github.com/nanahj/test-repo/blob/main/%EC%86%8C%EA%B3%B5%EC%9D%B4%EB%AF%B8%EC%A7%80%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/214,%EB%AC%B4%EB%A3%8C%EB%82%98%EB%88%94.jpg?raw=true',
+        0, '무료나눔', null),
+       (215, null, 1, '무료나눔', 214);
 
 insert into sido_area (id, adm_code, name)
 values (1, '11', '서울시'),

@@ -22,6 +22,9 @@ public class SpecificProductCategoryDto {
 	@Schema(description = "상품ID", example = "1")
 	private final Integer level;
 
+	@Schema(description = "상품 카테고리 이미지 주소", example = "http://example.com")
+	private final String imageUrl;
+
 	@Schema(implementation = ProductCategoryDto.class)
 	@ToString.Exclude
 	private SpecificProductCategoryDto subCategory;

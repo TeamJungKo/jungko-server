@@ -4,7 +4,9 @@ package com.jungko.jungko_server.mapper;
 import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.domain.ProductCategory;
+import com.jungko.jungko_server.product.domain.ProductKeyword;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductKeywordDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductDetailResponseDto;
@@ -22,10 +24,12 @@ public interface ProductMapper {
 	ProductMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(ProductMapper.class);
 
 	@Mapping(source = "product.id", target = "productId")
-	@Mapping(source = "product.productCategory", target = "productCategory")
-	@Mapping(source = "product.area", target = "area")
 	@Mapping(source = "product.imageUrl", target = "productImageUrl")
-	ProductDetailDto toProductDetailDto(Product product, String imageUrl);
+	@Mapping(target = "area", source = "areaDto")
+	@Mapping(target = "category", source = "categoryDto")
+	@Mapping(target = "keywords", source = "keywords")
+	ProductDetailDto toProductDetailDto(Product product, String imageUrl, SpecificAreaDto areaDto,
+			SpecificProductCategoryDto categoryDto, List<ProductKeywordDto> keywords);
 
 	@Mapping(source = "productDetailDto", target = "productDetail")
 	ProductDetailResponseDto toProductDetailResponseDto(ProductDetailDto productDetailDto);
@@ -34,8 +38,9 @@ public interface ProductMapper {
 	@Mapping(source = "product.imageUrl", target = "productImageUrl")
 	@Mapping(target = "area", source = "areaDto")
 	@Mapping(target = "category", source = "categoryDto")
+	@Mapping(target = "keywords", source = "keywords")
 	ProductPreviewDto toProductPreviewDto(Product product, SpecificAreaDto areaDto,
-			SpecificProductCategoryDto categoryDto);
+			SpecificProductCategoryDto categoryDto, List<ProductKeywordDto> keywords);
 
 	@Mapping(source = "productPreviewDtos", target = "products")
 	@Mapping(source = "totalElements", target = "totalResources")
@@ -59,6 +64,7 @@ public interface ProductMapper {
 				.categoryId(category.getId())
 				.name(category.getName())
 				.level(category.getLevel())
+				.imageUrl(category.getImageUrl())
 				.subCategory(null)
 				.build();
 
@@ -76,4 +82,6 @@ public interface ProductMapper {
 			return dto;
 		}
 	}
+
+	List<ProductKeywordDto> toProductKeywordDto(List<ProductKeyword> keywords);
 }

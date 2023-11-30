@@ -10,15 +10,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,11 +38,9 @@ public class KeywordController {
 	public void createKeyword(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @RequestBody KeywordRequestDto dto) {
-		log.info("Called createKeyword member: {}, dto: {}", memberSessionDto, dto);
-
 		List<String> keywords = dto.getKeywords();
-		System.out.println(keywords);
-		keywordService.createKeyword(memberSessionDto.getMemberId(),keywords);
+		keywordService.createKeyword(memberSessionDto.getMemberId(), keywords);
+		log.info("Called createKeyword member: {}, dto: {}", memberSessionDto, dto);
 	}
 
 	@Operation(summary = "키워드 삭제", description = "특정 키워드를 삭제합니다. 키워드 ID를 배열에 담아 ID에 해당하는 키워드들을 삭제합니다.")
@@ -70,7 +66,7 @@ public class KeywordController {
 	@Secured(MemberRole.S_USER)
 	public KeywordListResponseDto getMyKeywords(
 			@LoginMemberInfo MemberSessionDto memberSessionDto
-			) {
+	) {
 		log.info("Called getMyKeywords member: {}", memberSessionDto);
 
 		return keywordService.getKeywordsByMemberId(memberSessionDto.getMemberId());

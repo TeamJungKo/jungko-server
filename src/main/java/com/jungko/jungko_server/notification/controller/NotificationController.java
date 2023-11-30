@@ -47,8 +47,8 @@ public class NotificationController {
 	@Secured(MemberRole.S_USER)
 	public CardNoticeListResponseDto getCardNotice(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size) {
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size) {
 		log.info("Called getCardNotice member: {}, page: {}, size: {}", memberSessionDto, page,
 				size);
 
@@ -64,8 +64,8 @@ public class NotificationController {
 	@Secured(MemberRole.S_USER)
 	public KeywordNoticeListResponseDto getKeywordNotice(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size) {
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size) {
 		log.info("Called getKeywordNotice member: {}, page: {}, size: {}", memberSessionDto, page,
 				size);
 
