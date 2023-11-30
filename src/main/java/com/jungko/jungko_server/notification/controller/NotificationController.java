@@ -8,6 +8,7 @@ import com.jungko.jungko_server.notification.dto.request.NoticeDeleteRequestDto;
 import com.jungko.jungko_server.notification.dto.response.CardNoticeListResponseDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
 import com.jungko.jungko_server.notification.service.NotificationService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -43,6 +44,7 @@ public class NotificationController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
 	})
+	@Hidden
 	@GetMapping(value = "/cards")
 	@Secured(MemberRole.S_USER)
 	public CardNoticeListResponseDto getCardNotice(
@@ -78,6 +80,7 @@ public class NotificationController {
 			@ApiResponse(responseCode = "204", description = "no content"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
 	})
+	@Hidden
 	@DeleteMapping(value = "/cards")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@Secured(MemberRole.S_USER)
@@ -92,6 +95,7 @@ public class NotificationController {
 			@ApiResponse(responseCode = "204", description = "no content"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
 	})
+	@Hidden
 	@DeleteMapping(value = "/keywords")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@Secured(MemberRole.S_USER)
@@ -125,6 +129,7 @@ public class NotificationController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
 	})
+	@Hidden
 	@PutMapping(value = "/cards/{cardId}")
 	@Secured(MemberRole.S_USER)
 	public void cardNoticeToggle(
@@ -137,6 +142,7 @@ public class NotificationController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
 	})
+	@Hidden
 	@PutMapping(value = "/keywords/{keywordId}")
 	@Secured(MemberRole.S_USER)
 	public void keywordNoticeToggle(

@@ -5,6 +5,7 @@ import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
 import com.jungko.jungko_server.mapper.ProductMapper;
+import com.jungko.jungko_server.product.domain.ProductSortType;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
 import com.jungko.jungko_server.product.dto.request.ProductCompareRequestDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
@@ -58,20 +59,18 @@ public class ProductController {
 			@RequestParam(required = false) Long areaId,
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) ProductSortType sort,
 			@RequestParam(required = false) Direction order) {
 		log.info(
 				"Called searchProducts member: {}, keyword: {}, minPrice: {}, maxPrice: {}, productCategoryDto: {}, areaDto: {}, page: {}, size: {}, sort: {}, order: {}",
 				memberSessionDto, keyword, minPrice, maxPrice, categoryId, areaId,
 				page, size, sort, order);
-
 		PageRequest pageRequest;
-		if (sort == null || sort.isEmpty() || order == null) {
+		if (sort == null || order == null) {
 			pageRequest = PageRequest.of(page, size);
 		} else {
-			pageRequest = PageRequest.of(page, size, order, sort);
+			pageRequest = PageRequest.of(page, size, order, sort.toString());
 		}
-
 		return productService.searchProduct(keyword, minPrice, maxPrice, categoryId,
 				areaId, pageRequest);
 	}

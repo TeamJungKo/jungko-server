@@ -3,6 +3,7 @@ package com.jungko.jungko_server.card.controller;
 import com.jungko.jungko_server.auth.annotation.LoginMemberInfo;
 import com.jungko.jungko_server.auth.domain.MemberRole;
 import com.jungko.jungko_server.auth.dto.MemberSessionDto;
+import com.jungko.jungko_server.card.domain.CardSortType;
 import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
 import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
@@ -100,13 +101,21 @@ public class CardController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(required = false) Long categoryId
+			@RequestParam(required = false) Long categoryId,
+			@RequestParam(required = false) CardSortType sort,
+			@RequestParam(required = false) Direction order
 	) {
 		log.info("Called getMyCards member: {}, page: {}, size: {}, categoryId: {}",
 				memberSessionDto, page, size, categoryId);
 
+		PageRequest pageRequest;
+		if (sort == null || order == null) {
+			pageRequest = PageRequest.of(page, size);
+		} else {
+			pageRequest = PageRequest.of(page, size, order, sort.toString());
+		}
 		return cardService.getCardsByMemberId(memberSessionDto.getMemberId(),
-				PageRequest.of(page, size), categoryId);
+				pageRequest, categoryId);
 	}
 
 	@Operation(summary = "특정 유저 카드 목록 조회", description = "특정 유저가 만든 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
@@ -120,13 +129,21 @@ public class CardController {
 			@PathVariable("memberId") Long memberId,
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(required = false) Long categoryId
+			@RequestParam(required = false) Long categoryId,
+			@RequestParam(required = false) CardSortType sort,
+			@RequestParam(required = false) Direction order
 	) {
 		log.info(
 				"Called getMemberCards member: {}, memberId: {}, page: {}, size: {}, categoryId: {}",
 				memberSessionDto, memberId, page, size, categoryId);
 
-		return cardService.getCardsByMemberId(memberId, PageRequest.of(page, size), categoryId);
+		PageRequest pageRequest;
+		if (sort == null || order == null) {
+			pageRequest = PageRequest.of(page, size);
+		} else {
+			pageRequest = PageRequest.of(page, size, order, sort.toString());
+		}
+		return cardService.getCardsByMemberId(memberId, pageRequest, categoryId);
 	}
 
 	@Operation(summary = "인기 카드 목록 조회", description = "인기 카드 목록을 조회합니다. 페이지네이션을 지원합니다.")
@@ -137,12 +154,20 @@ public class CardController {
 	public CardListResponseDto getPopularCards(
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(required = false) Long categoryId
+			@RequestParam(required = false) Long categoryId,
+			@RequestParam(required = false) CardSortType sort,
+			@RequestParam(required = false) Direction order
 	) {
 		log.info("Called getPopularCards page: {}, size: {}, categoryId: {}",
 				page, size, categoryId);
 
-		return cardService.getPopularCards(PageRequest.of(page, size), categoryId);
+		PageRequest pageRequest;
+		if (sort == null || order == null) {
+			pageRequest = PageRequest.of(page, size);
+		} else {
+			pageRequest = PageRequest.of(page, size, order, sort.toString());
+		}
+		return cardService.getPopularCards(pageRequest, categoryId);
 	}
 
 	@Operation(summary = "카드 내 매물 검색", description = "카드 내 매물을 검색합니다. 페이지네이션을 지원합니다.")

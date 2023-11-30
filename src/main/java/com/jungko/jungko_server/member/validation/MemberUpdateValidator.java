@@ -14,7 +14,7 @@ public class MemberUpdateValidator implements
 	private static final Pattern NICKNAME_PATTERN = Pattern.compile(NICKNAME_REGEX);
 	private static final int NICKNAME_MIN_LENGTH = 2;
 	private static final int NICKNAME_MAX_LENGTH = 16;
-	private static final String EMAIL_REGEX = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+	private static final String EMAIL_REGEX = "^[a-zA-Z0-9+-.]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
 	private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 	private static final int EMAIL_MAX_LENGTH = 64;
 	private static final List<String> ALLOWED_IMAGE_TYPES = Arrays.asList(
