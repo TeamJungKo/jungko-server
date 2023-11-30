@@ -135,3 +135,5 @@ jungko:
     common-token-expire-time: 604800000
     refresh-token-expire-time: 2592000000
 
+swagger:
+  base-url: http://localhost
