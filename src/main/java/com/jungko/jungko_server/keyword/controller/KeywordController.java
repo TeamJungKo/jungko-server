@@ -68,8 +68,8 @@ public class KeywordController {
 	@Secured(MemberRole.S_USER)
 	public KeywordListResponseDto getMyKeywords(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@RequestParam Integer page,
-			@RequestParam Integer size) {
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size) {
 		log.info("Called getMyKeywords member: {}, page: {}, size: {}", memberSessionDto, page,
 				size);
 

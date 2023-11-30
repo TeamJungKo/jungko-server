@@ -7,13 +7,16 @@ import com.jungko.jungko_server.area.infrastructure.SidoAreaRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.ProductMapper;
 import com.jungko.jungko_server.product.domain.Product;
+import com.jungko.jungko_server.product.domain.ProductKeyword;
 import com.jungko.jungko_server.product.dto.ProductCategoryDto;
 import com.jungko.jungko_server.product.dto.ProductDetailDto;
+import com.jungko.jungko_server.product.dto.ProductKeywordDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductCategoryListResponseDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
 import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
+import com.jungko.jungko_server.product.infrastructure.ProductKeywordRepository;
 import com.jungko.jungko_server.product.infrastructure.ProductRepository;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.Predicate;
@@ -80,7 +83,10 @@ public class ProductService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											product.getProductCategory());
-							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+							List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+									product.getProductKeywords());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto,
+									productKeywordDtos);
 						}
 				).collect(Collectors.toList());
 
@@ -100,8 +106,10 @@ public class ProductService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											product.getProductCategory());
-							System.out.println(categoryDto);
-							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+							List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+									product.getProductKeywords());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto,
+									productKeywordDtos);
 						}
 				).collect(Collectors.toList());
 
@@ -120,9 +128,10 @@ public class ProductService {
 		SpecificProductCategoryDto categoryDto = productMapper
 				.convertToSpecificProductCategoryDtoRecursive(
 						product.getProductCategory());
-
+		List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+				product.getProductKeywords());
 		return productMapper.toProductDetailDto(product, product.getImageUrl(), areaDto,
-				categoryDto);
+				categoryDto, productKeywordDtos);
 	}
 
 

@@ -2,6 +2,7 @@ package com.jungko.jungko_server.product.dto;
 
 import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,6 +49,9 @@ public class ProductDetailDto {
 
 	@Schema(description = "상품의 상세 지역 정보를 조회하는 DTO", implementation = SpecificAreaDto.class)
 	private final SpecificAreaDto area;
+
+	@Schema(description = "상품의 키워드 정보를 조회하는 DTO", implementation = ProductKeywordDto.class)
+	private final List<ProductKeywordDto> keywords;
 
 	@Schema(description = "생성일", example = "2023-10-20T11:24:36.069Z")
 	private final LocalDateTime createdAt;
