@@ -13,9 +13,12 @@ import lombok.ToString;
 @Schema(description = "읍면동 정보를 담는 DTO")
 public class EmdDto {
 
-  @Schema(description = "읍면동 코드", example = "1111010100")
-  private final String code;
+	@Schema(description = "고유 ID", example = "1")
+	private final Long id;
 
-  @Schema(description = "읍면동 이름", example = "행신동")
-  private final String name;
+	@Schema(description = "읍면동 코드", example = "1111010100")
+	private final String code;
+
+	@Schema(description = "읍면동 이름", example = "행신동")
+	private final String name;
 }

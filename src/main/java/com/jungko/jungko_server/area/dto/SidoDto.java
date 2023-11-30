@@ -15,6 +15,9 @@ import lombok.ToString;
 @Schema(description = "시도 정보를 담는 DTO")
 public class SidoDto {
 
+	@Schema(description = "고유 ID", example = "1")
+	private final Long id;
+
 	@Schema(description = "시도 코드", example = "1111010100")
 	private final String code;
 
