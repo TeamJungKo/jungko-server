@@ -3,7 +3,7 @@ package com.jungko.jungko_server.member.domain;
 import com.jungko.jungko_server.auth.domain.Oauth2Type;
 import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.domain.InterestedCard;
-import com.jungko.jungko_server.keyword.domain.InterestedKeyword;
+import com.jungko.jungko_server.keyword.domain.Keyword;
 import com.jungko.jungko_server.notification.domain.Notification;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -75,7 +76,7 @@ public class Member {
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private Set<InterestedKeyword> interestedKeywords;
+	private List<Keyword> interestedKeywords;
 
 	public static Member createMember(String email, String profileImageUrl, String nickname,
 			boolean notificationAgreement, Oauth2Type oauth2Type, String oauthId,
