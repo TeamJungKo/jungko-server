@@ -20,10 +20,7 @@ import javax.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -103,6 +100,7 @@ public class ProductService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											product.getProductCategory());
+							System.out.println(categoryDto);
 							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
 						}
 				).collect(Collectors.toList());
@@ -118,7 +116,13 @@ public class ProductService {
 						HttpStatus.NOT_FOUND,
 						"해당 상품이 존재하지 않습니다. id=" + productId));
 
-		return productMapper.toProductDetailDto(product, product.getImageUrl());
+		SpecificAreaDto areaDto = areaMapper.emdAreaToSpecificAreaDto(product.getArea());
+		SpecificProductCategoryDto categoryDto = productMapper
+				.convertToSpecificProductCategoryDtoRecursive(
+						product.getProductCategory());
+
+		return productMapper.toProductDetailDto(product, product.getImageUrl(), areaDto,
+				categoryDto);
 	}
 
 

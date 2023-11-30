@@ -22,10 +22,11 @@ public interface ProductMapper {
 	ProductMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(ProductMapper.class);
 
 	@Mapping(source = "product.id", target = "productId")
-	@Mapping(source = "product.productCategory", target = "productCategory")
-	@Mapping(source = "product.area", target = "area")
 	@Mapping(source = "product.imageUrl", target = "productImageUrl")
-	ProductDetailDto toProductDetailDto(Product product, String imageUrl);
+	@Mapping(target = "area", source = "areaDto")
+	@Mapping(target = "category", source = "categoryDto")
+	ProductDetailDto toProductDetailDto(Product product, String imageUrl, SpecificAreaDto areaDto,
+			SpecificProductCategoryDto categoryDto);
 
 	@Mapping(source = "productDetailDto", target = "productDetail")
 	ProductDetailResponseDto toProductDetailResponseDto(ProductDetailDto productDetailDto);
@@ -59,6 +60,7 @@ public interface ProductMapper {
 				.categoryId(category.getId())
 				.name(category.getName())
 				.level(category.getLevel())
+				.imageUrl(category.getImageUrl())
 				.subCategory(null)
 				.build();
 
