@@ -1,14 +1,8 @@
 package com.jungko.jungko_server.keyword.domain;
 
 import com.jungko.jungko_server.member.domain.Member;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +14,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 
 @Entity
-
+@Table(name = "interested_keyword")
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -48,6 +42,7 @@ public class Keyword {
             Keyword newKeyword = new Keyword();
             newKeyword.setKeyword(keyword);
             newKeyword.setOwner(member);
+            newKeyword.createdAt = LocalDateTime.now();
             keywordList.add(newKeyword);
         }
         return keywordList;

@@ -39,7 +39,7 @@ public class KeywordController {
 	@Secured(MemberRole.S_USER)
 	public void createKeyword(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
-			@Valid @ModelAttribute KeywordRequestDto dto) {
+			@Valid @RequestBody KeywordRequestDto dto) {
 		log.info("Called createKeyword member: {}, dto: {}", memberSessionDto, dto);
 
 		List<String> keywords = dto.getKeywords();

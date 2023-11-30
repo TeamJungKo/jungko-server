@@ -6,12 +6,10 @@ import com.jungko.jungko_server.keyword.infrastructure.KeywordRepository;
 import com.jungko.jungko_server.member.domain.Member;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
-import com.jungko.jungko_server.product.infrastructure.ProductCategoryRepository;
 import com.jungko.jungko_server.mapper.MemberMapper;
 import com.jungko.jungko_server.mapper.KeywordMapper;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +35,7 @@ public class KeywordService {
                         HttpStatus.NOT_FOUND, "해당 회원이 존재하지 않습니다. id=" + memberId));
 
         List<Keyword> newKeywords = Keyword.createKeyword(loginMember, keywords);
+        System.out.println(newKeywords);
         keywordRepository.saveAll(newKeywords);
     }
 
