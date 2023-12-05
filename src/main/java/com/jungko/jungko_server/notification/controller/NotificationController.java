@@ -39,7 +39,7 @@ public class NotificationController {
 
 	private final NotificationService notificationService;
 
-	@Operation(summary = "전체 카드 알림 조회", description = "전체 카드 알림을 조회합니다. 페이지네이션을 지원합니다. 알림은 최근 2주일까지만 제공됩니다.")
+	@Operation(summary = "전체 카드 알림 조회", description = "전체 카드 알림을 조회합니다. 페이지네이션을 지원합니다. 알림은 최근 2주일까지만 제공됩니다.", deprecated = true)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
@@ -75,7 +75,7 @@ public class NotificationController {
 				PageRequest.of(page, size));
 	}
 
-	@Operation(summary = "전체 카드 알림 삭제", description = "전체 카드 알림을 삭제합니다.")
+	@Operation(summary = "전체 카드 알림 삭제", description = "전체 카드 알림을 삭제합니다.", deprecated = true)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "no content"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
@@ -90,7 +90,7 @@ public class NotificationController {
 		log.info("Called deleteNotice member: {}", memberSessionDto);
 	}
 
-	@Operation(summary = "전체 키워드 알림 삭제", description = "전체 키워드 알림을 삭제합니다.")
+	@Operation(summary = "전체 키워드 알림 삭제", description = "전체 키워드 알림을 삭제합니다.", deprecated = true)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "no content"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
@@ -124,7 +124,7 @@ public class NotificationController {
 		notificationService.deleteNotices(memberSessionDto.getMemberId(), noticeIds);
 	}
 
-	@Operation(summary = "특정 카드 알림 ON/OFF", description = "특정 카드에 대해 알림을 ON/OFF 합니다. 토글 API입니다.")
+	@Operation(summary = "특정 카드 알림 ON/OFF", description = "특정 카드에 대해 알림을 ON/OFF 합니다. 토글 API입니다.", deprecated = true)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
@@ -137,7 +137,7 @@ public class NotificationController {
 		log.info("Called cardNoticeToggle cardId: {}", cardId);
 	}
 
-	@Operation(summary = "특정 키워드 알림 ON/OFF", description = "특정 키워드에 대한 알림을 ON/OFF 합니다. 토글 API입니다.")
+	@Operation(summary = "특정 키워드 알림 ON/OFF", description = "특정 키워드에 대한 알림을 ON/OFF 합니다. 토글 API입니다.", deprecated = true)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "ok"),
 			@ApiResponse(responseCode = "500", description = "internal server error")
