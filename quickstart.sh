@@ -10,10 +10,17 @@ RESET='\033[0m'
 
 echo -e $GREEN "이 스크립트는 jungko-server 루트 디렉토리에서 실행되어야 합니다!!" $RESET
 
-git submodule foreach git pull origin main
+if [ "$1" != "demo" ]; then
+  git submodule foreach git pull origin main
+fi
 
 docker compose down --rmi all
 docker compose up --build -d
+
+if [ "$1" == "demo" ]; then
+  mkdir -p ./server-config/main/resources/
+  cp ./application.yml.example ./server-config/main/resources/application-demo.yml
+fi
 
 chmod +x ./gradlew
 ./gradlew build -x test
