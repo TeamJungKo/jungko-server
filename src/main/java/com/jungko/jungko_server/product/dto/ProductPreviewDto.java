@@ -44,6 +44,9 @@ public class ProductPreviewDto {
 	@Schema(description = "마켓상품ID", example = "1234")
 	private final String marketProductId;
 
+	@Schema(description = "상품의 마켓 URL", example = "https://www.google.com")
+	private final String marketProductUrl;
+
 	@Schema(description = "카테고리 정보", implementation = SpecificProductCategoryDto.class)
 	private final SpecificProductCategoryDto category;
 

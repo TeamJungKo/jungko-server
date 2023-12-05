@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `product`
     `is_new`              bit          not null,
     `market_name`         varchar(255) NOT NULL,
     `market_product_id`   varchar(255) NOT NULL,
+    `market_product_url`  varchar(255)  DEFAULT NULL,
     `price`               bigint(20)    DEFAULT NULL,
     `title`               varchar(255) NOT NULL,
     `uploaded_at`         datetime(6)  NOT NULL,
