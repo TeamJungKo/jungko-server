@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,6 +59,9 @@ public class Product {
 
 	@Column(nullable = false)
 	private boolean isNew;
+
+	@Column
+	private String marketProductUrl;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_category_id", nullable = false)

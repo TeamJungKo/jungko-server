@@ -8,6 +8,9 @@ import com.jungko.jungko_server.notification.dto.KeywordNoticeDto;
 import com.jungko.jungko_server.notification.dto.request.DeviceTokenRequestDto;
 import com.jungko.jungko_server.notification.dto.response.KeywordNoticeListResponseDto;
 import com.jungko.jungko_server.notification.infrastructure.NotificationRepository;
+import com.jungko.jungko_server.product.domain.Product;
+import com.jungko.jungko_server.product.infrastructure.ProductRepository;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,7 @@ public class NotificationService {
 	private final NotificationMapper notificationMapper;
 	private final NotificationRepository notificationRepository;
 	private final MemberRepository memberRepository;
+	private final ProductRepository productRepository;
 
 
 	public KeywordNoticeListResponseDto getNoticesByKeyword(Long memberId,
@@ -43,7 +47,11 @@ public class NotificationService {
 				.findAllByMemberId(loginMember.getId(), pageRequest);
 
 		List<KeywordNoticeDto> keywordNoticeDtos = notices.stream()
-				.map(notificationMapper::toKeywordNoticeDto)
+				.map(notice -> {
+					Optional<Product> product = productRepository.findById(notice.getProductId());
+					return notificationMapper.toKeywordNoticeDto(notice,
+							product.map(Product::getImageUrl).orElse(null));
+				})
 				.collect(Collectors.toList());
 
 		return notificationMapper.toKeywordNoticeListResponseDto(keywordNoticeDtos,

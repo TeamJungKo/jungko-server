@@ -10,8 +10,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
 
-	@Mapping(target = "noticeId", source = "id")
-	KeywordNoticeDto toKeywordNoticeDto(Notification notification);
+	@Mapping(target = "noticeId", source = "notification.id")
+	@Mapping(target = "productImageUrl", source = "productImageUrl")
+	KeywordNoticeDto toKeywordNoticeDto(Notification notification, String productImageUrl);
 
 	@Mapping(target = "keywordNotices", source = "keywordNoticeDtos")
 	@Mapping(target = "totalResources", source = "totalElements")

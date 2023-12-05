@@ -29,6 +29,9 @@ public class KeywordNoticeDto {
 	@Schema(description = "상품 고유 번호", example = "123")
 	private final Long productId;
 
+	@Schema(description = "상품 이미지 주소", example = "http://example.png")
+	private final String productImageUrl;
+
 	@Schema(description = "알림 생성 시간", example = "2023-11-04T12:34:56Z")
 	private final LocalDateTime createdAt;
 

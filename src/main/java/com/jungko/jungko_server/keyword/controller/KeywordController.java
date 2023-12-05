@@ -39,8 +39,8 @@ public class KeywordController {
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@Valid @RequestBody KeywordRequestDto dto) {
 		List<String> keywords = dto.getKeywords();
-		keywordService.createKeyword(memberSessionDto.getMemberId(), keywords);
 		log.info("Called createKeyword member: {}, dto: {}", memberSessionDto, dto);
+		keywordService.createKeyword(memberSessionDto.getMemberId(), keywords);
 	}
 
 	@Operation(summary = "키워드 삭제", description = "특정 키워드를 삭제합니다. 키워드 ID를 배열에 담아 ID에 해당하는 키워드들을 삭제합니다.")
