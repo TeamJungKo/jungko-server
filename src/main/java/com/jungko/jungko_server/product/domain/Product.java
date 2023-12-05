@@ -1,6 +1,7 @@
 package com.jungko.jungko_server.product.domain;
 
 import com.jungko.jungko_server.area.domain.EmdArea;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -66,7 +67,7 @@ public class Product {
 	private ProductCategory productCategory;
 
 	@OneToMany(mappedBy = "product")
-	private Set<ProductKeyword> productKeywords;
+	private List<ProductKeyword> productKeywords;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "area_id")

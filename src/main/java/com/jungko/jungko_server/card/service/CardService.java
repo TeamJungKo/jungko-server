@@ -18,6 +18,7 @@ import com.jungko.jungko_server.member.dto.MemberProfileDto;
 import com.jungko.jungko_server.member.infrastructure.MemberRepository;
 import com.jungko.jungko_server.product.domain.Product;
 import com.jungko.jungko_server.product.domain.ProductCategory;
+import com.jungko.jungko_server.product.dto.ProductKeywordDto;
 import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
@@ -259,7 +260,10 @@ public class CardService {
 							SpecificProductCategoryDto categoryDto = productMapper
 									.convertToSpecificProductCategoryDtoRecursive(
 											card.getProductCategory());
-							return productMapper.toProductPreviewDto(product, areaDto, categoryDto);
+							List<ProductKeywordDto> productKeywordDtos = productMapper.toProductKeywordDto(
+									product.getProductKeywords());
+							return productMapper.toProductPreviewDto(product, areaDto, categoryDto,
+									productKeywordDtos);
 						}
 				).collect(Collectors.toList());
 

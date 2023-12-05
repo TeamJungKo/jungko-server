@@ -1,6 +1,6 @@
 package com.jungko.jungko_server.area.domain;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +34,7 @@ public class SiggArea {
 	private String name;
 
 	@OneToMany(mappedBy = "siggArea")
-	private List<EmdArea> emdAreas;
+	private Set<EmdArea> emdAreas;
 
 	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
