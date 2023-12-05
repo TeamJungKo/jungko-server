@@ -8,6 +8,7 @@ import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
 import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
 import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
+import com.jungko.jungko_server.card.dto.response.CardSearchProductListResponseDto;
 import com.jungko.jungko_server.card.infrastructure.CardRepository;
 import com.jungko.jungko_server.mapper.AreaMapper;
 import com.jungko.jungko_server.mapper.CardMapper;
@@ -162,11 +163,11 @@ public class CardService {
 						HttpStatus.NOT_FOUND,
 						"해당 회원이 존재하지 않습니다. id=" + memberId));
 		Page<Card> cards = cardRepository.findAllByMemberId(loginMember.getId(), pageRequest);
-		Page<Card> filteredCards = cards.stream()
+		List<Card> filteredList = cards.stream()
 				.filter(card -> categoryId == null || card.getProductCategory().getId()
 						.equals(categoryId))
-				.collect(Collectors.collectingAndThen(Collectors.toList(),
-						list -> new PageImpl<>(list, pageRequest, cards.getTotalElements())));
+				.collect(Collectors.toList());
+		Page<Card> filteredCards = new PageImpl<>(filteredList, pageRequest, filteredList.size());
 
 		List<CardPreviewDto> cardPreviewDtos = filteredCards.stream()
 				.filter(card -> categoryId == null || card.getProductCategory().getId()
@@ -189,11 +190,11 @@ public class CardService {
 				categoryId);
 
 		Page<Card> cards = cardRepository.findAllByInterestedCardsCount(pageRequest);
-		Page<Card> filteredCards = cards.stream()
+		List<Card> filteredList = cards.stream()
 				.filter(card -> categoryId == null || card.getProductCategory().getId()
 						.equals(categoryId))
-				.collect(Collectors.collectingAndThen(Collectors.toList(),
-						list -> new PageImpl<>(list, pageRequest, cards.getTotalElements())));
+				.collect(Collectors.toList());
+		Page<Card> filteredCards = new PageImpl<>(filteredList, pageRequest, filteredList.size());
 
 		List<CardPreviewDto> cardPreviewDtos = filteredCards.stream()
 				.filter(card -> categoryId == null || card.getProductCategory().getId()
@@ -211,7 +212,7 @@ public class CardService {
 		return cardMapper.toCardListResponseDto(cardPreviewDtos, filteredCards.getTotalElements());
 	}
 
-	public ProductListResponseDto searchProductsByCard(Long memberId, Long cardId,
+	public CardSearchProductListResponseDto searchProductsByCard(Long memberId, Long cardId,
 			Pageable pageable) {
 		log.info("Called searchProductsByCard memberId: {}, cardId: {}, pageable: {}",
 				memberId, cardId, pageable);
@@ -267,7 +268,10 @@ public class CardService {
 						}
 				).collect(Collectors.toList());
 
-		return productMapper.toProductListResponseDto(productPreviewDtos,
+		return cardMapper.toCardSearchProductListResponseDto(
+				productPreviewDtos,
+				memberMapper.toMemberProfileDto(card.getMember(),
+						card.getMember().getProfileImageUrl()),
 				products.getTotalElements());
 	}
 }

@@ -4,7 +4,9 @@ import com.jungko.jungko_server.area.dto.SpecificAreaDto;
 import com.jungko.jungko_server.card.domain.Card;
 import com.jungko.jungko_server.card.dto.CardPreviewDto;
 import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
+import com.jungko.jungko_server.card.dto.response.CardSearchProductListResponseDto;
 import com.jungko.jungko_server.member.dto.MemberProfileDto;
+import com.jungko.jungko_server.product.dto.ProductPreviewDto;
 import com.jungko.jungko_server.product.dto.SpecificProductCategoryDto;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -24,5 +26,12 @@ public interface CardMapper {
 
 	@Mapping(target = "cards", source = "cardPreviewDtos")
 	CardListResponseDto toCardListResponseDto(List<CardPreviewDto> cardPreviewDtos,
+			long totalResources);
+
+	@Mapping(target = "products", source = "productPreviewDtos")
+	@Mapping(target = "author", source = "author")
+	@Mapping(target = "totalResources", source = "totalResources")
+	CardSearchProductListResponseDto toCardSearchProductListResponseDto(
+			List<ProductPreviewDto> productPreviewDtos, MemberProfileDto author,
 			long totalResources);
 }

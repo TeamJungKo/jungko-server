@@ -9,8 +9,9 @@ import com.jungko.jungko_server.card.dto.request.CardCreateRequestDto;
 import com.jungko.jungko_server.card.dto.request.CardUpdateRequestDto;
 import com.jungko.jungko_server.card.dto.response.CardListResponseDto;
 
+import com.jungko.jungko_server.card.dto.response.CardSearchProductListResponseDto;
 import com.jungko.jungko_server.card.service.CardService;
-import com.jungko.jungko_server.product.dto.response.ProductListResponseDto;
+import com.jungko.jungko_server.product.domain.ProductSortType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -175,12 +176,12 @@ public class CardController {
 			@ApiResponse(responseCode = "200", description = "ok"),
 	})
 	@GetMapping(value = "/{cardId}/products")
-	public ProductListResponseDto searchProductsByCard(
+	public CardSearchProductListResponseDto searchProductsByCard(
 			@LoginMemberInfo MemberSessionDto memberSessionDto,
 			@PathVariable("cardId") Long cardId,
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) ProductSortType sort,
 			@RequestParam(required = false) Direction order
 	) {
 		log.info(
@@ -188,10 +189,10 @@ public class CardController {
 				memberSessionDto, cardId, page, size, sort, order);
 
 		PageRequest pageRequest;
-		if (sort == null || sort.isEmpty() || order == null) {
+		if (order == null) {
 			pageRequest = PageRequest.of(page, size);
 		} else {
-			pageRequest = PageRequest.of(page, size, order, sort);
+			pageRequest = PageRequest.of(page, size, order, sort.toString());
 		}
 		return cardService.searchProductsByCard(memberSessionDto.getMemberId(), cardId,
 				pageRequest);
