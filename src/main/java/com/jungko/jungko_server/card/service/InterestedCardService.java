@@ -99,11 +99,11 @@ public class InterestedCardService {
 						"해당 회원이 존재하지 않습니다. id=" + targetMemberId));
 		Page<Card> cards = cardRepository.findAllByInterestedCardsMemberId(targetMemberId,
 				pageable);
-		Page<Card> filteredCards = cards.stream()
+		List<Card> filteredList = cards.stream()
 				.filter(card -> categoryId == null || card.getProductCategory().getId()
 						.equals(categoryId))
-				.collect(Collectors.collectingAndThen(Collectors.toList(),
-						list -> new PageImpl<>(list, pageable, cards.getTotalElements())));
+				.collect(Collectors.toList());
+		Page<Card> filteredCards = new PageImpl<>(filteredList, pageable, filteredList.size());
 
 		List<CardPreviewDto> cardPreviewDtos = filteredCards.stream()
 				.map(card -> {
