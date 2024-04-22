@@ -21,7 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./
+      - name: Cleaning up Stale Branches
+        uses: sichoi42/cleanup-stale-branch@v1.1.0
         id: stale
         with:
           days-before-stale: ${{ env.DAYS_BEFORE_STALE }}
